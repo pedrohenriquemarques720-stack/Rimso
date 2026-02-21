@@ -1,11 +1,8 @@
 import streamlit as st
-import pandas as pd
-import numpy as np
-import folium
 import requests
 from datetime import datetime
 import hashlib
-import base64
+import json
 
 # Configuração da página
 st.set_page_config(
@@ -24,23 +21,6 @@ if 'user_logado' not in st.session_state:
     st.session_state.aba_ativa = 'inicio'
     st.session_state.modal_cadastro = False
     st.session_state.form_ativa = 'pf'
-
-# Função para gerar HTML do mapa
-def gerar_mapa(lat, lon, lojas):
-    """Gera um mapa Folium e retorna como HTML"""
-    m = folium.Map(location=[lat, lon], zoom_start=13, control_scale=True)
-    
-    # Adicionar marcadores das lojas
-    for loja in lojas:
-        folium.Marker(
-            [loja["lat"], loja["lng"]],
-            popup=f"<b>{loja['nome']}</b><br>{loja['end']}<br>⭐ {loja['rating']}",
-            icon=folium.Icon(color='darkblue', icon='store', prefix='fa')
-        ).add_to(m)
-    
-    # Salvar mapa como HTML
-    mapa_html = m._repr_html_()
-    return mapa_html
 
 # CSS personalizado
 st.markdown("""
@@ -268,6 +248,7 @@ st.markdown("""
         overflow: hidden;
         border: 1px solid #efefec;
         margin: 20px 0 30px;
+        height: 400px;
     }
     
     .loja-item {
@@ -320,6 +301,12 @@ st.markdown("""
         margin-top: 16px;
     }
     
+    iframe {
+        border: none;
+        width: 100%;
+        height: 100%;
+    }
+    
     @media (max-width: 768px) {
         .func-grid {
             grid-template-columns: 1fr;
@@ -330,7 +317,66 @@ st.markdown("""
         }
     }
 </style>
+
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 """, unsafe_allow_html=True)
+
+# JavaScript para o mapa
+mapa_js = """
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+    let map;
+    let markers = [];
+    
+    function initMap(lat, lon) {
+        if (map) {
+            map.remove();
+        }
+        
+        map = L.map('map').setView([lat, lon], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+        
+        // Limpar markers antigos
+        markers.forEach(m => map.removeLayer(m));
+        markers = [];
+        
+        // Adicionar lojas de exemplo
+        const lojas = [
+            {nome: 'StreetWearBR', lat: lat - 0.01, lng: lon - 0.01, end: 'Rua Principal, 123', rating: 4.5},
+            {nome: 'UrbanStyle', lat: lat + 0.01, lng: lon + 0.01, end: 'Av. Central, 1500', rating: 4.8},
+            {nome: 'Sioostas', lat: lat, lng: lon + 0.02, end: 'Rua Comercial, 350', rating: 4.3}
+        ];
+        
+        lojas.forEach(loja => {
+            const marker = L.marker([loja.lat, loja.lng])
+                .addTo(map)
+                .bindPopup(`<b>${loja.nome}</b><br>${loja.end}<br>⭐ ${loja.rating}`);
+            markers.push(marker);
+        });
+    }
+    
+    function buscarLocal(local) {
+        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(local)}&limit=1&countrycodes=br`)
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.length > 0) {
+                    const lat = parseFloat(data[0].lat);
+                    const lon = parseFloat(data[0].lon);
+                    initMap(lat, lon);
+                    document.getElementById('status').innerHTML = '📍 Localização encontrada: ' + data[0].display_name.split(',')[0];
+                } else {
+                    document.getElementById('status').innerHTML = '❌ Localização não encontrada';
+                }
+            })
+            .catch(error => {
+                document.getElementById('status').innerHTML = '❌ Erro na busca';
+            });
+    }
+</script>
+"""
 
 # Funções auxiliares
 def toggle_aba(aba):
@@ -488,6 +534,9 @@ if st.session_state.aba_ativa == 'inicio':
 elif st.session_state.aba_ativa == 'descubra':
     st.markdown("## Descubra lojas perto de você")
     
+    # Incluir JavaScript
+    st.components.v1.html(mapa_js, height=0)
+    
     # Filtro de localização
     col1, col2 = st.columns([3, 1])
     with col1:
@@ -496,7 +545,10 @@ elif st.session_state.aba_ativa == 'descubra':
     with col2:
         buscar = st.button("🔍 Buscar", key="buscar_btn", use_container_width=True)
     
-    # Coordenadas padrão
+    # Status da busca
+    status_placeholder = st.empty()
+    
+    # Mapa
     if 'mapa_lat' not in st.session_state:
         st.session_state.mapa_lat = -23.5505
         st.session_state.mapa_lon = -46.6333
@@ -508,23 +560,21 @@ elif st.session_state.aba_ativa == 'descubra':
             if lat and lon:
                 st.session_state.mapa_lat = lat
                 st.session_state.mapa_lon = lon
-                st.success(f"📍 Localização encontrada: {display.split(',')[0]}")
+                status_placeholder.success(f"📍 Localização encontrada: {display.split(',')[0]}")
             else:
-                st.error("Localização não encontrada. Tente novamente.")
+                status_placeholder.error("Localização não encontrada. Tente novamente.")
     
-    # Lojas de exemplo (reposicionadas)
-    lojas_mapa = [
-        {"nome": "StreetWearBR", "lat": st.session_state.mapa_lat - 0.01, 
-         "lng": st.session_state.mapa_lon - 0.01, "end": "Rua Principal, 123", "rating": 4.5},
-        {"nome": "UrbanStyle", "lat": st.session_state.mapa_lat + 0.01, 
-         "lng": st.session_state.mapa_lon + 0.01, "end": "Av. Central, 1500", "rating": 4.8},
-        {"nome": "Sioostas", "lat": st.session_state.mapa_lat, 
-         "lng": st.session_state.mapa_lon + 0.02, "end": "Rua Comercial, 350", "rating": 4.3}
-    ]
+    # Criar mapa com HTML/JavaScript
+    mapa_html = f"""
+    <div class="map-container" id="map"></div>
+    <script>
+        setTimeout(function() {{
+            initMap({st.session_state.mapa_lat}, {st.session_state.mapa_lon});
+        }}, 100);
+    </script>
+    """
     
-    # Gerar e mostrar mapa
-    mapa_html = gerar_mapa(st.session_state.mapa_lat, st.session_state.mapa_lon, lojas_mapa)
-    st.markdown(f'<div class="map-container">{mapa_html}</div>', unsafe_allow_html=True)
+    st.components.v1.html(mapa_html, height=400)
     
     # Lista de lojas
     st.markdown("### Lojas encontradas")
@@ -539,7 +589,7 @@ elif st.session_state.aba_ativa == 'descubra':
                 <p style="color:#6b6b69;">📍 Rua da Consolação, 123</p>
                 <span class="rating">4.5 ⭐</span>
             </div>
-            <button class="btn-secondary" style="width:auto;">Ver loja</button>
+            <button class="btn-secondary" style="width:auto;" onclick="alert('Loja selecionada')">Ver loja</button>
         </div>
         """, unsafe_allow_html=True)
         
@@ -550,7 +600,7 @@ elif st.session_state.aba_ativa == 'descubra':
                 <p style="color:#6b6b69;">📍 Rua dos Pinheiros, 350</p>
                 <span class="rating">4.3 ⭐</span>
             </div>
-            <button class="btn-secondary" style="width:auto;">Ver loja</button>
+            <button class="btn-secondary" style="width:auto;" onclick="alert('Loja selecionada')">Ver loja</button>
         </div>
         """, unsafe_allow_html=True)
     
@@ -562,7 +612,7 @@ elif st.session_state.aba_ativa == 'descubra':
                 <p style="color:#6b6b69;">📍 Av. Faria Lima, 1500</p>
                 <span class="rating">4.8 ⭐</span>
             </div>
-            <button class="btn-secondary" style="width:auto;">Ver loja</button>
+            <button class="btn-secondary" style="width:auto;" onclick="alert('Loja selecionada')">Ver loja</button>
         </div>
         """, unsafe_allow_html=True)
 
