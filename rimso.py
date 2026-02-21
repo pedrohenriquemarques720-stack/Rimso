@@ -44,7 +44,6 @@ st.markdown("""
         border-radius: 40px;
         box-shadow: 0 25px 60px rgba(0, 0, 0, 0.08);
         overflow: hidden;
-        padding: 0;
     }
     
     /* Top bar */
@@ -61,7 +60,6 @@ st.markdown("""
         font-size: 32px;
         font-weight: 800;
         color: #121212;
-        display: inline-block;
     }
     
     .logo span {
@@ -79,7 +77,6 @@ st.markdown("""
         border-left: 1px solid #d9d9d6;
         padding-left: 20px;
         margin-left: 8px;
-        display: inline-block;
     }
     
     .user-menu {
@@ -100,20 +97,17 @@ st.markdown("""
         border-bottom: 1px solid #efefec;
     }
     
-    .tab-button {
+    .tab {
         padding: 16px 24px;
         font-weight: 600;
         color: #6b6b69;
         cursor: pointer;
         border-bottom: 3px solid transparent;
-        background: none;
-        border: none;
-        font-size: 16px;
     }
     
-    .tab-button.active {
+    .tab.active {
         color: #121212;
-        border-bottom: 3px solid #121212;
+        border-bottom-color: #121212;
     }
     
     /* Cards */
@@ -123,11 +117,6 @@ st.markdown("""
         padding: 20px;
         border: 1px solid #efefec;
         margin-bottom: 16px;
-        transition: 0.1s;
-    }
-    
-    .card:hover {
-        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
     
     .rating {
@@ -137,7 +126,6 @@ st.markdown("""
         font-weight: 600;
         color: #1f4f3d;
         display: inline-block;
-        font-size: 14px;
     }
     
     /* Filtro local */
@@ -149,7 +137,6 @@ st.markdown("""
         gap: 12px;
         margin-bottom: 24px;
         border: 1px solid #efefec;
-        align-items: center;
     }
     
     /* Botões */
@@ -157,24 +144,22 @@ st.markdown("""
         background: #121212;
         color: white;
         border: none;
-        padding: 12px 24px;
+        padding: 16px 32px;
         border-radius: 60px;
-        font-weight: 600;
+        font-weight: 700;
         cursor: pointer;
         width: 100%;
-        font-size: 16px;
     }
     
     .btn-secondary {
         background: #f1f1ee;
         color: #121212;
         border: none;
-        padding: 12px 24px;
+        padding: 16px 32px;
         border-radius: 60px;
         font-weight: 600;
         cursor: pointer;
         width: 100%;
-        font-size: 16px;
     }
     
     .price-tag {
@@ -214,18 +199,13 @@ st.markdown("""
     .stTextInput > div > div > input {
         border-radius: 60px !important;
         border: 1.5px solid #e3e3df !important;
-        padding: 12px 20px !important;
-        font-size: 15px !important;
-    }
-    
-    .stTextInput > div > div > input:focus {
-        border-color: #121212 !important;
+        padding: 16px 20px !important;
     }
     
     .stSelectbox > div > div > div {
         border-radius: 60px !important;
         border: 1.5px solid #e3e3df !important;
-        padding: 8px 16px !important;
+        padding: 12px 16px !important;
     }
     
     /* Grid */
@@ -262,49 +242,10 @@ st.markdown("""
         margin-bottom: 12px;
     }
     
-    .faq-item {
-        background: white;
-        border-radius: 20px;
-        padding: 20px;
-        margin-bottom: 12px;
-        border: 1px solid #efefec;
-        cursor: pointer;
-    }
-    
-    .faq-question {
-        font-weight: 700;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    
-    .contato-card {
-        background: white;
-        border-radius: 28px;
-        padding: 40px 30px;
-        text-align: center;
-        border: 1px solid #efefec;
-        height: 100%;
-    }
-    
-    .contato-icon {
-        font-size: 56px;
-        margin-bottom: 20px;
-    }
-    
-    .contato-email, .contato-instagram {
-        font-size: 22px;
-        font-weight: 700;
-        color: #121212;
-        text-decoration: none;
-        display: block;
-        margin-top: 16px;
-    }
-    
     iframe {
-        border: none;
         width: 100%;
         height: 100%;
+        border: none;
     }
     
     @media (max-width: 768px) {
@@ -313,70 +254,10 @@ st.markdown("""
         }
         .tabs-container {
             overflow-x: auto;
-            padding: 0 16px;
         }
     }
 </style>
-
-<!-- Leaflet CSS -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 """, unsafe_allow_html=True)
-
-# JavaScript para o mapa
-mapa_js = """
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script>
-    let map;
-    let markers = [];
-    
-    function initMap(lat, lon) {
-        if (map) {
-            map.remove();
-        }
-        
-        map = L.map('map').setView([lat, lon], 13);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap'
-        }).addTo(map);
-        
-        // Limpar markers antigos
-        markers.forEach(m => map.removeLayer(m));
-        markers = [];
-        
-        // Adicionar lojas de exemplo
-        const lojas = [
-            {nome: 'StreetWearBR', lat: lat - 0.01, lng: lon - 0.01, end: 'Rua Principal, 123', rating: 4.5},
-            {nome: 'UrbanStyle', lat: lat + 0.01, lng: lon + 0.01, end: 'Av. Central, 1500', rating: 4.8},
-            {nome: 'Sioostas', lat: lat, lng: lon + 0.02, end: 'Rua Comercial, 350', rating: 4.3}
-        ];
-        
-        lojas.forEach(loja => {
-            const marker = L.marker([loja.lat, loja.lng])
-                .addTo(map)
-                .bindPopup(`<b>${loja.nome}</b><br>${loja.end}<br>⭐ ${loja.rating}`);
-            markers.push(marker);
-        });
-    }
-    
-    function buscarLocal(local) {
-        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(local)}&limit=1&countrycodes=br`)
-            .then(response => response.json())
-            .then(data => {
-                if (data && data.length > 0) {
-                    const lat = parseFloat(data[0].lat);
-                    const lon = parseFloat(data[0].lon);
-                    initMap(lat, lon);
-                    document.getElementById('status').innerHTML = '📍 Localização encontrada: ' + data[0].display_name.split(',')[0];
-                } else {
-                    document.getElementById('status').innerHTML = '❌ Localização não encontrada';
-                }
-            })
-            .catch(error => {
-                document.getElementById('status').innerHTML = '❌ Erro na busca';
-            });
-    }
-</script>
-"""
 
 # Funções auxiliares
 def toggle_aba(aba):
@@ -431,8 +312,8 @@ def buscar_localizacao(local):
             lon = float(data[0]['lon'])
             display_name = data[0]['display_name']
             return lat, lon, display_name
-    except Exception as e:
-        st.error(f"Erro na busca: {e}")
+    except:
+        pass
     return None, None, None
 
 # Layout principal
@@ -509,7 +390,7 @@ if st.session_state.aba_ativa == 'inicio':
     with col1:
         st.markdown("""
         <div class="card" style="text-align:center;">
-            <div style="font-size:28px; margin-bottom:12px;">📍</div>
+            <div style="font-size:28px;">📍</div>
             <h3>Lojas próximas</h3>
             <p style="color:#6b6b69;">Encontre lojas no seu bairro</p>
         </div>
@@ -517,7 +398,7 @@ if st.session_state.aba_ativa == 'inicio':
     with col2:
         st.markdown("""
         <div class="card" style="text-align:center;">
-            <div style="font-size:28px; margin-bottom:12px;">🏷️</div>
+            <div style="font-size:28px;">🏷️</div>
             <h3>Ofertas exclusivas</h3>
             <p style="color:#6b6b69;">Descontos especiais</p>
         </div>
@@ -525,7 +406,7 @@ if st.session_state.aba_ativa == 'inicio':
     with col3:
         st.markdown("""
         <div class="card" style="text-align:center;">
-            <div style="font-size:28px; margin-bottom:12px;">💳</div>
+            <div style="font-size:28px;">💳</div>
             <h3>Pagamento fácil</h3>
             <p style="color:#6b6b69;">Taxa única de R$20 para lojas</p>
         </div>
@@ -533,9 +414,6 @@ if st.session_state.aba_ativa == 'inicio':
 
 elif st.session_state.aba_ativa == 'descubra':
     st.markdown("## Descubra lojas perto de você")
-    
-    # Incluir JavaScript
-    st.components.v1.html(mapa_js, height=0)
     
     # Filtro de localização
     col1, col2 = st.columns([3, 1])
@@ -545,13 +423,12 @@ elif st.session_state.aba_ativa == 'descubra':
     with col2:
         buscar = st.button("🔍 Buscar", key="buscar_btn", use_container_width=True)
     
-    # Status da busca
-    status_placeholder = st.empty()
-    
-    # Mapa
+    # Coordenadas padrão (São Paulo)
     if 'mapa_lat' not in st.session_state:
         st.session_state.mapa_lat = -23.5505
         st.session_state.mapa_lon = -46.6333
+    
+    status_placeholder = st.empty()
     
     # Buscar localização
     if buscar and local:
@@ -564,14 +441,40 @@ elif st.session_state.aba_ativa == 'descubra':
             else:
                 status_placeholder.error("Localização não encontrada. Tente novamente.")
     
-    # Criar mapa com HTML/JavaScript
+    # HTML do mapa com Leaflet (carregado via CDN)
     mapa_html = f"""
-    <div class="map-container" id="map"></div>
-    <script>
-        setTimeout(function() {{
-            initMap({st.session_state.mapa_lat}, {st.session_state.mapa_lon});
-        }}, 100);
-    </script>
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+        <style>
+            #map {{ height: 100%; width: 100%; }}
+        </style>
+    </head>
+    <body>
+        <div id="map"></div>
+        <script>
+            var map = L.map('map').setView([{st.session_state.mapa_lat}, {st.session_state.mapa_lon}], 13);
+            L.tileLayer('https://{{s}}.tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png', {{
+                attribution: '© OpenStreetMap'
+            }}).addTo(map);
+            
+            // Adicionar marcadores de exemplo
+            var lojas = [
+                {{nome: 'StreetWearBR', lat: {st.session_state.mapa_lat - 0.01}, lng: {st.session_state.mapa_lon - 0.01}, end: 'Rua Principal, 123', rating: 4.5}},
+                {{nome: 'UrbanStyle', lat: {st.session_state.mapa_lat + 0.01}, lng: {st.session_state.mapa_lon + 0.01}, end: 'Av. Central, 1500', rating: 4.8}},
+                {{nome: 'Sioostas', lat: {st.session_state.mapa_lat}, lng: {st.session_state.mapa_lon + 0.02}, end: 'Rua Comercial, 350', rating: 4.3}}
+            ];
+            
+            lojas.forEach(function(loja) {{
+                L.marker([loja.lat, loja.lng])
+                    .addTo(map)
+                    .bindPopup('<b>' + loja.nome + '</b><br>' + loja.end + '<br>⭐ ' + loja.rating);
+            }});
+        </script>
+    </body>
+    </html>
     """
     
     st.components.v1.html(mapa_html, height=400)
@@ -653,37 +556,37 @@ elif st.session_state.aba_ativa == 'contato':
     
     with col1:
         st.markdown("""
-        <div class="contato-card">
-            <div class="contato-icon">📧</div>
+        <div class="card" style="text-align:center;padding:40px;">
+            <div style="font-size:56px;">📧</div>
             <h3>E-mail</h3>
-            <a href="mailto:contato@rimso.com.br" class="contato-email">
+            <a href="mailto:contato@rimso.com.br" style="font-size:22px;font-weight:700;color:#121212;text-decoration:none;">
                 contato@rimso.com.br
             </a>
-            <p style="color:#6b6b69; margin-top:12px;">Respondemos em até 24h</p>
+            <p style="color:#6b6b69;margin-top:12px;">Respondemos em até 24h</p>
         </div>
         """, unsafe_allow_html=True)
     
     with col2:
         st.markdown("""
-        <div class="contato-card">
-            <div class="contato-icon">📱</div>
+        <div class="card" style="text-align:center;padding:40px;">
+            <div style="font-size:56px;">📱</div>
             <h3>Instagram</h3>
-            <a href="https://instagram.com/rimsoapp" target="_blank" class="contato-instagram">
+            <a href="https://instagram.com/rimsoapp" target="_blank" style="font-size:22px;font-weight:700;color:#121212;text-decoration:none;">
                 @rimsoapp
             </a>
-            <p style="color:#6b6b69; margin-top:12px;">Siga para novidades e promoções</p>
+            <p style="color:#6b6b69;margin-top:12px;">Siga para novidades e promoções</p>
         </div>
         """, unsafe_allow_html=True)
     
     st.markdown("""
     <div class="card" style="padding:30px; margin-top:24px;">
-        <h3 style="margin-bottom:16px;">🕒 Horário de atendimento</h3>
-        <p style="font-size:18px;">Segunda a sexta: 9h às 18h<br>Sábado: 9h às 13h</p>
-        <p style="color:#6b6b69; margin-top:12px;">Estamos sempre prontos para ajudar!</p>
+        <h3>🕒 Horário de atendimento</h3>
+        <p style="margin-top:16px;font-size:18px;">Segunda a sexta: 9h às 18h<br>Sábado: 9h às 13h</p>
+        <p style="color:#6b6b69;margin-top:12px;">Estamos sempre prontos para ajudar!</p>
     </div>
     """, unsafe_allow_html=True)
 
-st.markdown('</div>', unsafe_allow_html=True)  # Fecha main-container
+st.markdown('</div>', unsafe_allow_html=True)
 
 # Modal de cadastro/login
 if st.session_state.modal_cadastro:
@@ -692,7 +595,6 @@ if st.session_state.modal_cadastro:
         <div class="modal">
     """, unsafe_allow_html=True)
     
-    # Botão fechar
     if st.button("✕", key="fechar_modal"):
         st.session_state.modal_cadastro = False
         st.rerun()
