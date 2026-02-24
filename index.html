@@ -75,10 +75,6 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
-        body.dark-mode {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-        }
-
         /* Animações */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
@@ -100,7 +96,7 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Container Principal */
+        /* ==================== DASHBOARD PRINCIPAL ==================== */
         .dashboard {
             max-width: 1600px;
             margin: 0 auto;
@@ -123,7 +119,6 @@
             display: flex;
             flex-direction: column;
             border-right: 3px solid var(--gold);
-            transition: background-color 0.3s;
             height: 95vh;
             overflow-y: auto;
         }
@@ -144,7 +139,7 @@
         .logo-area {
             padding: 0 10px 30px 10px;
             border-bottom: 2px solid var(--gold);
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             text-align: center;
         }
 
@@ -152,7 +147,7 @@
             font-size: 32px;
             font-weight: 800;
             color: white;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
             letter-spacing: 2px;
         }
 
@@ -166,11 +161,11 @@
             letter-spacing: 1px;
         }
 
-        /* Sistema de Login */
+        /* User Info */
         .user-info-sidebar {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 20px;
-            padding: 20px;
+            padding: 15px;
             margin-bottom: 20px;
             border: 1px solid var(--gold);
             cursor: pointer;
@@ -180,38 +175,36 @@
         .user-info-sidebar:hover {
             background: rgba(255, 255, 255, 0.1);
             transform: translateY(-2px);
-            box-shadow: var(--shadow);
         }
 
         .user-login-status {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
         }
 
         .user-avatar-sidebar {
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             background: var(--gradient);
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 20px;
+            font-size: 18px;
             color: var(--black);
-            transition: var(--transition);
         }
 
         .user-details-sidebar h4 {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--gray);
             margin-bottom: 2px;
         }
 
         .user-details-sidebar p {
             font-weight: 600;
-            font-size: 16px;
+            font-size: 14px;
             color: white;
         }
 
@@ -219,43 +212,20 @@
         .menu-item {
             display: flex;
             align-items: center;
-            gap: 15px;
-            padding: 15px;
-            border-radius: 16px;
+            gap: 12px;
+            padding: 12px 15px;
+            border-radius: 12px;
             color: #94a3b8;
             margin-bottom: 5px;
             cursor: pointer;
             transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .menu-item::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 3px;
-            background: var(--gradient);
-            transform: scaleY(0);
-            transition: transform 0.3s;
-        }
-
-        .menu-item:hover::before {
-            transform: scaleY(1);
-        }
-
-        .menu-item i {
-            width: 24px;
-            font-size: 20px;
-            transition: var(--transition);
+            font-size: 14px;
         }
 
         .menu-item:hover {
             background: rgba(255, 255, 255, 0.1);
             color: var(--gold);
-            padding-left: 25px;
+            transform: translateX(5px);
         }
 
         .menu-item.active {
@@ -263,51 +233,46 @@
             color: white;
         }
 
-        .menu-item.active i {
-            color: white;
-        }
-
-        .menu-item.active::before {
-            transform: scaleY(1);
-            background: white;
+        .menu-item i {
+            width: 20px;
+            font-size: 16px;
         }
 
         .menu-divider {
             height: 2px;
             background: linear-gradient(90deg, var(--red), var(--gold), var(--red));
-            margin: 20px 0;
+            margin: 15px 0;
         }
 
-        /* Bairros na Sidebar */
+        /* Bairros Sidebar */
         .bairros-sidebar {
-            margin-top: 20px;
+            margin-top: 15px;
         }
 
         .bairros-sidebar h4 {
             color: white;
-            margin-bottom: 15px;
-            padding: 0 10px;
-            font-size: 14px;
+            margin-bottom: 10px;
+            font-size: 13px;
             text-transform: uppercase;
+            opacity: 0.7;
         }
 
         .bairro-sidebar-item {
-            padding: 10px 15px;
-            margin: 4px 0;
-            border-radius: 8px;
+            padding: 8px 12px;
+            margin: 2px 0;
+            border-radius: 6px;
             cursor: pointer;
-            transition: var(--transition);
-            font-size: 14px;
+            font-size: 13px;
             color: #94a3b8;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: var(--transition);
         }
 
         .bairro-sidebar-item:hover {
             background: rgba(255,255,255,0.1);
             color: var(--gold);
-            transform: translateX(5px);
         }
 
         .bairro-sidebar-item.active {
@@ -318,12 +283,8 @@
         .bairro-sidebar-item .badge {
             background: rgba(255,255,255,0.1);
             padding: 2px 6px;
-            border-radius: 60px;
+            border-radius: 10px;
             font-size: 10px;
-        }
-
-        .bairro-sidebar-item.active .badge {
-            background: rgba(255,255,255,0.2);
         }
 
         /* ==================== MAIN CONTENT ==================== */
@@ -331,12 +292,11 @@
             background: var(--bg-primary);
             overflow-y: auto;
             max-height: 95vh;
-            transition: background-color 0.3s;
         }
 
         /* Top Bar */
         .top-bar {
-            padding: 20px 30px;
+            padding: 15px 25px;
             background: var(--bg-primary);
             border-bottom: 3px solid var(--gold);
             display: flex;
@@ -345,62 +305,58 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            backdrop-filter: blur(10px);
-            background: rgba(var(--bg-primary), 0.9);
         }
 
         .page-title {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 700;
             color: var(--text-primary);
         }
 
         .page-title span {
             color: var(--red);
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 400;
-            margin-left: 10px;
+            margin-left: 8px;
         }
 
         .top-actions {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             align-items: center;
         }
 
         .search-box {
             background: var(--bg-secondary);
             border-radius: 60px;
-            padding: 12px 20px;
+            padding: 10px 15px;
             display: flex;
             align-items: center;
-            gap: 10px;
-            width: 300px;
+            gap: 8px;
+            width: 280px;
             border: 2px solid transparent;
-            transition: var(--transition);
         }
 
         .search-box:focus-within {
             border-color: var(--red);
-            box-shadow: 0 0 0 3px rgba(221, 0, 0, 0.1);
         }
 
         .search-box input {
             background: transparent;
             border: none;
             flex: 1;
-            font-size: 14px;
+            font-size: 13px;
             outline: none;
             color: var(--text-primary);
         }
 
         .search-results {
             position: absolute;
-            top: 70px;
-            right: 30px;
-            width: 300px;
+            top: 60px;
+            right: 25px;
+            width: 280px;
             background: var(--card-bg);
-            border-radius: 20px;
+            border-radius: 16px;
             border: 2px solid var(--border);
             box-shadow: var(--shadow-lg);
             display: none;
@@ -412,10 +368,13 @@
         }
 
         .search-result-item {
-            padding: 15px;
+            padding: 12px 15px;
             border-bottom: 1px solid var(--border);
             cursor: pointer;
-            transition: background 0.2s;
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
         }
 
         .search-result-item:hover {
@@ -428,7 +387,7 @@
         }
 
         .notification-badge i {
-            font-size: 24px;
+            font-size: 20px;
             color: var(--text-primary);
         }
 
@@ -438,29 +397,27 @@
             right: -5px;
             background: var(--red);
             color: white;
-            font-size: 10px;
+            font-size: 9px;
             padding: 2px 5px;
             border-radius: 60px;
         }
 
         .theme-toggle {
             cursor: pointer;
-            font-size: 20px;
+            font-size: 18px;
             color: var(--text-primary);
             padding: 8px;
             border-radius: 50%;
-            transition: var(--transition);
         }
 
         .theme-toggle:hover {
             background: var(--bg-secondary);
-            transform: rotate(180deg);
         }
 
-        /* Content Area */
+        /* ==================== CONTENT AREA ==================== */
         .content-area {
-            padding: 30px;
-            min-height: calc(95vh - 100px);
+            padding: 25px;
+            min-height: calc(95vh - 80px);
         }
 
         .secao {
@@ -483,20 +440,20 @@
         }
 
         .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid var(--border);
-            border-top: 4px solid var(--red);
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border);
+            border-top: 3px solid var(--red);
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin: 20px auto;
+            margin: 15px auto;
         }
 
         .hidden {
             display: none !important;
         }
 
-        /* ==================== CARDS E COMPONENTES ==================== */
+        /* ==================== CARDS ==================== */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -506,52 +463,33 @@
 
         .stat-card {
             background: var(--card-bg);
-            border-radius: 24px;
-            padding: 25px;
+            border-radius: 20px;
+            padding: 20px;
             box-shadow: var(--shadow);
             border: 2px solid var(--border);
             transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--gradient);
-            transform: scaleX(0);
-            transition: transform 0.3s;
-        }
-
-        .stat-card:hover::before {
-            transform: scaleX(1);
         }
 
         .stat-card:hover {
             transform: translateY(-5px);
             border-color: var(--gold);
-            box-shadow: var(--shadow-lg);
         }
 
         .stat-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 16px;
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
             background: var(--gradient);
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--black);
-            font-size: 24px;
-            margin-bottom: 15px;
+            font-size: 20px;
+            margin-bottom: 12px;
         }
 
         .stat-value {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 800;
             color: var(--text-primary);
             margin-bottom: 5px;
@@ -559,43 +497,41 @@
 
         .stat-label {
             color: var(--text-secondary);
-            font-size: 14px;
+            font-size: 13px;
         }
 
         /* Welcome Section */
         .welcome-section {
             text-align: center;
-            padding: 40px;
+            padding: 40px 30px;
             background: var(--gradient);
-            border-radius: 40px;
+            border-radius: 30px;
             margin-bottom: 30px;
             color: var(--black);
-            position: relative;
-            overflow: hidden;
         }
 
         .welcome-section h1 {
-            font-size: 36px;
+            font-size: 28px;
             margin-bottom: 10px;
         }
 
         .welcome-section p {
-            font-size: 18px;
+            font-size: 16px;
             opacity: 0.9;
         }
 
         /* Bairros Grid */
         .bairros-destaque-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             gap: 15px;
             margin: 20px 0;
         }
 
         .bairro-destaque-card {
             background: var(--card-bg);
-            border-radius: 20px;
-            padding: 20px;
+            border-radius: 16px;
+            padding: 20px 15px;
             border: 2px solid var(--border);
             cursor: pointer;
             transition: var(--transition);
@@ -605,28 +541,34 @@
         .bairro-destaque-card:hover {
             border-color: var(--gold);
             transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
+            background: var(--gradient);
+            color: var(--black);
         }
 
         .bairro-destaque-card h3 {
-            color: var(--text-primary);
+            font-size: 16px;
             margin-bottom: 5px;
-            font-size: 18px;
+            color: var(--text-primary);
         }
 
         .bairro-destaque-card p {
+            font-size: 13px;
             color: var(--text-secondary);
-            font-size: 14px;
         }
 
         .bairro-destaque-card .badge {
             display: inline-block;
-            padding: 4px 10px;
-            background: var(--gradient);
-            color: var(--black);
-            border-radius: 60px;
-            font-size: 12px;
-            margin-top: 10px;
+            padding: 4px 8px;
+            background: var(--red);
+            color: white;
+            border-radius: 20px;
+            font-size: 10px;
+            margin-top: 8px;
+        }
+
+        .bairro-destaque-card:hover .badge {
+            background: var(--black);
+            color: white;
         }
 
         /* Info Cards */
@@ -639,8 +581,8 @@
 
         .info-card {
             background: var(--card-bg);
-            border-radius: 24px;
-            padding: 30px;
+            border-radius: 20px;
+            padding: 25px 20px;
             text-align: center;
             border: 2px solid var(--border);
             cursor: pointer;
@@ -650,39 +592,49 @@
         .info-card:hover {
             border-color: var(--gold);
             transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
+            background: var(--gradient);
+            color: var(--black);
         }
 
         .info-card i {
-            font-size: 48px;
+            font-size: 40px;
             color: var(--red);
-            margin-bottom: 15px;
+            margin-bottom: 12px;
+        }
+
+        .info-card:hover i {
+            color: var(--black);
         }
 
         .info-card h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
             color: var(--text-primary);
-            margin-bottom: 10px;
-            font-size: 20px;
         }
 
         .info-card p {
+            font-size: 13px;
             color: var(--text-secondary);
-            font-size: 14px;
+        }
+
+        .info-card:hover p {
+            color: var(--black);
         }
 
         /* Bairros Lista */
         .bairros-header {
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .bairros-header h1 {
+            font-size: 24px;
             color: var(--text-primary);
-            font-size: 28px;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
         .bairros-header p {
             color: var(--text-secondary);
+            font-size: 14px;
         }
 
         .bairros-search {
@@ -691,61 +643,50 @@
 
         .search-bairro {
             width: 100%;
-            padding: 15px 20px;
+            padding: 12px 20px;
             border-radius: 60px;
             border: 2px solid var(--border);
             background: var(--bg-secondary);
             color: var(--text-primary);
-            font-size: 16px;
-        }
-
-        .search-bairro:focus {
-            border-color: var(--red);
-            outline: none;
+            font-size: 14px;
         }
 
         .bairros-lista-completa {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 10px;
             margin-top: 20px;
         }
 
         .bairro-lista-item {
             background: var(--card-bg);
-            border-radius: 16px;
-            padding: 20px;
+            border-radius: 12px;
+            padding: 15px;
             border: 2px solid var(--border);
             cursor: pointer;
-            transition: var(--transition);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: var(--transition);
         }
 
         .bairro-lista-item:hover {
             border-color: var(--gold);
-            transform: translateX(5px);
             background: var(--gradient);
             color: var(--black);
-        }
-
-        .bairro-lista-item:hover .bairro-contagem {
-            background: rgba(0,0,0,0.1);
-            color: var(--black);
+            transform: translateX(5px);
         }
 
         .bairro-nome {
-            font-weight: 600;
-            color: var(--text-primary);
+            font-weight: 500;
+            font-size: 14px;
         }
 
         .bairro-contagem {
-            color: var(--text-secondary);
-            font-size: 14px;
-            padding: 4px 10px;
             background: var(--bg-secondary);
-            border-radius: 60px;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 11px;
         }
 
         /* Lojas Grid */
@@ -753,14 +694,12 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            gap: 20px;
+            margin-bottom: 20px;
         }
 
         .lojas-header h1 {
+            font-size: 22px;
             color: var(--text-primary);
-            font-size: 28px;
         }
 
         .lojas-header h1 span {
@@ -773,23 +712,24 @@
         }
 
         .filter-select {
-            padding: 10px 20px;
-            border-radius: 60px;
+            padding: 8px 15px;
+            border-radius: 30px;
             border: 2px solid var(--border);
             background: var(--bg-secondary);
             color: var(--text-primary);
+            font-size: 13px;
             cursor: pointer;
         }
 
         .lojas-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 20px;
         }
 
         .loja-card {
             background: var(--card-bg);
-            border-radius: 24px;
+            border-radius: 20px;
             overflow: hidden;
             border: 2px solid var(--border);
             cursor: pointer;
@@ -799,24 +739,23 @@
         .loja-card:hover {
             border-color: var(--gold);
             transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
         }
 
         .loja-cover {
-            height: 150px;
+            height: 140px;
             background: var(--gradient);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 48px;
+            font-size: 42px;
         }
 
         .loja-info {
-            padding: 20px;
+            padding: 18px;
         }
 
         .loja-nome {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 700;
             color: var(--text-primary);
             margin-bottom: 5px;
@@ -824,26 +763,22 @@
 
         .loja-bairro {
             color: var(--red);
-            font-size: 14px;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
+            font-size: 13px;
+            margin-bottom: 8px;
         }
 
         .loja-categoria {
             display: flex;
-            gap: 8px;
+            gap: 5px;
             flex-wrap: wrap;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .categoria-tag {
             background: var(--bg-secondary);
-            padding: 4px 12px;
-            border-radius: 60px;
-            font-size: 12px;
-            color: var(--text-secondary);
+            padding: 4px 10px;
+            border-radius: 30px;
+            font-size: 11px;
         }
 
         .loja-footer {
@@ -851,19 +786,21 @@
             justify-content: space-between;
             align-items: center;
             border-top: 2px solid var(--border);
-            padding-top: 15px;
+            padding-top: 12px;
         }
 
         .loja-avaliacao {
             color: var(--gold);
+            font-size: 13px;
         }
 
         .loja-contato {
             background: transparent;
             border: 2px solid var(--red);
             color: var(--red);
-            padding: 6px 16px;
-            border-radius: 60px;
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-size: 12px;
             font-weight: 600;
             cursor: pointer;
         }
@@ -878,13 +815,13 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 20px;
-            margin: 40px 0;
+            margin: 30px 0;
         }
 
         .plan-card {
             background: var(--card-bg);
-            border-radius: 24px;
-            padding: 30px;
+            border-radius: 20px;
+            padding: 25px 20px;
             border: 2px solid var(--border);
             position: relative;
             transition: var(--transition);
@@ -892,60 +829,56 @@
 
         .plan-card:hover {
             border-color: var(--gold);
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-lg);
+            transform: translateY(-5px);
         }
 
         .plan-card.popular {
             border: 3px solid var(--gold);
             transform: scale(1.05);
-            z-index: 2;
         }
 
         .plan-badge {
             position: absolute;
-            top: -12px;
+            top: -10px;
             right: 20px;
             background: var(--gradient);
             color: var(--black);
-            padding: 6px 16px;
-            border-radius: 60px;
-            font-size: 12px;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 11px;
             font-weight: 700;
             border: 2px solid var(--gold);
         }
 
         .plan-name {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 800;
-            margin-bottom: 15px;
-            color: var(--text-primary);
+            margin-bottom: 10px;
         }
 
         .plan-price {
-            font-size: 48px;
+            font-size: 32px;
             font-weight: 800;
             color: var(--red);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .plan-price span {
-            font-size: 16px;
+            font-size: 14px;
             color: var(--text-secondary);
-            font-weight: 400;
         }
 
         .plan-features {
             list-style: none;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .plan-features li {
-            padding: 10px 0;
-            color: var(--text-secondary);
+            padding: 6px 0;
+            font-size: 13px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .plan-features i.fa-check {
@@ -958,12 +891,13 @@
 
         .plan-btn {
             width: 100%;
-            padding: 16px;
-            border-radius: 60px;
+            padding: 12px;
+            border-radius: 30px;
             border: 2px solid var(--red);
             background: transparent;
             color: var(--red);
-            font-weight: 700;
+            font-weight: 600;
+            font-size: 14px;
             cursor: pointer;
         }
 
@@ -981,14 +915,14 @@
         .cadastro-tipos {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            margin-top: 40px;
+            gap: 25px;
+            margin-top: 30px;
         }
 
         .cadastro-card {
             background: var(--card-bg);
-            border-radius: 32px;
-            padding: 40px;
+            border-radius: 24px;
+            padding: 35px 25px;
             text-align: center;
             border: 2px solid var(--border);
             cursor: pointer;
@@ -997,40 +931,49 @@
 
         .cadastro-card:hover {
             border-color: var(--gold);
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-lg);
+            transform: translateY(-5px);
+            background: var(--gradient);
+            color: var(--black);
         }
 
         .cadastro-card i {
-            font-size: 64px;
+            font-size: 48px;
             color: var(--red);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+        }
+
+        .cadastro-card:hover i {
+            color: var(--black);
         }
 
         .cadastro-card h3 {
-            font-size: 28px;
-            color: var(--text-primary);
+            font-size: 22px;
             margin-bottom: 10px;
         }
 
         .cadastro-card p {
+            font-size: 14px;
+            margin-bottom: 15px;
             color: var(--text-secondary);
-            margin-bottom: 20px;
+        }
+
+        .cadastro-card:hover p {
+            color: var(--black);
         }
 
         .cadastro-card ul {
             list-style: none;
             text-align: left;
-            margin: 20px 0;
-            padding: 0 20px;
+            margin: 15px 0;
+            padding: 0 15px;
         }
 
         .cadastro-card ul li {
-            padding: 8px 0;
-            color: var(--text-secondary);
+            padding: 5px 0;
+            font-size: 13px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .cadastro-card ul li::before {
@@ -1039,64 +982,82 @@
             font-weight: 700;
         }
 
-        /* Sobre */
-        .sobre-content {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin: 40px 0;
-        }
-
-        .sobre-card {
-            background: var(--card-bg);
-            border-radius: 24px;
-            padding: 30px;
-            text-align: center;
-            border: 2px solid var(--border);
-            transition: var(--transition);
-        }
-
-        .sobre-card:hover {
-            border-color: var(--gold);
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .sobre-card i {
-            font-size: 48px;
-            color: var(--red);
-            margin-bottom: 20px;
-        }
-
-        .sobre-card h3 {
-            color: var(--text-primary);
-            margin-bottom: 15px;
-        }
-
-        .sobre-card p {
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
         /* Mapa */
         .mapa-controles {
             margin: 20px 0;
             display: flex;
             gap: 10px;
-            justify-content: center;
         }
 
         .map-container {
-            height: 500px;
-            border-radius: 24px;
+            height: 450px;
+            border-radius: 20px;
             overflow: hidden;
             border: 2px solid var(--border);
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         #map {
             height: 100%;
             width: 100%;
+        }
+
+        /* Sobre */
+        .sobre-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .sobre-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            border: 2px solid var(--border);
+        }
+
+        .sobre-card i {
+            font-size: 40px;
+            color: var(--red);
+            margin-bottom: 15px;
+        }
+
+        .sobre-card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .sobre-card p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Contato e Ajuda */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: var(--bg-secondary);
+            border-radius: 30px;
+            border: 2px dashed var(--border);
+        }
+
+        .empty-state i {
+            font-size: 60px;
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+
+        .empty-state h2 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            color: var(--text-secondary);
+            margin-bottom: 10px;
         }
 
         /* ==================== MODAIS ==================== */
@@ -1120,12 +1081,11 @@
 
         .modal-content {
             background: var(--card-bg);
-            border-radius: 32px;
-            padding: 30px;
-            max-width: 500px;
+            border-radius: 30px;
+            padding: 25px;
+            max-width: 450px;
             width: 90%;
             border: 3px solid var(--gold);
-            animation: fadeIn 0.3s ease;
             max-height: 90vh;
             overflow-y: auto;
         }
@@ -1134,17 +1094,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .modal-title {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 700;
-            color: var(--text-primary);
         }
 
         .modal-close {
-            font-size: 24px;
+            font-size: 22px;
             cursor: pointer;
             color: var(--text-secondary);
         }
@@ -1153,51 +1112,38 @@
             color: var(--red);
         }
 
-        .modal-body {
-            margin-bottom: 30px;
-        }
-
         /* Formulários */
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--text-primary);
+            margin-bottom: 5px;
+            font-weight: 500;
+            font-size: 13px;
         }
 
         .form-input,
         .form-select {
             width: 100%;
-            padding: 12px 16px;
+            padding: 10px 12px;
             border: 2px solid var(--border);
-            border-radius: 12px;
-            font-size: 14px;
+            border-radius: 10px;
+            font-size: 13px;
             background: var(--bg-secondary);
             color: var(--text-primary);
         }
 
-        .form-input:focus,
-        .form-select:focus {
-            border-color: var(--red);
-            outline: none;
-        }
-
         /* Botões */
         .btn {
-            padding: 12px 24px;
-            border-radius: 60px;
+            padding: 10px 20px;
+            border-radius: 30px;
             border: none;
             font-weight: 600;
+            font-size: 13px;
             cursor: pointer;
             transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
         }
 
         .btn-primary {
@@ -1207,7 +1153,6 @@
 
         .btn-primary:hover {
             background: var(--red-dark);
-            transform: translateY(-2px);
         }
 
         .btn-secondary {
@@ -1217,22 +1162,21 @@
 
         .btn-secondary:hover {
             background: var(--gold-light);
-            transform: translateY(-2px);
         }
 
         /* Toast */
         .toast {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
+            bottom: 20px;
+            right: 20px;
             background: var(--card-bg);
             color: var(--text-primary);
-            padding: 15px 25px;
-            border-radius: 60px;
-            font-size: 14px;
+            padding: 12px 20px;
+            border-radius: 40px;
+            font-size: 13px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             box-shadow: var(--shadow-lg);
             z-index: 1000;
             transform: translateY(100px);
@@ -1248,35 +1192,6 @@
 
         .toast.success {
             border-color: var(--success);
-        }
-
-        .toast.error {
-            border-color: var(--danger);
-        }
-
-        /* Placeholders para abas vazias */
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            background: var(--bg-secondary);
-            border-radius: 40px;
-            border: 2px dashed var(--border);
-        }
-
-        .empty-state i {
-            font-size: 64px;
-            color: var(--gray);
-            margin-bottom: 20px;
-        }
-
-        .empty-state h2 {
-            color: var(--text-primary);
-            margin-bottom: 10px;
-        }
-
-        .empty-state p {
-            color: var(--text-secondary);
-            margin-bottom: 20px;
         }
 
         /* Responsividade */
@@ -1301,7 +1216,7 @@
             
             .top-bar {
                 flex-direction: column;
-                gap: 15px;
+                gap: 10px;
             }
             
             .search-box {
@@ -1310,6 +1225,7 @@
             
             .lojas-header {
                 flex-direction: column;
+                gap: 10px;
             }
             
             .lojas-filtros {
@@ -1328,11 +1244,11 @@
                 <div class="logo-tagline">Piracicaba - SP</div>
             </div>
 
-            <!-- Sistema de Login -->
+            <!-- User Info -->
             <div class="user-info-sidebar" id="userInfoSidebar" onclick="abrirModal('loginModal')">
                 <div class="user-login-status">
                     <div class="user-avatar-sidebar" id="userAvatarSidebar">
-                        <i class="far fa-user"></i>
+                        <i class="fas fa-user"></i>
                     </div>
                     <div class="user-details-sidebar" id="userDetailsSidebar">
                         <h4>Bem-vindo(a)</h4>
@@ -1342,49 +1258,49 @@
             </div>
 
             <!-- Menu Principal -->
-            <div class="menu-item active" onclick="mudarSecao('inicio', this)">
+            <div class="menu-item active" data-secao="inicio">
                 <i class="fas fa-home"></i>
                 <span>Início</span>
             </div>
-            <div class="menu-item" onclick="mudarSecao('bairros', this)">
+            <div class="menu-item" data-secao="bairros">
                 <i class="fas fa-map"></i>
                 <span>Bairros</span>
             </div>
-            <div class="menu-item" onclick="mudarSecao('lojas', this)">
+            <div class="menu-item" data-secao="lojas">
                 <i class="fas fa-store"></i>
                 <span>Lojas</span>
             </div>
-            <div class="menu-item" onclick="mudarSecao('planos', this)">
+            <div class="menu-item" data-secao="planos">
                 <i class="fas fa-credit-card"></i>
                 <span>Planos</span>
             </div>
-            <div class="menu-item" onclick="mudarSecao('cadastro', this)">
+            <div class="menu-item" data-secao="cadastro">
                 <i class="fas fa-user-plus"></i>
                 <span>Cadastre-se</span>
             </div>
             
             <div class="menu-divider"></div>
             
-            <div class="menu-item" onclick="mudarSecao('mapa', this)">
+            <div class="menu-item" data-secao="mapa">
                 <i class="fas fa-map-marked-alt"></i>
-                <span>Mapa da Cidade</span>
+                <span>Mapa</span>
             </div>
-            <div class="menu-item" onclick="mudarSecao('sobre', this)">
+            <div class="menu-item" data-secao="sobre">
                 <i class="fas fa-info-circle"></i>
-                <span>Sobre o RIMSO</span>
+                <span>Sobre</span>
             </div>
-            <div class="menu-item" onclick="mudarSecao('contato', this)">
+            <div class="menu-item" data-secao="contato">
                 <i class="fas fa-headset"></i>
                 <span>Contato</span>
             </div>
-            <div class="menu-item" onclick="mudarSecao('ajuda', this)">
+            <div class="menu-item" data-secao="ajuda">
                 <i class="fas fa-question-circle"></i>
                 <span>Ajuda</span>
             </div>
 
-            <!-- Lista de Bairros -->
-            <div class="bairros-sidebar" id="bairrosSidebar">
-                <h4>Bairros de Piracicaba</h4>
+            <!-- Bairros Sidebar -->
+            <div class="bairros-sidebar">
+                <h4>Bairros</h4>
                 <div id="bairrosSidebarList"></div>
             </div>
         </div>
@@ -1395,25 +1311,25 @@
             <div class="top-bar">
                 <div class="page-title" id="pageTitle">
                     RIMSO Piracicaba
-                    <span>início</span>
+                    <span id="pageSubtitle">início</span>
                 </div>
                 <div class="top-actions">
-                    <!-- Busca -->
+                    <!-- Search -->
                     <div style="position: relative;">
                         <div class="search-box">
                             <i class="fas fa-search"></i>
-                            <input type="text" placeholder="Buscar lojas, bairros..." id="searchInput" oninput="buscarTermo(this.value)">
+                            <input type="text" placeholder="Buscar bairros..." id="searchInput" oninput="buscarTermo(this.value)">
                         </div>
                         <div class="search-results" id="searchResults"></div>
                     </div>
                     
-                    <!-- Notificações -->
+                    <!-- Notifications -->
                     <div class="notification-badge" onclick="abrirNotificacoes()">
                         <i class="far fa-bell"></i>
                         <span class="badge" id="notificationBadge">3</span>
                     </div>
                     
-                    <!-- Toggle Tema -->
+                    <!-- Theme Toggle -->
                     <div class="theme-toggle" onclick="toggleTema()" id="themeToggle">
                         <i class="fas fa-moon"></i>
                     </div>
@@ -1428,24 +1344,23 @@
                     <p>Carregando...</p>
                 </div>
 
-                <!-- ==================== SEÇÃO INÍCIO ==================== -->
+                <!-- SEÇÃO INÍCIO -->
                 <div id="secaoInicio" class="secao ativa">
-                    <div class="welcome-section" data-aos="fade-up">
-                        <h1>Bem-vindo ao RIMSO Piracicaba! 🏪</h1>
-                        <p>Descubra as melhores lojas perto de você em cada bairro da cidade</p>
+                    <div class="welcome-section">
+                        <h1>Bem-vindo ao RIMSO! 🏪</h1>
+                        <p>Descubra as melhores lojas nos bairros de Piracicaba</p>
                     </div>
 
-                    <!-- Stats -->
-                    <div class="stats-grid" data-aos="fade-up" data-aos-delay="100">
+                    <div class="stats-grid">
                         <div class="stat-card">
                             <div class="stat-icon"><i class="fas fa-store"></i></div>
                             <div class="stat-value" id="statsLojas">0</div>
-                            <div class="stat-label">Lojas cadastradas</div>
+                            <div class="stat-label">Lojas</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon"><i class="fas fa-users"></i></div>
                             <div class="stat-value" id="statsUsuarios">0</div>
-                            <div class="stat-label">Usuários ativos</div>
+                            <div class="stat-label">Usuários</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon"><i class="fas fa-map-marker-alt"></i></div>
@@ -1459,89 +1374,88 @@
                         </div>
                     </div>
 
-                    <!-- Bairros em Destaque -->
-                    <div class="quick-access" data-aos="fade-up" data-aos-delay="200">
-                        <h2 style="color: var(--text-primary); margin-bottom: 20px;">Bairros em Destaque</h2>
+                    <div class="quick-access">
+                        <h2 style="color: var(--text-primary); margin-bottom: 15px; font-size: 18px;">Bairros em Destaque</h2>
                         <div class="bairros-destaque-grid" id="bairrosDestaque"></div>
                     </div>
 
-                    <!-- Cards de Ação -->
-                    <div class="info-cards" data-aos="fade-up" data-aos-delay="300">
-                        <div class="info-card" onclick="mudarSecao('cadastro', document.querySelector('[onclick*=\"cadastro\"]'))">
+                    <div class="info-cards">
+                        <div class="info-card" data-secao="cadastro">
                             <i class="fas fa-user-plus"></i>
-                            <h3>Cadastre-se grátis</h3>
-                            <p>Crie sua conta como cliente e favorite suas lojas</p>
+                            <h3>Cadastre-se</h3>
+                            <p>Crie sua conta gratuita</p>
                         </div>
-                        <div class="info-card" onclick="mudarSecao('planos', document.querySelector('[onclick*=\"planos\"]'))">
+                        <div class="info-card" data-secao="planos">
                             <i class="fas fa-store-alt"></i>
-                            <h3>Anuncie sua loja</h3>
-                            <p>Planos a partir de R$49/mês para lojistas</p>
+                            <h3>Anuncie</h3>
+                            <p>Planos para lojistas</p>
                         </div>
-                        <div class="info-card" onclick="mudarSecao('mapa', document.querySelector('[onclick*=\"mapa\"]'))">
+                        <div class="info-card" data-secao="mapa">
                             <i class="fas fa-map-marked-alt"></i>
-                            <h3>Explore no mapa</h3>
-                            <p>Veja as lojas próximas a você</p>
+                            <h3>Explorar</h3>
+                            <p>Lojas no mapa</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- ==================== SEÇÃO BAIRROS ==================== -->
-                <div id="secaoBairros" class="secao hidden">
-                    <div class="bairros-header" data-aos="fade-up">
+                <!-- SEÇÃO BAIRROS -->
+                <div id="secaoBairros" class="secao">
+                    <div class="bairros-header">
                         <h1>Bairros de Piracicaba</h1>
                         <p>Encontre lojas no seu bairro</p>
                     </div>
                     
-                    <div class="bairros-search" data-aos="fade-up" data-aos-delay="100">
+                    <div class="bairros-search">
                         <input type="text" class="search-bairro" placeholder="Digite o nome do bairro..." id="buscarBairro" oninput="filtrarBairros(this.value)">
                     </div>
 
-                    <div class="bairros-lista-completa" id="bairrosLista" data-aos="fade-up" data-aos-delay="200"></div>
+                    <div class="bairros-lista-completa" id="bairrosLista"></div>
                 </div>
 
-                <!-- ==================== SEÇÃO LOJAS ==================== -->
-                <div id="secaoLojas" class="secao hidden">
-                    <div class="lojas-header" data-aos="fade-up">
+                <!-- SEÇÃO LOJAS -->
+                <div id="secaoLojas" class="secao">
+                    <div class="lojas-header">
                         <h1>Lojas em <span id="bairroSelecionado">Piracicaba</span></h1>
                         <div class="lojas-filtros">
-                            <select class="filter-select" id="filtroCategoria" onchange="filtrarLojas()">
-                                <option value="">Todas as categorias</option>
+                            <select class="filter-select" id="filtroCategoria">
+                                <option value="">Todas</option>
                                 <option value="Roupas">Roupas</option>
                                 <option value="Calçados">Calçados</option>
                                 <option value="Acessórios">Acessórios</option>
-                                <option value="Moda Feminina">Moda Feminina</option>
-                                <option value="Moda Masculina">Moda Masculina</option>
-                                <option value="Infantil">Infantil</option>
                             </select>
-                            <select class="filter-select" id="filtroOrdenar" onchange="ordenarLojas(this.value)">
-                                <option value="relevancia">Mais relevantes</option>
-                                <option value="avaliacao">Melhor avaliação</option>
-                                <option value="nome">Ordem alfabética</option>
+                            <select class="filter-select" id="filtroOrdenar">
+                                <option value="relevancia">Relevância</option>
+                                <option value="nome">Nome</option>
                             </select>
                         </div>
                     </div>
 
-                    <div class="lojas-grid" id="lojasContainer" data-aos="fade-up" data-aos-delay="100"></div>
+                    <div class="lojas-grid" id="lojasContainer">
+                        <div class="empty-state">
+                            <i class="fas fa-store"></i>
+                            <h3>Nenhuma loja cadastrada</h3>
+                            <p>Seja o primeiro a cadastrar sua loja!</p>
+                            <button class="btn btn-primary" style="margin-top: 15px;" onclick="mudarSecao('cadastro')">Cadastrar loja</button>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- ==================== SEÇÃO PLANOS ==================== -->
-                <div id="secaoPlanos" class="secao hidden">
-                    <h1 data-aos="fade-up">Planos para Lojistas</h1>
-                    <p data-aos="fade-up" data-aos-delay="100">Escolha o plano ideal para sua loja e comece a vender mais</p>
+                <!-- SEÇÃO PLANOS -->
+                <div id="secaoPlanos" class="secao">
+                    <h1 style="font-size: 24px; margin-bottom: 10px;">Planos para Lojistas</h1>
+                    <p style="color: var(--text-secondary); margin-bottom: 20px;">Escolha o plano ideal para sua loja</p>
 
-                    <div class="plans-grid" data-aos="fade-up" data-aos-delay="200">
+                    <div class="plans-grid">
                         <div class="plan-card">
                             <div class="plan-name">Básico</div>
                             <div class="plan-price">R$49 <span>/mês</span></div>
                             <ul class="plan-features">
                                 <li><i class="fas fa-check"></i> Até 50 produtos</li>
-                                <li><i class="fas fa-check"></i> Fotos ilimitadas</li>
                                 <li><i class="fas fa-check"></i> 1 bairro</li>
-                                <li><i class="fas fa-check"></i> Estatísticas básicas</li>
+                                <li><i class="fas fa-check"></i> Fotos ilimitadas</li>
                                 <li><i class="fas fa-times"></i> Destaque na busca</li>
-                                <li><i class="fas fa-times"></i> Suporte prioritário</li>
                             </ul>
-                            <button class="plan-btn" onclick="contratarPlano('basico')">Contratar</button>
+                            <button class="plan-btn" onclick="abrirModal('cadastroLojaModal')">Contratar</button>
                         </div>
 
                         <div class="plan-card popular">
@@ -1550,13 +1464,11 @@
                             <div class="plan-price">R$89 <span>/mês</span></div>
                             <ul class="plan-features">
                                 <li><i class="fas fa-check"></i> Até 200 produtos</li>
-                                <li><i class="fas fa-check"></i> Fotos ilimitadas</li>
                                 <li><i class="fas fa-check"></i> Até 3 bairros</li>
-                                <li><i class="fas fa-check"></i> Estatísticas avançadas</li>
+                                <li><i class="fas fa-check"></i> Fotos ilimitadas</li>
                                 <li><i class="fas fa-check"></i> Destaque na busca</li>
-                                <li><i class="fas fa-check"></i> Suporte prioritário</li>
                             </ul>
-                            <button class="plan-btn" onclick="contratarPlano('profissional')">Contratar</button>
+                            <button class="plan-btn" onclick="abrirModal('cadastroLojaModal')">Contratar</button>
                         </div>
 
                         <div class="plan-card">
@@ -1564,32 +1476,29 @@
                             <div class="plan-price">R$149 <span>/mês</span></div>
                             <ul class="plan-features">
                                 <li><i class="fas fa-check"></i> Produtos ilimitados</li>
-                                <li><i class="fas fa-check"></i> Fotos ilimitadas</li>
                                 <li><i class="fas fa-check"></i> Todos os bairros</li>
-                                <li><i class="fas fa-check"></i> Relatórios completos</li>
+                                <li><i class="fas fa-check"></i> Fotos ilimitadas</li>
                                 <li><i class="fas fa-check"></i> Destaque máximo</li>
-                                <li><i class="fas fa-check"></i> Suporte 24/7</li>
                             </ul>
-                            <button class="plan-btn" onclick="contratarPlano('premium')">Contratar</button>
+                            <button class="plan-btn" onclick="abrirModal('cadastroLojaModal')">Contratar</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- ==================== SEÇÃO CADASTRO ==================== -->
-                <div id="secaoCadastro" class="secao hidden">
-                    <h1 data-aos="fade-up">Cadastre-se no RIMSO</h1>
-                    <p data-aos="fade-up" data-aos-delay="100">Escolha o tipo de cadastro</p>
+                <!-- SEÇÃO CADASTRO -->
+                <div id="secaoCadastro" class="secao">
+                    <h1 style="font-size: 24px; margin-bottom: 10px;">Cadastre-se no RIMSO</h1>
+                    <p style="color: var(--text-secondary); margin-bottom: 20px;">Escolha o tipo de cadastro</p>
 
-                    <div class="cadastro-tipos" data-aos="fade-up" data-aos-delay="200">
+                    <div class="cadastro-tipos">
                         <div class="cadastro-card" onclick="abrirModal('cadastroPFModal')">
                             <i class="fas fa-user"></i>
                             <h3>Pessoa Física</h3>
-                            <p>Cadastro gratuito para clientes</p>
+                            <p>Cadastro gratuito</p>
                             <ul>
                                 <li>Salvar lojas favoritas</li>
                                 <li>Avaliar lojas</li>
                                 <li>Receber promoções</li>
-                                <li>Comentários</li>
                             </ul>
                             <button class="btn btn-secondary">Cadastrar grátis</button>
                         </div>
@@ -1597,24 +1506,23 @@
                         <div class="cadastro-card" onclick="abrirModal('cadastroLojaModal')">
                             <i class="fas fa-store"></i>
                             <h3>Lojista</h3>
-                            <p>Planos a partir de R$49/mês</p>
+                            <p>Planos a partir de R$49</p>
                             <ul>
                                 <li>Anunciar produtos</li>
                                 <li>Gerenciar loja</li>
                                 <li>Estatísticas</li>
-                                <li>Destaque na busca</li>
                             </ul>
                             <button class="btn btn-primary">Ver planos</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- ==================== SEÇÃO MAPA ==================== -->
-                <div id="secaoMapa" class="secao hidden">
-                    <h1 data-aos="fade-up">Mapa de Piracicaba</h1>
-                    <p data-aos="fade-up" data-aos-delay="100">Encontre lojas próximas a você</p>
+                <!-- SEÇÃO MAPA -->
+                <div id="secaoMapa" class="secao">
+                    <h1 style="font-size: 24px; margin-bottom: 10px;">Mapa de Piracicaba</h1>
+                    <p style="color: var(--text-secondary); margin-bottom: 20px;">Encontre lojas próximas</p>
 
-                    <div class="mapa-controles" data-aos="fade-up" data-aos-delay="200">
+                    <div class="mapa-controles">
                         <button class="btn btn-secondary" onclick="localizarUsuario()">
                             <i class="fas fa-location-dot"></i> Minha localização
                         </button>
@@ -1622,62 +1530,55 @@
                         <button class="btn btn-primary" onclick="buscarEndereco()">Buscar</button>
                     </div>
 
-                    <div class="map-container" data-aos="fade-up" data-aos-delay="300">
+                    <div class="map-container">
                         <div id="map"></div>
                     </div>
                 </div>
 
-                <!-- ==================== SEÇÃO SOBRE ==================== -->
-                <div id="secaoSobre" class="secao hidden">
-                    <h1 data-aos="fade-up">Sobre o RIMSO Piracicaba</h1>
+                <!-- SEÇÃO SOBRE -->
+                <div id="secaoSobre" class="secao">
+                    <h1 style="font-size: 24px; margin-bottom: 20px;">Sobre o RIMSO</h1>
                     
-                    <div class="sobre-content" data-aos="fade-up" data-aos-delay="100">
+                    <div class="sobre-content">
                         <div class="sobre-card">
                             <i class="fas fa-bullseye"></i>
-                            <h3>Nosso Objetivo</h3>
-                            <p>Conectar moradores de Piracicaba às lojas locais, fortalecendo o comércio de bairro.</p>
+                            <h3>Missão</h3>
+                            <p>Conectar moradores de Piracicaba às lojas locais</p>
                         </div>
                         <div class="sobre-card">
                             <i class="fas fa-hand-holding-heart"></i>
-                            <h3>Para Clientes</h3>
-                            <p>Cadastro gratuito para encontrar lojas, favoritar e avaliar perto de você.</p>
+                            <h3>Clientes</h3>
+                            <p>Cadastro gratuito para encontrar lojas no seu bairro</p>
                         </div>
                         <div class="sobre-card">
                             <i class="fas fa-chart-line"></i>
-                            <h3>Para Lojistas</h3>
-                            <p>Aumente sua visibilidade com planos acessíveis e alcance clientes no seu bairro.</p>
+                            <h3>Lojistas</h3>
+                            <p>Planos acessíveis para aumentar sua visibilidade</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- ==================== SEÇÃO CONTATO ==================== -->
-                <div id="secaoContato" class="secao hidden">
-                    <div class="empty-state" data-aos="fade-up">
+                <!-- SEÇÃO CONTATO -->
+                <div id="secaoContato" class="secao">
+                    <div class="empty-state">
                         <i class="fas fa-envelope"></i>
                         <h2>Central de Contato</h2>
-                        <p>Em breve você poderá entrar em contato diretamente com nossa equipe.</p>
-                        <p style="margin-top: 20px;">📧 contato@rimso.com.br</p>
+                        <p>📧 contato@rimso.com.br</p>
                         <p>📱 (19) 3434-5678</p>
-                        <button class="btn btn-primary" style="margin-top: 20px;" onclick="mostrarToast('Mensagem enviada! Em breve retornamos.', 'success')">
-                            Enviar mensagem
-                        </button>
+                        <button class="btn btn-primary" style="margin-top: 15px;" onclick="mostrarToast('Mensagem enviada!')">Enviar mensagem</button>
                     </div>
                 </div>
 
-                <!-- ==================== SEÇÃO AJUDA ==================== -->
-                <div id="secaoAjuda" class="secao hidden">
-                    <div class="empty-state" data-aos="fade-up">
+                <!-- SEÇÃO AJUDA -->
+                <div id="secaoAjuda" class="secao">
+                    <div class="empty-state">
                         <i class="fas fa-question-circle"></i>
                         <h2>Central de Ajuda</h2>
-                        <p>Estamos construindo uma base de conhecimento para ajudar você.</p>
-                        <div style="text-align: left; max-width: 400px; margin: 30px auto;">
-                            <p><strong>📌 Perguntas frequentes:</strong></p>
-                            <ul style="list-style: none; margin-top: 15px;">
-                                <li style="margin: 10px 0;">• Como me cadastro como cliente?</li>
-                                <li style="margin: 10px 0;">• Como anunciar minha loja?</li>
-                                <li style="margin: 10px 0;">• Quais as formas de pagamento?</li>
-                                <li style="margin: 10px 0;">• Como entrar em contato com uma loja?</li>
-                            </ul>
+                        <p>Perguntas frequentes:</p>
+                        <div style="text-align: left; max-width: 400px; margin: 20px auto;">
+                            <p>• Como me cadastro?</p>
+                            <p>• Como anunciar minha loja?</p>
+                            <p>• Quais as formas de pagamento?</p>
                         </div>
                     </div>
                 </div>
@@ -1685,55 +1586,48 @@
         </div>
     </div>
 
-    <!-- ==================== MODAIS ==================== -->
+    <!-- MODAIS -->
 
-    <!-- Modal Login -->
+    <!-- Login Modal -->
     <div class="modal" id="loginModal">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-title">Entrar no RIMSO</div>
+                <div class="modal-title">Entrar</div>
                 <div class="modal-close" onclick="fecharModal('loginModal')">×</div>
             </div>
             <div class="modal-body">
-                <div class="modal-opcoes">
-                    <button class="btn btn-primary" style="width: 100%; margin-bottom: 10px;" onclick="loginGoogle()">
-                        <i class="fab fa-google"></i> Continuar com Google
-                    </button>
-                    <button class="btn btn-secondary" style="width: 100%;" onclick="loginEmail()">
-                        <i class="fas fa-envelope"></i> Continuar com Email
-                    </button>
-                </div>
-                <div style="text-align: center; margin: 20px 0; color: var(--text-secondary);">ou</div>
-                <p style="text-align: center;">
-                    Novo por aqui? <a href="#" style="color: var(--red);" onclick="fecharModal('loginModal'); abrirModal('cadastroPFModal')">Cadastre-se grátis</a>
+                <button class="btn btn-primary" style="width: 100%; margin-bottom: 10px;" onclick="loginGoogle()">
+                    <i class="fab fa-google"></i> Google
+                </button>
+                <button class="btn btn-secondary" style="width: 100%;" onclick="loginEmail()">
+                    <i class="fas fa-envelope"></i> Email
+                </button>
+                <p style="text-align: center; margin-top: 15px;">
+                    <a href="#" style="color: var(--red);" onclick="fecharModal('loginModal'); abrirModal('cadastroPFModal')">Cadastre-se</a>
                 </p>
             </div>
         </div>
     </div>
 
-    <!-- Modal Cadastro PF -->
+    <!-- Cadastro PF Modal -->
     <div class="modal" id="cadastroPFModal">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-title">Cadastro - Cliente</div>
+                <div class="modal-title">Cadastro Cliente</div>
                 <div class="modal-close" onclick="fecharModal('cadastroPFModal')">×</div>
             </div>
             <div class="modal-body">
                 <form onsubmit="salvarCadastroPF(event)">
                     <div class="form-group">
-                        <label>Nome completo</label>
+                        <label>Nome</label>
                         <input type="text" class="form-input" required>
                     </div>
                     <div class="form-group">
-                        <label>E-mail</label>
+                        <label>Email</label>
                         <input type="email" class="form-input" required>
                     </div>
                     <div class="form-group">
-                        <label>Telefone</label>
-                        <input type="tel" class="form-input" placeholder="(19) 99999-9999">
-                    </div>
-                    <div class="form-group">
-                        <label>Bairro onde mora</label>
+                        <label>Bairro</label>
                         <select class="form-select" id="bairroCliente" required>
                             <option value="">Selecione</option>
                         </select>
@@ -1742,17 +1636,17 @@
                         <label>Senha</label>
                         <input type="password" class="form-input" required>
                     </div>
-                    <button type="submit" class="btn btn-primary" style="width: 100%;">Cadastrar grátis</button>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Cadastrar</button>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- Modal Cadastro Loja -->
+    <!-- Cadastro Loja Modal -->
     <div class="modal" id="cadastroLojaModal">
-        <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-title">Cadastro - Lojista</div>
+                <div class="modal-title">Cadastro Lojista</div>
                 <div class="modal-close" onclick="fecharModal('cadastroLojaModal')">×</div>
             </div>
             <div class="modal-body">
@@ -1766,16 +1660,12 @@
                         <input type="text" class="form-input" required>
                     </div>
                     <div class="form-group">
-                        <label>E-mail</label>
+                        <label>Email</label>
                         <input type="email" class="form-input" required>
                     </div>
                     <div class="form-group">
-                        <label>Telefone / WhatsApp</label>
+                        <label>Telefone</label>
                         <input type="tel" class="form-input" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Endereço</label>
-                        <input type="text" class="form-input" placeholder="Rua, número" required>
                     </div>
                     <div class="form-group">
                         <label>Bairro</label>
@@ -1784,14 +1674,14 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Plano desejado</label>
+                        <label>Plano</label>
                         <select class="form-select" required>
-                            <option value="basico">Básico - R$49/mês</option>
-                            <option value="profissional">Profissional - R$89/mês</option>
-                            <option value="premium">Premium - R$149/mês</option>
+                            <option value="basico">Básico - R$49</option>
+                            <option value="profissional">Profissional - R$89</option>
+                            <option value="premium">Premium - R$149</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary" style="width: 100%;">Solicitar cadastro</button>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Solicitar</button>
                 </form>
             </div>
         </div>
@@ -1801,7 +1691,7 @@
     <div class="toast" id="toast"></div>
 
     <script>
-        // ==================== DADOS DE PIRACICABA ====================
+        // ==================== DADOS ====================
         const bairrosPiracicaba = [
             { nome: 'Centro', lojas: 0, destaque: true },
             { nome: 'Alto', lojas: 0, destaque: true },
@@ -1818,82 +1708,37 @@
             { nome: 'Campestre', lojas: 0 },
             { nome: 'Castelinho', lojas: 0 },
             { nome: 'Cecap', lojas: 0 },
-            { nome: 'Chácara Nazareth', lojas: 0 },
-            { nome: 'Cidade Jardim', lojas: 0 },
-            { nome: 'Clube de Campo', lojas: 0 },
             { nome: 'Jardim América', lojas: 0 },
-            { nome: 'Jardim Boa Esperança', lojas: 0 },
-            { nome: 'Jardim Brasília', lojas: 0 },
-            { nome: 'Jardim Califórnia', lojas: 0 },
-            { nome: 'Jardim Campestre', lojas: 0 },
-            { nome: 'Jardim Castelinho', lojas: 0 },
-            { nome: 'Jardim Caxambu', lojas: 0 },
-            { nome: 'Jardim Cecap', lojas: 0 },
-            { nome: 'Jardim Cidade Alta', lojas: 0 },
-            { nome: 'Jardim Cidade Jardim', lojas: 0 },
-            { nome: 'Jardim Clube de Campo', lojas: 0 },
             { nome: 'Jardim Europa', lojas: 0 },
             { nome: 'Jardim Ibirapuera', lojas: 0 },
-            { nome: 'Jardim Ipanema', lojas: 0 },
             { nome: 'Jardim Itapuã', lojas: 0 },
-            { nome: 'Jardim Jequitibá', lojas: 0 },
-            { nome: 'Jardim Lago Azul', lojas: 0 },
             { nome: 'Jardim Maracanã', lojas: 0 },
-            { nome: 'Jardim Maria Luiza', lojas: 0 },
             { nome: 'Jardim Monte Alegre', lojas: 0 },
             { nome: 'Jardim Morada do Sol', lojas: 0 },
-            { nome: 'Jardim Nossa Senhora de Fátima', lojas: 0 },
-            { nome: 'Jardim Nova América', lojas: 0 },
-            { nome: 'Jardim Nova Piracicaba', lojas: 0 },
-            { nome: 'Jardim Oriente', lojas: 0 },
             { nome: 'Jardim Paulista', lojas: 0 },
             { nome: 'Jardim Planalto', lojas: 0 },
             { nome: 'Jardim Primavera', lojas: 0 },
-            { nome: 'Jardim Residencial', lojas: 0 },
             { nome: 'Jardim São Francisco', lojas: 0 },
             { nome: 'Jardim São Jorge', lojas: 0 },
-            { nome: 'Jardim São José', lojas: 0 },
             { nome: 'Jardim São Judas', lojas: 0 },
-            { nome: 'Jardim São Luiz', lojas: 0 },
             { nome: 'Jardim São Paulo', lojas: 0 },
-            { nome: 'Jardim São Pedro', lojas: 0 },
-            { nome: 'Jardim São Sebastião', lojas: 0 },
             { nome: 'Jardim Taquaral', lojas: 0 },
-            { nome: 'Jardim Vila Real', lojas: 0 },
             { nome: 'Nova Piracicaba', lojas: 0 },
             { nome: 'Parque Autódromo', lojas: 0 },
-            { nome: 'Parque da Rua do Porto', lojas: 0 },
             { nome: 'Parque das Nações', lojas: 0 },
             { nome: 'Parque dos Eucaliptos', lojas: 0 },
             { nome: 'Parque dos Ipês', lojas: 0 },
-            { nome: 'Parque dos Jequitibás', lojas: 0 },
-            { nome: 'Parque dos Lírios', lojas: 0 },
-            { nome: 'Parque dos Pinheiros', lojas: 0 },
-            { nome: 'Parque dos Sabiás', lojas: 0 },
             { nome: 'Parque Industrial', lojas: 0 },
-            { nome: 'Parque Residencial', lojas: 0 },
-            { nome: 'Parque São Jorge', lojas: 0 },
-            { nome: 'Parque São Judas', lojas: 0 },
-            { nome: 'Pauliceia', lojas: 0 },
-            { nome: 'Piracicamirim', lojas: 0 },
-            { nome: 'Pq. Residencial', lojas: 0 },
             { nome: 'Santa Rosa', lojas: 0 },
-            { nome: 'Santa Terezinha', lojas: 0 },
             { nome: 'São Dimas', lojas: 0 },
-            { nome: 'São Jorge', lojas: 0 },
-            { nome: 'São Judas', lojas: 0 },
-            { nome: 'São Luiz', lojas: 0 },
             { nome: 'Taquaral', lojas: 0 },
-            { nome: 'Vila Areão', lojas: 0 },
-            { nome: 'Vila Independência', lojas: 0 },
             { nome: 'Vila Industrial', lojas: 0 },
             { nome: 'Vila Monteiro', lojas: 0 },
             { nome: 'Vila Nova', lojas: 0 },
-            { nome: 'Vila Rezende', lojas: 0 },
             { nome: 'Vila Sônia', lojas: 0 }
         ].sort((a, b) => a.nome.localeCompare(b.nome));
 
-        // ==================== ESTADO DA APLICAÇÃO ====================
+        // ==================== ESTADO ====================
         let estado = {
             usuario: null,
             bairroAtual: null,
@@ -1908,6 +1753,7 @@
             carregarBairrosDestaque();
             carregarSelectsBairros();
             atualizarStats();
+            configurarMenu();
             verificarTemaSalvo();
             AOS.init({ duration: 1000, once: true });
         };
@@ -1928,7 +1774,7 @@
             const container = document.getElementById('bairrosSidebarList');
             if (!container) return;
             
-            container.innerHTML = bairrosPiracicaba.slice(0, 15).map(bairro => `
+            container.innerHTML = bairrosPiracicaba.slice(0, 12).map(bairro => `
                 <div class="bairro-sidebar-item" onclick="selecionarBairro('${bairro.nome}')">
                     <span>${bairro.nome}</span>
                     <span class="badge">${bairro.lojas}</span>
@@ -1940,12 +1786,12 @@
             const container = document.getElementById('bairrosDestaque');
             if (!container) return;
             
-            const destaques = bairrosPiracicaba.filter(b => b.destaque).slice(0, 8);
+            const destaques = bairrosPiracicaba.filter(b => b.destaque).slice(0, 6);
             container.innerHTML = destaques.map(bairro => `
                 <div class="bairro-destaque-card" onclick="selecionarBairro('${bairro.nome}')">
                     <h3>${bairro.nome}</h3>
                     <p>${bairro.lojas} lojas</p>
-                    <span class="badge">em destaque</span>
+                    <span class="badge">destaque</span>
                 </div>
             `).join('');
         }
@@ -1969,11 +1815,29 @@
             document.getElementById('statsAvaliacoes').textContent = '0';
         }
 
-        // ==================== NAVEGAÇÃO ====================
-        function mudarSecao(secao, element) {
+        // ==================== MENU ====================
+        function configurarMenu() {
+            // Menu items
+            document.querySelectorAll('.menu-item[data-secao]').forEach(item => {
+                item.addEventListener('click', function() {
+                    const secao = this.dataset.secao;
+                    mudarSecao(secao);
+                });
+            });
+
+            // Info cards
+            document.querySelectorAll('.info-card[data-secao]').forEach(card => {
+                card.addEventListener('click', function() {
+                    const secao = this.dataset.secao;
+                    mudarSecao(secao);
+                });
+            });
+        }
+
+        function mudarSecao(secao) {
             // Atualizar menu
             document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
-            element.classList.add('active');
+            document.querySelector(`.menu-item[data-secao="${secao}"]`).classList.add('active');
 
             // Esconder todas as seções
             document.querySelectorAll('.secao').forEach(s => s.classList.remove('ativa'));
@@ -1997,8 +1861,7 @@
                 'ajuda': 'ajuda'
             };
             
-            document.getElementById('pageTitle').innerHTML = 
-                `RIMSO Piracicaba <span>${titulos[secao]}</span>`;
+            document.getElementById('pageSubtitle').textContent = titulos[secao] || secao;
 
             window.scrollTo(0, 0);
         }
@@ -2016,11 +1879,8 @@
                 }
             });
 
-            // Ir para seção de lojas
-            const menuLojas = document.querySelector('[onclick*="lojas"]');
-            mudarSecao('lojas', menuLojas);
-            
-            mostrarToast(`Buscando lojas em ${bairro}...`, 'success');
+            mudarSecao('lojas');
+            mostrarToast(`Buscando lojas em ${bairro}...`);
         }
 
         // ==================== BUSCA ====================
@@ -2032,18 +1892,18 @@
                 return;
             }
 
-            const resultadosBairros = bairrosPiracicaba.filter(b => 
+            const resultados = bairrosPiracicaba.filter(b => 
                 b.nome.toLowerCase().includes(termo.toLowerCase())
             ).slice(0, 5);
 
-            if (resultadosBairros.length === 0) {
+            if (resultados.length === 0) {
                 resultsDiv.classList.remove('show');
                 return;
             }
 
-            resultsDiv.innerHTML = resultadosBairros.map(b => `
+            resultsDiv.innerHTML = resultados.map(b => `
                 <div class="search-result-item" onclick="selecionarBairro('${b.nome}')">
-                    <i class="fas fa-map-marker-alt" style="color: var(--gold);"></i>
+                    <i class="fas fa-map-marker-alt"></i>
                     <strong>${b.nome}</strong><br>
                     <small>${b.lojas} lojas</small>
                 </div>
@@ -2066,58 +1926,44 @@
             `).join('');
         }
 
-        // ==================== LOJAS ====================
-        function filtrarLojas() {
-            mostrarToast('Filtros aplicados', 'success');
+        // ==================== MODAIS ====================
+        function abrirModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
         }
 
-        function ordenarLojas(ordem) {
-            mostrarToast(`Ordenando por ${ordem}`, 'success');
+        function fecharModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
         }
 
-        // ==================== PLANOS ====================
-        function contratarPlano(plano) {
-            const precos = {
-                'basico': 'R$49,00',
-                'profissional': 'R$89,00',
-                'premium': 'R$149,00'
-            };
-            
-            abrirModal('cadastroLojaModal');
-            mostrarToast(`Plano ${plano} selecionado: ${precos[plano]}/mês`, 'success');
-        }
-
-        // ==================== LOGIN E CADASTRO ====================
+        // ==================== LOGIN/CADASTRO ====================
         function loginGoogle() {
-            mostrarToast('Login com Google em desenvolvimento', 'success');
+            mostrarToast('Login com Google');
             setTimeout(() => {
-                document.getElementById('userDetailsSidebar').innerHTML = '<h4>Bem-vindo(a)</h4><p>Usuário Cliente</p>';
-                document.getElementById('userAvatarSidebar').innerHTML = '<i class="fas fa-user"></i>';
+                document.getElementById('userDetailsSidebar').innerHTML = '<h4>Bem-vindo(a)</h4><p>Usuário</p>';
                 fecharModal('loginModal');
             }, 1000);
         }
 
         function loginEmail() {
-            mostrarToast('Login com Email em desenvolvimento', 'success');
+            mostrarToast('Login com Email');
         }
 
         function salvarCadastroPF(event) {
             event.preventDefault();
-            mostrarToast('Cadastro realizado com sucesso! Bem-vindo(a)!', 'success');
+            mostrarToast('Cadastro realizado!');
             fecharModal('cadastroPFModal');
-            
             document.getElementById('userDetailsSidebar').innerHTML = '<h4>Bem-vindo(a)</h4><p>Cliente</p>';
         }
 
         function salvarCadastroLoja(event) {
             event.preventDefault();
-            mostrarToast('Solicitação enviada! Entraremos em contato em até 24h.', 'success');
+            mostrarToast('Solicitação enviada!');
             fecharModal('cadastroLojaModal');
         }
 
         // ==================== NOTIFICAÇÕES ====================
         function abrirNotificacoes() {
-            mostrarToast('Você tem 3 notificações novas', 'success');
+            mostrarToast('3 notificações novas');
             estado.notificacoes = 0;
             document.getElementById('notificationBadge').textContent = '0';
         }
@@ -2126,23 +1972,15 @@
         function localizarUsuario() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        mostrarToast('Localização encontrada!', 'success');
-                    },
-                    () => {
-                        mostrarToast('Não foi possível encontrar sua localização', 'error');
-                    }
+                    () => mostrarToast('Localização encontrada!'),
+                    () => mostrarToast('Erro ao localizar', 'error')
                 );
-            } else {
-                mostrarToast('Seu navegador não suporta geolocalização', 'error');
             }
         }
 
         function buscarEndereco() {
             const endereco = document.getElementById('enderecoBusca').value;
-            if (endereco) {
-                mostrarToast(`Buscando: ${endereco}`, 'success');
-            }
+            if (endereco) mostrarToast(`Buscando: ${endereco}`);
         }
 
         // ==================== TEMA ====================
@@ -2169,15 +2007,6 @@
             }
         }
 
-        // ==================== MODAIS ====================
-        function abrirModal(modalId) {
-            document.getElementById(modalId).classList.add('active');
-        }
-
-        function fecharModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-        }
-
         // ==================== TOAST ====================
         function mostrarToast(mensagem, tipo = 'success') {
             const toast = document.getElementById('toast');
@@ -2186,10 +2015,10 @@
             
             setTimeout(() => {
                 toast.classList.remove('show');
-            }, 3000);
+            }, 2000);
         }
 
-        // Fechar resultados da busca ao clicar fora
+        // Fechar resultados da busca
         document.addEventListener('click', function(e) {
             if (!e.target.closest('.search-box') && !e.target.closest('.search-results')) {
                 document.getElementById('searchResults')?.classList.remove('show');
