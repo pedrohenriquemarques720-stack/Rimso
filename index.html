@@ -51,7 +51,7 @@
 
         /* Container Principal */
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
             width: 100%;
             margin: 0 auto;
         }
@@ -217,7 +217,7 @@
             background: var(--bg-primary);
             border-radius: 30px;
             padding: 30px;
-            max-width: 450px;
+            max-width: 500px;
             width: 90%;
             border: 3px solid var(--gold);
             max-height: 90vh;
@@ -571,6 +571,25 @@
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 10px;
             margin-top: 20px;
+            max-height: 600px;
+            overflow-y: auto;
+            padding: 10px;
+            border: 2px solid var(--border);
+            border-radius: 20px;
+        }
+
+        .bairros-grid::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .bairros-grid::-webkit-scrollbar-track {
+            background: var(--light);
+            border-radius: 10px;
+        }
+
+        .bairros-grid::-webkit-scrollbar-thumb {
+            background: var(--red);
+            border-radius: 10px;
         }
 
         .bairro-card {
@@ -581,10 +600,14 @@
             cursor: pointer;
             display: flex;
             justify-content: space-between;
+            transition: var(--transition);
         }
 
         .bairro-card:hover {
             border-color: var(--red);
+            transform: translateX(5px);
+            background: var(--gradient);
+            color: var(--black);
         }
 
         .lojas-grid {
@@ -627,7 +650,7 @@
         <div id="cadastroScreen" class="cadastro-screen">
             <div class="cadastro-logo">
                 <h1>RIM<span>SO</span></h1>
-                <p>Piracicaba - SP</p>
+                <p>Piracicaba e Região</p>
             </div>
 
             <div class="cadastro-cards">
@@ -774,6 +797,11 @@
                                     <option value="roupas">Roupas</option>
                                     <option value="calcados">Calçados</option>
                                     <option value="acessorios">Acessórios</option>
+                                    <option value="moda-feminina">Moda Feminina</option>
+                                    <option value="moda-masculina">Moda Masculina</option>
+                                    <option value="infantil">Infantil</option>
+                                    <option value="plus-size">Plus Size</option>
+                                    <option value="streetwear">Streetwear</option>
                                 </select>
                             </div>
                         </div>
@@ -791,7 +819,7 @@
                         </div>
                         <div class="form-group">
                             <label>Senha</label>
-                            <input type="password" class="form-input" id="lojaSenja" required>
+                            <input type="password" class="form-input" id="lojaSenha" required>
                         </div>
                         <button type="submit" class="btn btn-gold">Solicitar cadastro</button>
                     </form>
@@ -826,8 +854,8 @@
                     <div class="stat-label">Lojas Cadastradas</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value" id="totalVendas">0</div>
-                    <div class="stat-label">Vendas</div>
+                    <div class="stat-value" id="totalBairros">0</div>
+                    <div class="stat-label">Bairros</div>
                 </div>
             </div>
 
@@ -885,8 +913,8 @@
                 </div>
                 <div class="content-area" id="clienteContent">
                     <div style="text-align: center; padding: 40px; background: var(--gradient); border-radius: 30px;">
-                        <h1 style="font-size: 28px;">Modo Cliente 👋</h1>
-                        <p>Você está visualizando como cliente</p>
+                        <h1 style="font-size: 28px;">Bem-vindo ao RIMSO! 👋</h1>
+                        <p>Explore as lojas nos bairros de Piracicaba e região</p>
                     </div>
                 </div>
             </div>
@@ -931,8 +959,8 @@
                 </div>
                 <div class="content-area" id="lojistaContent">
                     <div style="text-align: center; padding: 40px;">
-                        <h2>Modo Lojista</h2>
-                        <p>Você está visualizando como lojista</p>
+                        <h2>Bem-vindo ao Painel do Lojista</h2>
+                        <p>Gerencie sua loja, vendas e promoções</p>
                     </div>
                 </div>
             </div>
@@ -943,6 +971,90 @@
     </div>
 
     <script>
+        // ==================== LISTA COMPLETA DE BAIRROS DE PIRACICABA E REGIÃO ====================
+        const bairrosPiracicaba = [
+            // Bairros centrais
+            'Centro', 'Alto', 'Cidade Alta', 'Cidade Jardim', 'Jardim Europa',
+            'Jardim Paulista', 'Jardim Planalto', 'Jardim Primavera', 'Jardim São Paulo',
+            
+            // Bairros tradicionais
+            'Pauliceia', 'Clube de Campo', 'Jaraguá', 'Vila Rezende', 'Santa Terezinha',
+            'Piracicamirim', 'Água Branca', 'Campestre', 'Cecap', 'Nova Piracicaba',
+            'Taquaral', 'São Dimas', 'Vila Industrial', 'Vila Monteiro', 'Vila Nova',
+            
+            // Jardins e loteamentos
+            'Jardim América', 'Jardim Boa Esperança', 'Jardim Brasília', 'Jardim Califórnia',
+            'Jardim Campestre', 'Jardim Castelinho', 'Jardim Caxambu', 'Jardim Cidade Alta',
+            'Jardim Cidade Jardim', 'Jardim Clube de Campo', 'Jardim Ibirapuera', 'Jardim Ipanema',
+            'Jardim Itapuã', 'Jardim Jequitibá', 'Jardim Lago Azul', 'Jardim Maracanã',
+            'Jardim Maria Luiza', 'Jardim Monte Alegre', 'Jardim Morada do Sol',
+            'Jardim Nossa Senhora de Fátima', 'Jardim Nova América', 'Jardim Nova Piracicaba',
+            'Jardim Oriente', 'Jardim São Francisco', 'Jardim São Jorge', 'Jardim São José',
+            'Jardim São Judas', 'Jardim São Luiz', 'Jardim São Pedro', 'Jardim São Sebastião',
+            'Jardim Taquaral', 'Jardim Vila Real',
+            
+            // Parques e loteamentos
+            'Parque Autódromo', 'Parque da Rua do Porto', 'Parque das Nações',
+            'Parque dos Eucaliptos', 'Parque dos Ipês', 'Parque dos Jequitibás',
+            'Parque dos Lírios', 'Parque dos Pinheiros', 'Parque dos Sabiás',
+            'Parque Industrial', 'Parque Residencial', 'Parque São Jorge', 'Parque São Judas',
+            
+            // Vilas e bairros tradicionais
+            'Vila Areão', 'Vila Independência', 'Vila Sônia', 'Chácara Nazareth',
+            'Castelinho', 'Bairro Alto', 'Santa Rosa', 'Nova América',
+            
+            // Região de Dois Córregos e adjacências
+            'Dois Córregos', 'Santa Olímpia', 'Santana', 'São José', 'São Roque',
+            'Córrego do Salto', 'Córrego Fundo', 'Córrego Grande', 'Córrego do Meio',
+            'Córrego do Ouro', 'Córrego Seco', 'Córrego do Engenho', 'Córrego da Lagoa',
+            
+            // Região de Saltinho e adjacências
+            'Saltinho', 'Rio das Pedras', 'Mombuca', 'Capivari', 'Rafard',
+            'São Pedro', 'Águas de São Pedro', 'Santa Bárbara d\'Oeste', 'Americana',
+            'Nova Odessa', 'Sumaré', 'Hortolândia', 'Monte Mor', 'Elias Fausto',
+            
+            // Distritos de Piracicaba
+            'Artemis', 'Ibitiruna', 'Tupi', 'Guamium', 'Anhumas',
+            'Tanquinho', 'Pau Queimado', 'Pinheiros', 'Serrote', 'Pereiras',
+            
+            // Novos loteamentos e condomínios
+            'Condomínio Residencial Alto Padrão', 'Loteamento Cidade Jardim',
+            'Loteamento Parque dos Ipês', 'Loteamento Santa Rosa', 'Loteamento São Judas',
+            'Residencial Água Branca', 'Residencial Campestre', 'Residencial Castelinho',
+            'Residencial Cidade Alta', 'Residencial Cidade Jardim', 'Residencial Clube de Campo',
+            'Residencial Europa', 'Residencial Ibirapuera', 'Residencial Itapuã',
+            'Residencial Maracanã', 'Residencial Monte Alegre', 'Residencial Morada do Sol',
+            'Residencial Nossa Senhora de Fátima', 'Residencial Nova América',
+            'Residencial Nova Piracicaba', 'Residencial Oriente', 'Residencial Pauliceia',
+            'Residencial Planalto', 'Residencial Primavera', 'Residencial Santa Terezinha',
+            'Residencial São Dimas', 'Residencial São Francisco', 'Residencial São Jorge',
+            'Residencial São Judas', 'Residencial São Luiz', 'Residencial São Paulo',
+            'Residencial Taquaral', 'Residencial Vila Rezende',
+            
+            // Região rural e chácaras
+            'Chácara da Barra', 'Chácara do Salto', 'Chácara dos Eucaliptos',
+            'Chácara dos Ipês', 'Chácara Recanto', 'Sítio do Meio', 'Sítio do Ouro',
+            'Sítio do Salto', 'Sítio Santa Maria', 'Sítio São José',
+            
+            // Bairros periféricos e expansão
+            'Bairro dos Prados', 'Bairro dos Lagos', 'Bairro das Nações',
+            'Bairro dos Estados', 'Bairro das Bandeiras', 'Bairro do Carmo',
+            'Bairro do Bosque', 'Bairro do Parque', 'Bairro do Lago',
+            'Bairro da Ponte', 'Bairro da Estação', 'Bairro da Rodoviária',
+            
+            // Região norte
+            'Norte', 'Jardim Norte', 'Parque Norte', 'Residencial Norte',
+            
+            // Região sul
+            'Sul', 'Jardim Sul', 'Parque Sul', 'Residencial Sul',
+            
+            // Região leste
+            'Leste', 'Jardim Leste', 'Parque Leste', 'Residencial Leste',
+            
+            // Região oeste
+            'Oeste', 'Jardim Oeste', 'Parque Oeste', 'Residencial Oeste'
+        ].sort((a, b) => a.localeCompare(b));
+
         // ==================== BANCO DE DADOS SIMULADO ====================
         const usuarios = [
             {
@@ -956,18 +1068,6 @@
 
         const lojas = [];
         let usuarioLogado = null;
-
-        // Bairros de Piracicaba
-        const bairrosPiracicaba = [
-            'Centro', 'Alto', 'Pauliceia', 'Cidade Alta', 'Cidade Jardim',
-            'Clube de Campo', 'Jaraguá', 'Vila Rezende', 'Santa Terezinha',
-            'Piracicamirim', 'Água Branca', 'Campestre', 'Cecap', 'Nova Piracicaba',
-            'Taquaral', 'São Dimas', 'Jardim América', 'Jardim Europa',
-            'Jardim Ibirapuera', 'Jardim Itapuã', 'Jardim Maracanã',
-            'Jardim Monte Alegre', 'Jardim Paulista', 'Jardim Planalto',
-            'Jardim Primavera', 'Parque Autódromo', 'Parque das Nações',
-            'Parque Industrial', 'Vila Industrial', 'Vila Monteiro'
-        ].sort();
 
         // ==================== FUNÇÕES DE MODAL ====================
         function abrirModal(modalId) {
@@ -1005,7 +1105,7 @@
 
             document.getElementById('totalUsuarios').textContent = usuarios.length;
             document.getElementById('totalLojas').textContent = lojas.length;
-            document.getElementById('totalVendas').textContent = '0';
+            document.getElementById('totalBairros').textContent = bairrosPiracicaba.length;
         }
 
         // ==================== LOGIN ====================
@@ -1069,7 +1169,7 @@
             const nomeLoja = document.getElementById('lojaNome').value;
             const proprietario = document.getElementById('proprietarioNome').value;
             const email = document.getElementById('lojaEmail').value;
-            const senha = document.getElementById('lojaSenja').value;
+            const senha = document.getElementById('lojaSenha').value;
             const bairro = document.getElementById('lojaBairro').value;
             const plano = document.getElementById('lojaPlano').value;
             
@@ -1139,23 +1239,24 @@
             if (secao === 'inicio') {
                 content.innerHTML = `
                     <div style="text-align: center; padding: 40px; background: var(--gradient); border-radius: 30px;">
-                        <h1 style="font-size: 28px;">Olá, ${usuarioLogado?.nome}! 👋</h1>
-                        <p>Encontre as melhores lojas em Piracicaba</p>
+                        <h1 style="font-size: 28px;">Olá, ${usuarioLogado?.nome || 'Visitante'}! 👋</h1>
+                        <p>Encontre as melhores lojas em Piracicaba e região</p>
                     </div>
                     <div class="stats-grid" style="margin-top: 30px;">
                         <div class="stat-card"><div class="stat-value">${bairrosPiracicaba.length}</div><div class="stat-label">Bairros</div></div>
                         <div class="stat-card"><div class="stat-value">${lojas.length}</div><div class="stat-label">Lojas</div></div>
-                        <div class="stat-card"><div class="stat-value">4.8</div><div class="stat-label">Avaliação</div></div>
+                        <div class="stat-card"><div class="stat-value">4.8</div><div class="stat-label">Avaliação Média</div></div>
                     </div>
                 `;
             } else if (secao === 'bairros') {
                 content.innerHTML = `
-                    <h2 style="margin-bottom: 20px;">Bairros de Piracicaba</h2>
+                    <h2 style="margin-bottom: 20px;">Bairros de Piracicaba e Região</h2>
+                    <p style="margin-bottom: 15px; color: var(--text-secondary);">Total: ${bairrosPiracicaba.length} bairros</p>
                     <div class="bairros-grid">
                         ${bairrosPiracicaba.map(b => `
                             <div class="bairro-card" onclick="verLojasBairro('${b}')">
                                 <span>${b}</span>
-                                <span style="color: var(--gray);">${Math.floor(Math.random() * 5) + 1} lojas</span>
+                                <span style="color: var(--gray);">${Math.floor(Math.random() * 10) + 1} lojas</span>
                             </div>
                         `).join('')}
                     </div>
@@ -1169,10 +1270,12 @@
                                 <h3>${l.nome}</h3>
                                 <p>📍 ${l.bairro}</p>
                                 <p>⭐ 4.8 (120 avaliações)</p>
+                                <p><small>Plano: ${l.plano}</small></p>
                             </div>
                         `).join('') : `
                             <div style="text-align: center; padding: 40px; grid-column: 1/-1;">
                                 <p>Nenhuma loja cadastrada ainda</p>
+                                <p>Seja o primeiro a cadastrar sua loja!</p>
                             </div>
                         `}
                     </div>
@@ -1182,6 +1285,7 @@
                     <h2 style="margin-bottom: 20px;">Minhas Lojas Favoritas</h2>
                     <div style="text-align: center; padding: 40px;">
                         <p>Você ainda não tem lojas favoritas</p>
+                        <p>Explore as lojas e favorite as que mais gostar!</p>
                     </div>
                 `;
             }
@@ -1208,7 +1312,7 @@
                         </div>
                         <div class="stat-card">
                             <div class="stat-value">89</div>
-                            <div class="stat-label">Contatos</div>
+                            <div class="stat-label">Contatos WhatsApp</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-value">34</div>
@@ -1216,8 +1320,12 @@
                         </div>
                         <div class="stat-card">
                             <div class="stat-value">4.8</div>
-                            <div class="stat-label">Avaliação</div>
+                            <div class="stat-label">Avaliação Média</div>
                         </div>
+                    </div>
+                    <div style="margin-top: 30px;">
+                        <h3>Últimas atividades</h3>
+                        <p style="color: var(--text-secondary);">Nenhuma atividade recente</p>
                     </div>
                 `;
             } else if (secao === 'vendas') {
@@ -1232,6 +1340,22 @@
                         </tr>
                         <tr><td colspan="4" style="padding: 40px; text-align: center;">Nenhuma venda registrada</td></tr>
                     </table>
+                `;
+            } else if (secao === 'produtos') {
+                content.innerHTML = `
+                    <h2 style="margin-bottom: 20px;">Meus Produtos</h2>
+                    <button class="btn btn-primary" style="width: auto; margin-bottom: 20px;">
+                        <i class="fas fa-plus"></i> Adicionar Produto
+                    </button>
+                    <p style="color: var(--text-secondary);">Nenhum produto cadastrado</p>
+                `;
+            } else if (secao === 'promocoes') {
+                content.innerHTML = `
+                    <h2 style="margin-bottom: 20px;">Promoções</h2>
+                    <button class="btn btn-gold" style="width: auto; margin-bottom: 20px;">
+                        <i class="fas fa-bolt"></i> Criar Promoção Relâmpago
+                    </button>
+                    <p style="color: var(--text-secondary);">Nenhuma promoção ativa</p>
                 `;
             }
         }
@@ -1248,7 +1372,39 @@
         window.onload = function() {
             carregarBairros();
             atualizarTabelaAdmin();
+            console.log(`✅ ${bairrosPiracicaba.length} bairros carregados!`);
         };
     </script>
+
+    <!-- ==================== SCRIPTS DAS FUNÇÕES ==================== -->
+    <!-- Sistema de Avaliações -->
+    <script src="js/1-avaliacoes.js"></script>
+    
+    <!-- Feed de Novidades -->
+    <script src="js/2-feed.js"></script>
+    
+    <!-- Listas Personalizadas -->
+    <script src="js/3-listas-favoritos.js"></script>
+    
+    <!-- Rotas no Mapa -->
+    <script src="js/4-rotas-mapa.js"></script>
+    
+    <!-- Filtros Avançados -->
+    <script src="js/5-filtros-avancados.js"></script>
+    
+    <!-- Notificações -->
+    <script src="js/6-notificacoes.js"></script>
+    
+    <!-- Estatísticas do Lojista -->
+    <script src="js/7-estatisticas-lojista.js"></script>
+    
+    <!-- Promoções Relâmpago -->
+    <script src="js/8-promocoes.js"></script>
+    
+    <!-- Compartilhamento -->
+    <script src="js/9-compartilhar.js"></script>
+    
+    <!-- Admin Avançado -->
+    <script src="js/10-admin-avancado.js"></script>
 </body>
 </html>
