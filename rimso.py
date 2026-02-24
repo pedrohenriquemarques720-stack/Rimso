@@ -15,7 +15,7 @@ st.set_page_config(
 # Configuração via variável de ambiente ou hardcoded
 GITHUB_HTML_URL = os.getenv(
     "RIMSO_HTML_URL",
-    "https://raw.githubusercontent.com/SEU_USUARIO/SEU_REPOSITORIO/main/index.html"
+    "https://raw.githubusercontent.com/pedrohenriquemarques720-stack/Rimso/refs/heads/main/index.html"
 )
 
 # Cache com TTL configurável
