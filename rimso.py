@@ -1,6 +1,5 @@
 import streamlit as st
 import requests
-import os
 from streamlit.components.v1 import html
 import time
 
@@ -12,23 +11,14 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Configuração via variável de ambiente ou hardcoded
-GITHUB_HTML_URL = os.getenv(
-    "RIMSO_HTML_URL",
-    "https://raw.githubusercontent.com/pedrohenriquemarques720-stack/Rimso/refs/heads/main/index.html"
-)
+# URL CORRETA do seu index.html no GitHub
+GITHUB_HTML_URL = "https://raw.githubusercontent.com/pedrohenriquemarques720-stack/Rimso/refs/heads/main/index.html"
 
-# Cache com TTL configurável
-CACHE_TTL = int(os.getenv("RIMSO_CACHE_TTL", "3600"))  # 1 hora default
-
-@st.cache_data(ttl=CACHE_TTL)
+# Função para carregar o HTML do GitHub
+@st.cache_data(ttl=3600)  # Cache de 1 hora
 def carregar_html_github():
-    """Carrega o HTML do GitHub com cache"""
     try:
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (RIMSO-App)'
-        }
-        response = requests.get(GITHUB_HTML_URL, headers=headers, timeout=10)
+        response = requests.get(GITHUB_HTML_URL, timeout=10)
         if response.status_code == 200:
             return response.text
         else:
@@ -41,15 +31,22 @@ def carregar_html_github():
         st.error(f"Erro inesperado: {e}")
         return None
 
+# Função para carregar HTML local (fallback)
 def carregar_html_local():
-    """Fallback para arquivo local"""
     try:
         with open('index.html', 'r', encoding='utf-8') as f:
             return f.read()
     except FileNotFoundError:
         return None
 
-# Sidebar
+# Título oculto da página
+st.markdown("""
+<div style="display: none;">
+    <!-- Título oculto, pois o HTML já tem seu próprio cabeçalho -->
+</div>
+""", unsafe_allow_html=True)
+
+# Sidebar com informações e controle
 with st.sidebar:
     st.markdown("""
     <div style="text-align: center; padding: 20px 0;">
@@ -57,7 +54,7 @@ with st.sidebar:
         <div style="font-size: 24px; font-weight: 800;">
             RIM<span style="color: #DD0000;">SO</span>
         </div>
-        <div style="color: #6B7280; font-size: 12px;">
+        <div style="color: #6B7280; font-size: 12px; margin-top: 5px;">
             Painel de Controle
         </div>
     </div>
@@ -88,7 +85,9 @@ with st.sidebar:
                 st.rerun()
         with col2:
             if st.button("🌐 Abrir GitHub"):
-                js = f"window.open('{GITHUB_HTML_URL.replace('raw.githubusercontent', 'github').replace('/main/', '/blob/main/')}')"
+                # Converter URL raw para URL normal do GitHub
+                url_github = GITHUB_HTML_URL.replace('raw.githubusercontent.com', 'github.com').replace('/refs/heads/', '/blob/')
+                js = f"window.open('{url_github}')"
                 st.components.v1.html(f"<script>{js}</script>", height=0)
     
     else:
@@ -101,11 +100,16 @@ with st.sidebar:
     status = st.empty()
     status.info("⏳ Aguardando...")
     
-    # Métricas
+    # Informações adicionais
     st.divider()
-    st.caption("💡 Dica: Para atualizar o HTML, edite o arquivo no GitHub e clique em 'Atualizar'")
+    st.caption("""
+    **Instruções:**
+    1. O HTML é carregado do GitHub
+    2. Para atualizar, clique em 'Atualizar'
+    3. Cache dura 1 hora
+    """)
 
-# CSS para remover padding do Streamlit
+# CSS para remover padding do Streamlit e permitir que o HTML ocupe toda a tela
 st.markdown("""
 <style>
     /* Remove padding do container principal */
@@ -114,9 +118,10 @@ st.markdown("""
         max-width: 100% !important;
     }
     
-    /* Esconde elementos desnecessários */
+    /* Esconde elementos desnecessários do Streamlit */
     #MainMenu, footer, header {
         visibility: hidden;
+        display: none;
     }
     
     /* Ajusta a altura do iframe */
@@ -125,6 +130,12 @@ st.markdown("""
         border: none;
         margin: 0;
         padding: 0;
+        min-height: 100vh;
+    }
+    
+    /* Remove qualquer padding adicional */
+    .stApp {
+        padding: 0 !important;
     }
     
     /* Loading spinner personalizado */
@@ -147,6 +158,33 @@ st.markdown("""
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
     }
+    
+    /* Estilo para mensagem de erro */
+    .error-container {
+        text-align: center;
+        padding: 50px;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    .error-container h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #DD0000;
+    }
+    
+    .error-container p {
+        color: #6B7280;
+        margin-bottom: 10px;
+    }
+    
+    .error-container .code {
+        background: #F3F4F6;
+        padding: 10px;
+        border-radius: 8px;
+        font-family: monospace;
+        margin: 20px 0;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -157,13 +195,13 @@ with main_container:
     # Placeholder para o HTML
     html_placeholder = st.empty()
     
-    # Mostrar loading
+    # Mostrar loading inicial
     with html_placeholder.container():
         st.markdown("""
         <div class="custom-spinner">
             <div class="spinner"></div>
             <h3>Carregando RIMSO...</h3>
-            <p style="color: #6B7280;">Aguarde enquanto carregamos a interface</p>
+            <p style="color: #6B7280;">Aguarde enquanto carregamos a interface do GitHub</p>
         </div>
         """, unsafe_allow_html=True)
     
@@ -186,7 +224,7 @@ with main_container:
         )
         
         # Atualizar status
-        status.success(f"✅ RIMSO carregado ({len(html_content):,} bytes)")
+        status.success(f"✅ RIMSO carregado com sucesso ({len(html_content):,} bytes)")
         
         if modo_debug:
             with st.expander("🔍 Debug Info"):
@@ -194,23 +232,44 @@ with main_container:
                     "fonte": fonte,
                     "tamanho": len(html_content),
                     "cache": "ativo" if usar_cache else "inativo",
-                    "url": GITHUB_HTML_URL if fonte == "GitHub" else "local"
+                    "url": GITHUB_HTML_URL if fonte == "GitHub" else "local",
+                    "timestamp": time.strftime("%Y-%m-%d %H:%M:%S")
                 })
     else:
         status.error("❌ Falha ao carregar")
-        html_placeholder.error("""
-        # 😕 Não foi possível carregar o RIMSO
         
-        **Possíveis causas:**
-        1. Arquivo não encontrado no GitHub
-        2. URL incorreta
-        3. Problema de conexão
-        4. Arquivo local não existe
-        
-        **Verifique:**
-        - URL do GitHub: `{}`
-        - Se o arquivo `index.html` existe na pasta
-        - Sua conexão com internet
-        
-        Para corrigir, edite a variável `GITHUB_HTML_URL` no código.
-        """.format(GITHUB_HTML_URL))
+        # Mensagem de erro detalhada
+        html_placeholder.markdown(f"""
+        <div class="error-container">
+            <h1>😕 Não foi possível carregar o RIMSO</h1>
+            
+            <p><strong>Possíveis causas:</strong></p>
+            <p>• Arquivo não encontrado no GitHub</p>
+            <p>• URL incorreta</p>
+            <p>• Problema de conexão</p>
+            <p>• Arquivo local não existe</p>
+            
+            <p><strong>Verifique:</strong></p>
+            <div class="code">
+                URL do GitHub: {GITHUB_HTML_URL}
+            </div>
+            <p>• Se o arquivo <code>index.html</code> existe no repositório</p>
+            <p>• Sua conexão com internet</p>
+            
+            <p style="margin-top: 30px;">
+                <strong>URL Raw Correta:</strong><br>
+                <code>https://raw.githubusercontent.com/pedrohenriquemarques720-stack/Rimso/refs/heads/main/index.html</code>
+            </p>
+            
+            <p style="margin-top: 30px; color: #DD0000;">
+                ⚠️ Erro 404: Arquivo não encontrado no GitHub
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+# Rodapé (opcional)
+st.markdown("""
+<div style="display: none;">
+    <!-- Rodapé oculto, o HTML já tem seu próprio -->
+</div>
+""", unsafe_allow_html=True)
