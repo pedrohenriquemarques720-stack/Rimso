@@ -1376,7 +1376,7 @@
         };
     </script>
 
-    <!-- ==================== SCRIPTS DAS FUNÇÕES ==================== -->
+       <!-- ==================== SCRIPTS DAS FUNÇÕES ==================== -->
     <!-- Sistema de Avaliações -->
     <script src="js/1-avaliacoes.js"></script>
     
@@ -1406,5 +1406,60 @@
     
     <!-- Admin Avançado -->
     <script src="js/10-admin-avancado.js"></script>
+
+    <!-- ==================== INICIALIZAR FUNÇÕES ==================== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                // Sistema de Avaliações
+                if (typeof criarModalAvaliacao === 'function') {
+                    criarModalAvaliacao();
+                    console.log('✅ Avaliações inicializado');
+                }
+                
+                // Feed de Novidades
+                if (typeof criarFeedInicial === 'function') {
+                    criarFeedInicial();
+                    console.log('✅ Feed inicializado');
+                }
+                
+                // Listas Personalizadas
+                if (typeof criarModalListas === 'function') {
+                    criarModalListas();
+                    console.log('✅ Listas inicializado');
+                }
+                
+                // Filtros Avançados
+                if (typeof criarBarraFiltros === 'function') {
+                    // Verificar se estamos na seção de lojas
+                    const lojasContainer = document.getElementById('lojasContainer');
+                    if (lojasContainer) {
+                        criarBarraFiltros();
+                        console.log('✅ Filtros inicializado');
+                    }
+                }
+                
+                // Notificações
+                if (typeof criarPainelNotificacoes === 'function') {
+                    criarPainelNotificacoes();
+                    console.log('✅ Notificações inicializado');
+                }
+                
+                // Promoções
+                if (typeof criarModalPromocao === 'function') {
+                    criarModalPromocao();
+                    console.log('✅ Promoções inicializado');
+                }
+                
+                // Botão de Compartilhar
+                if (typeof criarBotaoCompartilhar === 'function') {
+                    criarBotaoCompartilhar();
+                    console.log('✅ Compartilhar inicializado');
+                }
+                
+                console.log('🚀 Todas as funções inicializadas!');
+            }, 500);
+        });
+    </script>
 </body>
 </html>
