@@ -1281,6 +1281,94 @@
             display: none !important;
         }
 
+        /* ==================== ÁREA DE ROLAGEM INTERNA (ANUNCIE SUA LOJA) ==================== */
+        .scrollable-anuncio-area {
+            max-height: 350px;
+            overflow-y: auto;
+            padding-right: 10px;
+            margin-bottom: 20px;
+            scroll-behavior: smooth;
+            border-radius: 16px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent) var(--border);
+        }
+
+        .scrollable-anuncio-area::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .scrollable-anuncio-area::-webkit-scrollbar-track {
+            background: var(--border);
+            border-radius: 20px;
+        }
+
+        .scrollable-anuncio-area::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 20px;
+            border: 2px solid var(--border);
+        }
+
+        .scrollable-anuncio-area::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+
+        .planos-mini-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .plano-mini-card {
+            text-align: center;
+            padding: 15px 10px;
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            background: white;
+        }
+
+        .plano-mini-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .plano-mini-card.popular {
+            border: 3px solid var(--accent);
+            background: var(--light);
+            position: relative;
+        }
+
+        .plano-mini-card h3 {
+            color: var(--primary);
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .plano-mini-card .preco {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .plano-mini-card .periodo {
+            font-size: 10px;
+            color: var(--gray);
+        }
+
+        .plano-mini-card .badge-mini {
+            position: absolute;
+            top: -8px;
+            right: 0;
+            background: var(--accent);
+            color: white;
+            font-size: 8px;
+            padding: 2px 6px;
+            border-radius: 60px;
+            font-weight: 700;
+        }
+
         /* ==================== RESPONSIVIDADE ==================== */
         @media (max-width: 768px) {
             .mobile-menu-toggle {
@@ -1403,6 +1491,10 @@
             .form-row {
                 grid-template-columns: 1fr;
             }
+            
+            .planos-mini-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1460,7 +1552,7 @@
                 <a href="#" onclick="abrirModal('modalCadastro')"><i class="fas fa-user-plus"></i> Cadastrar</a>
             </div>
             <div class="top-bar-links hidden" id="userInfo">
-                <span class="user-greeting" id="userGreeting">Olá, <span id="userName"></span></span>
+                <span class="user-greeting">Olá, <span id="userName"></span></span>
                 <button class="btn-logout" onclick="fazerLogout()">Sair</button>
             </div>
         </div>
@@ -1708,50 +1800,64 @@
         </div>
     </div>
 
-    <!-- MODAL PLANOS -->
+    <!-- MODAL PLANOS COM ROLAGEM INTERNA -->
     <div class="modal" id="modalPlanos">
-        <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-content">
             <div class="modal-header">
                 <h2>Anuncie sua loja</h2>
                 <span class="modal-close" onclick="fecharModal('modalPlanos')">&times;</span>
             </div>
             <div class="modal-body">
-                <p style="margin-bottom: 20px; color: var(--gray);">Escolha o plano ideal para divulgar seu negócio:</p>
-                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px;">
-                    <div style="text-align: center; padding: 15px; border: 2px solid var(--border); border-radius: 16px; cursor: pointer;" onclick="selecionarPlano('basico')" id="planoBasico">
-                        <h3 style="color: var(--primary);">Básico</h3>
-                        <p style="font-size: 20px; font-weight: 700;">R$49</p>
-                        <p style="font-size: 12px; color: var(--gray);">/mês</p>
+                <div class="scrollable-anuncio-area">
+                    <p style="margin-bottom: 20px; color: var(--gray); text-align: center; font-weight: 500;">
+                        Escolha o plano ideal para divulgar seu negócio:
+                    </p>
+                    
+                    <!-- Cards de planos em miniatura -->
+                    <div class="planos-mini-grid">
+                        <div class="plano-mini-card" onclick="selecionarPlano('basico')" id="planoBasico">
+                            <h3>Básico</h3>
+                            <div class="preco">R$49</div>
+                            <div class="periodo">/mês</div>
+                        </div>
+                        <div class="plano-mini-card popular" onclick="selecionarPlano('profissional')" id="planoProfissional">
+                            <span class="badge-mini">MAIS VENDIDO</span>
+                            <h3>Profissional</h3>
+                            <div class="preco">R$89</div>
+                            <div class="periodo">/mês</div>
+                        </div>
+                        <div class="plano-mini-card" onclick="selecionarPlano('premium')" id="planoPremium">
+                            <h3>Premium</h3>
+                            <div class="preco">R$149</div>
+                            <div class="periodo">/mês</div>
+                        </div>
                     </div>
-                    <div style="text-align: center; padding: 15px; border: 3px solid var(--accent); border-radius: 16px; cursor: pointer; background: var(--light);" onclick="selecionarPlano('profissional')" id="planoProfissional">
-                        <h3 style="color: var(--primary);">Profissional</h3>
-                        <p style="font-size: 20px; font-weight: 700;">R$89</p>
-                        <p style="font-size: 12px; color: var(--gray);">/mês</p>
-                        <span style="background: var(--accent); color: white; padding: 2px 8px; border-radius: 60px; font-size: 10px;">MAIS VENDIDO</span>
-                    </div>
-                    <div style="text-align: center; padding: 15px; border: 2px solid var(--border); border-radius: 16px; cursor: pointer;" onclick="selecionarPlano('premium')" id="planoPremium">
-                        <h3 style="color: var(--primary);">Premium</h3>
-                        <p style="font-size: 20px; font-weight: 700;">R$149</p>
-                        <p style="font-size: 12px; color: var(--gray);">/mês</p>
-                    </div>
+
+                    <!-- Formulário de anúncio -->
+                    <form onsubmit="contratarPlanoFinal(event)">
+                        <div class="form-group">
+                            <label>Nome da loja</label>
+                            <input type="text" class="form-control" id="lojaNome" placeholder="Digite o nome da sua loja" required>
+                        </div>
+                        <div class="form-group">
+                            <label>WhatsApp</label>
+                            <input type="tel" class="form-control" id="lojaWhatsapp" placeholder="(19) 99999-9999" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Endereço</label>
+                            <input type="text" class="form-control" id="lojaEndereco" placeholder="Rua, número - Bairro" required>
+                        </div>
+                        <input type="hidden" id="planoSelecionado" value="profissional">
+                        
+                        <button type="submit" class="banner-btn" style="width: 100%; margin-top: 10px;">
+                            <i class="fas fa-check-circle"></i> Contratar plano e anunciar
+                        </button>
+                    </form>
+                    
+                    <p style="font-size: 11px; color: var(--gray); text-align: center; margin-top: 15px;">
+                        Ao contratar, você concorda com nossos termos de uso e política de privacidade.
+                    </p>
                 </div>
-                
-                <form onsubmit="contratarPlanoFinal(event)">
-                    <div class="form-group">
-                        <label>Nome da loja</label>
-                        <input type="text" class="form-control" id="lojaNome" required>
-                    </div>
-                    <div class="form-group">
-                        <label>WhatsApp</label>
-                        <input type="tel" class="form-control" id="lojaWhatsapp" placeholder="(19) 99999-9999" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Endereço</label>
-                        <input type="text" class="form-control" id="lojaEndereco" placeholder="Rua, número - Bairro" required>
-                    </div>
-                    <input type="hidden" id="planoSelecionado" value="profissional">
-                    <button type="submit" class="banner-btn" style="width: 100%;">Contratar plano e anunciar</button>
-                </form>
             </div>
         </div>
     </div>
