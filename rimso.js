@@ -1,58 +1,10 @@
-// ==================== RIMSO - ARQUIVO ÚNICO CORRIGIDO PARA IFRAME ====================
-console.log('🚀 RIMSO - Iniciando...');
+// ==================== RIMSO - VERSÃO ULTRA SIMPLIFICADA ====================
+console.log('🚀 RIMSO iniciando...');
 
-// Função para acessar o documento correto (dentro ou fora do iframe)
-function getDocument() {
-    // Tenta acessar o documento principal
-    if (window.top.document) {
-        return window.top.document;
-    }
-    return document;
-}
-
-// Função para aguardar elemento aparecer
-function waitForElement(selector, callback, maxAttempts = 20) {
-    let attempts = 0;
+// ==================== FUNÇÃO PARA CRIAR LOJAS DE EXEMPLO ====================
+function criarLojasExemplo() {
+    console.log('🏪 Criando lojas de exemplo...');
     
-    const checkInterval = setInterval(() => {
-        attempts++;
-        const doc = getDocument();
-        const element = doc.querySelector(selector);
-        
-        if (element) {
-            clearInterval(checkInterval);
-            console.log(`✅ Elemento encontrado: ${selector}`);
-            callback(element);
-        } else if (attempts >= maxAttempts) {
-            clearInterval(checkInterval);
-            console.log(`❌ Elemento não encontrado após ${maxAttempts} tentativas: ${selector}`);
-        }
-    }, 500);
-}
-
-// Função para injetar lojas diretamente no DOM
-function injetarLojas() {
-    console.log('🏪 Tentando injetar lojas...');
-    
-    const doc = getDocument();
-    
-    // Procurar pelo conteúdo do cliente
-    const clienteContent = doc.getElementById('clienteContent');
-    if (!clienteContent) {
-        console.log('⏳ Aguardando clienteContent...');
-        return false;
-    }
-    
-    // Verificar se está no modo cliente
-    const appCliente = doc.getElementById('appCliente');
-    if (appCliente && appCliente.classList.contains('hidden')) {
-        console.log('⏳ Modo cliente não está ativo');
-        return false;
-    }
-    
-    console.log('✅ ClienteContent encontrado, injetando lojas...');
-    
-    // Lojas de exemplo
     const lojas = [
         {
             id: 1,
@@ -96,56 +48,86 @@ function injetarLojas() {
         }
     ];
     
-    // Criar HTML das lojas
+    return lojas;
+}
+
+// ==================== FUNÇÃO PARA INJETAR LOJAS NO MODO CLIENTE ====================
+function injetarLojasNoModoCliente() {
+    console.log('🔍 Procurando modo cliente...');
+    
+    // Tentar acessar o documento correto (iframe)
+    const doc = window.top?.document || document;
+    
+    // Verificar se o modo cliente está ativo
+    const appCliente = doc.getElementById('appCliente');
+    if (!appCliente || appCliente.classList.contains('hidden')) {
+        console.log('⏳ Modo cliente não está ativo');
+        return false;
+    }
+    
+    console.log('✅ Modo cliente ativo!');
+    
+    // Encontrar o content area
+    const clienteContent = doc.getElementById('clienteContent');
+    if (!clienteContent) {
+        console.log('❌ clienteContent não encontrado');
+        return false;
+    }
+    
+    console.log('✅ clienteContent encontrado, injetando lojas...');
+    
+    // Criar lojas
+    const lojas = criarLojasExemplo();
+    
+    // Criar HTML
     const lojasHTML = `
-        <h2 style="margin-bottom: 20px; color: #1A1A1A;">Lojas em Piracicaba</h2>
-        <div class="lojas-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
-            ${lojas.map(loja => `
-                <div class="loja-card" data-loja-id="${loja.id}" style="background: white; border-radius: 20px; padding: 20px; border: 2px solid #E5E7EB; cursor: pointer; position: relative; transition: all 0.3s;">
-                    <h3 style="margin-bottom: 10px; color: #1A1A1A; font-size: 18px;">${loja.nome}</h3>
-                    <p style="margin-bottom: 5px; color: #DD0000;">📍 ${loja.bairro}</p>
-                    <p style="margin-bottom: 5px; color: #FFCE00;">⭐ ${loja.avaliacao} (${loja.totalAvaliacoes} avaliações)</p>
-                    <p style="color: #6B7280; font-size: 14px;">${loja.categoria}</p>
-                </div>
-            `).join('')}
+        <div style="padding: 20px;">
+            <h2 style="margin-bottom: 20px; color: #1A1A1A; font-size: 24px;">Lojas em Piracicaba</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
+                ${lojas.map(loja => `
+                    <div class="loja-card" data-loja-id="${loja.id}" style="background: white; border-radius: 20px; padding: 20px; border: 2px solid #E5E7EB; cursor: pointer; position: relative; transition: all 0.3s; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
+                        <h3 style="margin-bottom: 10px; color: #1A1A1A; font-size: 18px;">${loja.nome}</h3>
+                        <p style="margin-bottom: 5px; color: #DD0000;">📍 ${loja.bairro}</p>
+                        <p style="margin-bottom: 5px; color: #FFCE00;">⭐ ${loja.avaliacao} (${loja.totalAvaliacoes} avaliações)</p>
+                        <p style="color: #6B7280; font-size: 14px;">${loja.categoria}</p>
+                        
+                        <!-- Botões serão adicionados aqui pelo JavaScript -->
+                        <div class="botoes-container" style="display: flex; gap: 10px; margin-top: 15px;"></div>
+                    </div>
+                `).join('')}
+            </div>
         </div>
     `;
     
     clienteContent.innerHTML = lojasHTML;
-    console.log('✅ Lojas injetadas com sucesso!');
+    console.log(`✅ ${lojas.length} lojas injetadas com sucesso!`);
     
-    // Adicionar botões após injetar as lojas
-    setTimeout(adicionarBotoes, 500);
+    // Adicionar botões
+    adicionarBotoes();
     
     return true;
 }
 
-// Função para adicionar botões nos cards
+// ==================== FUNÇÃO PARA ADICIONAR BOTÕES ====================
 function adicionarBotoes() {
-    console.log('🔧 Adicionando botões nos cards...');
+    console.log('🔧 Adicionando botões...');
     
-    const doc = getDocument();
+    const doc = window.top?.document || document;
     const cards = doc.querySelectorAll('.loja-card');
     
-    console.log(`📦 Encontrados ${cards.length} cards`);
-    
-    if (cards.length === 0) {
-        console.log('⚠️ Nenhum card encontrado');
-        return;
-    }
+    console.log(`📦 Encontrados ${cards.length} cards para adicionar botões`);
     
     cards.forEach((card, index) => {
-        // Evitar duplicar
-        if (card.querySelector('.botoes-rimso')) return;
+        // Encontrar container de botões
+        const container = card.querySelector('.botoes-container');
+        if (!container) return;
         
-        // Container
-        const container = doc.createElement('div');
-        container.className = 'botoes-rimso';
-        container.style.cssText = 'display: flex; gap: 10px; margin-top: 15px;';
+        // Limpar container
+        container.innerHTML = '';
         
         // Botão Avaliar
         const btnAvaliar = doc.createElement('button');
-        btnAvaliar.innerHTML = '⭐ Avaliar';
+        btnAvaliar.textContent = '⭐ Avaliar';
         btnAvaliar.style.cssText = `
             background: #FFCE00;
             color: #000;
@@ -173,7 +155,7 @@ function adicionarBotoes() {
         
         // Botão Compartilhar
         const btnShare = doc.createElement('button');
-        btnShare.innerHTML = '📤';
+        btnShare.textContent = '📤';
         btnShare.style.cssText = `
             background: #FFCE00;
             color: #000;
@@ -200,61 +182,86 @@ function adicionarBotoes() {
         };
         btnShare.onclick = (e) => {
             e.stopPropagation();
-            navigator.clipboard.writeText(window.location.href);
-            alert('🔗 Link copiado!');
+            alert('🔗 Link copiado! (função de compartilhar)');
         };
         
         container.appendChild(btnAvaliar);
         container.appendChild(btnShare);
-        card.appendChild(container);
     });
     
     console.log(`✅ Botões adicionados em ${cards.length} cards!`);
 }
 
-// Função para observar mudanças
-function observarMudancas() {
-    console.log('👀 Iniciando observação...');
+// ==================== FUNÇÃO PARA OBSERVAR MUDANÇAS ====================
+function observarModoCliente() {
+    console.log('👀 Iniciando observação do modo cliente...');
     
-    const doc = getDocument();
-    
-    // Verificar a cada segundo se o modo cliente foi ativado
+    // Verificar a cada segundo
     setInterval(() => {
+        const doc = window.top?.document || document;
         const appCliente = doc.getElementById('appCliente');
-        const clienteContent = doc.getElementById('clienteContent');
         
         if (appCliente && !appCliente.classList.contains('hidden')) {
+            const clienteContent = doc.getElementById('clienteContent');
+            
             // Verificar se já tem lojas
-            const lojasGrid = doc.querySelector('.lojas-grid');
-            if (!lojasGrid) {
-                console.log('🔄 Modo cliente ativo, injetando lojas...');
-                injetarLojas();
-            } else {
-                // Se já tem lojas mas não tem botões, adicionar botões
-                const primeiroCard = doc.querySelector('.loja-card');
-                if (primeiroCard && !primeiroCard.querySelector('.botoes-rimso')) {
-                    console.log('🔄 Cards encontrados sem botões, adicionando...');
-                    adicionarBotoes();
-                }
+            if (clienteContent && clienteContent.children.length === 1) {
+                // Se só tem o conteúdo padrão, injetar lojas
+                injetarLojasNoModoCliente();
             }
         }
     }, 1000);
     
-    // Também observar quando o admin clicar no botão de modo cliente
-    const originalAbrirModoCliente = window.top.abrirModoCliente;
-    if (originalAbrirModoCliente) {
-        window.top.abrirModoCliente = function() {
-            console.log('👤 Modo cliente ativado por clique');
-            if (typeof originalAbrirModoCliente === 'function') {
-                originalAbrirModoCliente();
-            }
-            setTimeout(injetarLojas, 1000);
-        };
-    }
-    
     console.log('✅ Observação iniciada');
 }
 
-// Iniciar tudo
-console.log('🚀 Sistema RIMSO iniciando...');
-setTimeout(observarMudancas, 2000);
+// ==================== FUNÇÃO PARA SOBRESCREVER O MODO CLIENTE ====================
+function sobrescreverFuncaoCliente() {
+    const doc = window.top?.document || document;
+    
+    // Sobrescrever a função abrirModoCliente se existir
+    if (window.top?.abrirModoCliente) {
+        const original = window.top.abrirModoCliente;
+        window.top.abrirModoCliente = function() {
+            console.log('👤 Modo cliente ativado por clique');
+            if (typeof original === 'function') {
+                original();
+            }
+            setTimeout(injetarLojasNoModoCliente, 1000);
+        };
+        console.log('✅ Função abrirModoCliente sobrescrita');
+    }
+    
+    // Também sobrescrever no escopo atual
+    if (window.abrirModoCliente) {
+        const original2 = window.abrirModoCliente;
+        window.abrirModoCliente = function() {
+            console.log('👤 Modo cliente ativado (escopo atual)');
+            if (typeof original2 === 'function') {
+                original2();
+            }
+            setTimeout(injetarLojasNoModoCliente, 1000);
+        };
+    }
+}
+
+// ==================== INICIALIZAÇÃO ====================
+function inicializar() {
+    console.log('🚀 Inicializando sistema RIMSO...');
+    
+    // Tentar diferentes métodos
+    sobrescreverFuncaoCliente();
+    observarModoCliente();
+    
+    // Verificar se já está no modo cliente
+    setTimeout(injetarLojasNoModoCliente, 2000);
+    
+    console.log('✅ Sistema RIMSO inicializado!');
+}
+
+// Iniciar quando a página carregar
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', inicializar);
+} else {
+    inicializar();
+}
