@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Chart.js para gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     
     <style>
         * {
@@ -643,6 +645,33 @@
         .back-btn:hover {
             background: var(--red-dark);
         }
+
+        /* Estilos para a Fase 2 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            border: 2px solid var(--border);
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--red);
+            margin-top: 10px;
+        }
+
+        .chart-container {
+            height: 300px;
+            margin: 20px 0;
+        }
     </style>
 </head>
 <body>
@@ -903,6 +932,9 @@
                 <div class="menu-item" onclick="mostrarSecaoCliente('favoritos')">
                     <i class="fas fa-heart"></i> Favoritos
                 </div>
+                <div class="menu-item" onclick="mostrarSecaoCliente('feed')">
+                    <i class="fas fa-rss"></i> Feed
+                </div>
                 <div class="menu-item" onclick="voltarAdmin()">
                     <i class="fas fa-arrow-left"></i> Voltar ao Admin
                 </div>
@@ -948,6 +980,9 @@
                 </div>
                 <div class="menu-item" onclick="mostrarSecaoLojista('promocoes')">
                     <i class="fas fa-bolt"></i> Promoções
+                </div>
+                <div class="menu-item" onclick="mostrarSecaoLojista('estatisticas')">
+                    <i class="fas fa-chart-line"></i> Estatísticas
                 </div>
                 <div class="menu-item" onclick="voltarAdmin()">
                     <i class="fas fa-arrow-left"></i> Voltar ao Admin
@@ -1314,12 +1349,6 @@
                         `).join('')}
                     </div>
                 `;
-                
-                // Disparar evento para que os scripts adicionem os botões
-                setTimeout(() => {
-                    const event = new CustomEvent('lojasCarregadas');
-                    document.dispatchEvent(event);
-                }, 500);
             } else if (secao === 'favoritos') {
                 content.innerHTML = `
                     <h2 style="margin-bottom: 20px;">Minhas Lojas Favoritas</h2>
@@ -1328,6 +1357,12 @@
                         <p>Explore as lojas e favorite as que mais gostar!</p>
                     </div>
                 `;
+            } else if (secao === 'feed') {
+                if (typeof window.mostrarFeed === 'function') {
+                    window.mostrarFeed();
+                } else {
+                    content.innerHTML = '<div style="text-align: center; padding: 40px;"><h3>Feed em desenvolvimento</h3></div>';
+                }
             }
         }
 
@@ -1365,30 +1400,34 @@
             const content = document.getElementById('lojistaContent');
 
             if (secao === 'dashboard') {
-                content.innerHTML = `
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-value">1.247</div>
-                            <div class="stat-label">Visualizações</div>
+                if (typeof window.mostrarDashboardLojista === 'function') {
+                    window.mostrarDashboardLojista();
+                } else {
+                    content.innerHTML = `
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-value">1.247</div>
+                                <div class="stat-label">Visualizações</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value">89</div>
+                                <div class="stat-label">Contatos WhatsApp</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value">34</div>
+                                <div class="stat-label">Vendas</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value">4.8</div>
+                                <div class="stat-label">Avaliação Média</div>
+                            </div>
                         </div>
-                        <div class="stat-card">
-                            <div class="stat-value">89</div>
-                            <div class="stat-label">Contatos WhatsApp</div>
+                        <div style="margin-top: 30px;">
+                            <h3>Últimas atividades</h3>
+                            <p style="color: var(--text-secondary);">Nenhuma atividade recente</p>
                         </div>
-                        <div class="stat-card">
-                            <div class="stat-value">34</div>
-                            <div class="stat-label">Vendas</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value">4.8</div>
-                            <div class="stat-label">Avaliação Média</div>
-                        </div>
-                    </div>
-                    <div style="margin-top: 30px;">
-                        <h3>Últimas atividades</h3>
-                        <p style="color: var(--text-secondary);">Nenhuma atividade recente</p>
-                    </div>
-                `;
+                    `;
+                }
             } else if (secao === 'vendas') {
                 content.innerHTML = `
                     <h2 style="margin-bottom: 20px;">Minhas Vendas</h2>
@@ -1418,6 +1457,13 @@
                     </button>
                     <p style="color: var(--text-secondary);">Nenhuma promoção ativa</p>
                 `;
+            } else if (secao === 'estatisticas') {
+                content.innerHTML = `
+                    <h2 style="margin-bottom: 20px;">Estatísticas</h2>
+                    <div class="chart-container">
+                        <canvas id="vendasChart"></canvas>
+                    </div>
+                `;
             }
         }
 
@@ -1440,170 +1486,7 @@
         };
     </script>
     
-        <script src="rimso.js"></script>
-
-    <!-- ==================== INICIALIZAR FUNÇÕES ==================== -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(() => {
-                // Sistema de Avaliações
-                if (typeof criarModalAvaliacao === 'function') {
-                    criarModalAvaliacao();
-                    console.log('✅ Avaliações inicializado');
-                }
-                
-                // Feed de Novidades
-                if (typeof criarFeedInicial === 'function') {
-                    criarFeedInicial();
-                    console.log('✅ Feed inicializado');
-                }
-                
-                // Favoritos / Listas Personalizadas
-                if (typeof criarModalListas === 'function') {
-                    criarModalListas();
-                    console.log('✅ Favoritos inicializado');
-                }
-                
-                // Filtros Avançados
-                if (typeof criarBarraFiltros === 'function') {
-                    const lojasContainer = document.getElementById('lojasContainer');
-                    if (lojasContainer) {
-                        criarBarraFiltros();
-                        console.log('✅ Filtros inicializado');
-                    }
-                }
-                
-                // Notificações
-                if (typeof criarPainelNotificacoes === 'function') {
-                    criarPainelNotificacoes();
-                    console.log('✅ Notificações inicializado');
-                }
-                
-                // Promoções
-                if (typeof criarModalPromocao === 'function') {
-                    criarModalPromocao();
-                    console.log('✅ Promoções inicializado');
-                }
-                
-                // Botão de Compartilhar
-                if (typeof criarBotaoCompartilhar === 'function') {
-                    criarBotaoCompartilhar();
-                    console.log('✅ Compartilhar inicializado');
-                }
-                
-                console.log('🚀 Todas as funções inicializadas!');
-            }, 500);
-        });
-    </script>
-
-<!-- ===== SCRIPT QUE CRIA OS BOTÕES DIRETAMENTE ===== -->
-<script>
-// Função para adicionar botões nos cards
-function adicionarBotoesAgora() {
-    console.log('🔧 Tentando adicionar botões...');
-    
-    // Procurar por cards de loja
-    const cards = document.querySelectorAll('.loja-card');
-    console.log(`📦 Encontrados ${cards.length} cards`);
-    
-    if (cards.length === 0) {
-        console.log('⚠️ Nenhum card encontrado');
-        return;
-    }
-    
-    cards.forEach((card, index) => {
-        // Não duplicar botões
-        if (card.querySelector('.btn-avaliar')) return;
-        
-        // Criar container para os botões
-        const container = document.createElement('div');
-        container.style.cssText = 'display: flex; gap: 10px; margin-top: 15px;';
-        
-        // Botão Avaliar
-        const btnAvaliar = document.createElement('button');
-        btnAvaliar.className = 'btn-avaliar';
-        btnAvaliar.innerHTML = '<i class="fas fa-star"></i> Avaliar';
-        btnAvaliar.style.cssText = `
-            background: #FFCE00;
-            color: #000000;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 25px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            flex: 1;
-            transition: all 0.3s;
-        `;
-        btnAvaliar.onmouseover = () => {
-            btnAvaliar.style.background = '#DD0000';
-            btnAvaliar.style.color = '#FFFFFF';
-        };
-        btnAvaliar.onmouseout = () => {
-            btnAvaliar.style.background = '#FFCE00';
-            btnAvaliar.style.color = '#000000';
-        };
-        btnAvaliar.onclick = (e) => {
-            e.stopPropagation();
-            alert(`⭐ Avaliar loja ${index + 1}`);
-        };
-        
-        // Botão Compartilhar
-        const btnCompartilhar = document.createElement('button');
-        btnCompartilhar.className = 'btn-compartilhar';
-        btnCompartilhar.innerHTML = '<i class="fas fa-share-alt"></i>';
-        btnCompartilhar.style.cssText = `
-            background: #FFCE00;
-            color: #000000;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            font-size: 16px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-        `;
-        btnCompartilhar.onmouseover = () => {
-            btnCompartilhar.style.background = '#DD0000';
-            btnCompartilhar.style.color = '#FFFFFF';
-            btnCompartilhar.style.transform = 'scale(1.1)';
-        };
-        btnCompartilhar.onmouseout = () => {
-            btnCompartilhar.style.background = '#FFCE00';
-            btnCompartilhar.style.color = '#000000';
-            btnCompartilhar.style.transform = 'scale(1)';
-        };
-        btnCompartilhar.onclick = (e) => {
-            e.stopPropagation();
-            navigator.clipboard.writeText(window.location.href);
-            alert('🔗 Link copiado!');
-        };
-        
-        container.appendChild(btnAvaliar);
-        container.appendChild(btnCompartilhar);
-        card.appendChild(container);
-    });
-    
-    console.log('✅ Botões adicionados com sucesso!');
-}
-
-// Executar várias vezes para garantir
-setTimeout(adicionarBotoesAgora, 1000);
-setTimeout(adicionarBotoesAgora, 2000);
-setTimeout(adicionarBotoesAgora, 3000);
-setTimeout(adicionarBotoesAgora, 5000);
-
-// Observar mudanças no DOM
-const observer = new MutationObserver(adicionarBotoesAgora);
-observer.observe(document.body, { childList: true, subtree: true });
-
-console.log('🚀 Sistema de botões ativo!');
-</script>
-
+    <!-- Script único com todas as funcionalidades Fase 1 e Fase 2 -->
+    <script src="rimso-completo.js"></script>
 </body>
 </html>
-
-
