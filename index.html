@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- AOS - Animate On Scroll -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <!-- Google Maps -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&libraries=places"></script>
     
@@ -525,22 +527,6 @@
             border: 2px solid var(--border);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
-            animation: fadeIn 0.5s ease;
-            animation-fill-mode: both;
-        }
-
-        .loja-card:nth-child(1) { animation-delay: 0.1s; }
-        .loja-card:nth-child(2) { animation-delay: 0.2s; }
-        .loja-card:nth-child(3) { animation-delay: 0.3s; }
-        .loja-card:nth-child(4) { animation-delay: 0.4s; }
-        .loja-card:nth-child(5) { animation-delay: 0.5s; }
-        .loja-card:nth-child(6) { animation-delay: 0.6s; }
-        .loja-card:nth-child(7) { animation-delay: 0.7s; }
-        .loja-card:nth-child(8) { animation-delay: 0.8s; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         .loja-card:hover {
@@ -749,12 +735,6 @@
             border: 2px solid var(--border);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
-            animation: slideIn 0.5s ease;
-        }
-
-        @keyframes slideIn {
-            from { transform: translateX(-20px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
         }
 
         .featured-item:hover {
@@ -806,7 +786,6 @@
             border-radius: 30px;
             padding: 30px;
             border: 2px solid var(--border);
-            animation: fadeIn 0.5s ease;
         }
 
         .loja-page-header {
@@ -913,20 +892,6 @@
             font-size: 18px;
         }
 
-        /* ==================== MAPA ==================== */
-        .map-container {
-            height: 300px;
-            border-radius: 20px;
-            overflow: hidden;
-            margin: 20px 0;
-            border: 2px solid var(--border);
-        }
-
-        #map {
-            height: 100%;
-            width: 100%;
-        }
-
         /* ==================== AVALIAÇÕES ==================== */
         .avaliacoes-section {
             margin-top: 40px;
@@ -937,7 +902,6 @@
             border-radius: 16px;
             padding: 20px;
             margin-bottom: 15px;
-            animation: fadeIn 0.3s ease;
         }
 
         .avaliacao-header {
@@ -1017,7 +981,6 @@
 
         .modal.active {
             display: flex;
-            animation: fadeIn 0.3s ease;
         }
 
         .modal-content {
@@ -1029,7 +992,6 @@
             max-height: 90vh;
             overflow-y: auto;
             border: 3px solid var(--accent);
-            animation: slideIn 0.3s ease;
         }
 
         .modal-header {
@@ -1384,16 +1346,16 @@
     </nav>
 
     <!-- BANNER -->
-    <section class="hero-banner">
+    <section class="hero-banner" data-aos="fade-up">
         <div class="banner-content">
-            <h1>Moda em Piracicaba</h1>
-            <p>Descubra as melhores lojas de roupas da cidade, com surfwear, streetwear, moda feminina e muito mais!</p>
-            <button class="banner-btn" onclick="document.getElementById('lojasGrid').scrollIntoView({behavior: 'smooth'})">Explorar lojas</button>
+            <h1 data-aos="fade-right" data-aos-delay="200">Moda em Piracicaba</h1>
+            <p data-aos="fade-right" data-aos-delay="400">Descubra as melhores lojas de roupas da cidade, com surfwear, streetwear, moda feminina e muito mais!</p>
+            <button class="banner-btn" data-aos="fade-up" data-aos-delay="600" onclick="document.getElementById('lojasGrid').scrollIntoView({behavior: 'smooth'})">Explorar lojas</button>
         </div>
     </section>
 
     <!-- FILTROS RÁPIDOS -->
-    <div class="quick-filters">
+    <div class="quick-filters" data-aos="fade-up" data-aos-delay="200">
         <span class="filter-chip active" onclick="filtrarCategoria('todos')">Todas</span>
         <span class="filter-chip" onclick="filtrarCategoria('surfwear')">Surfwear</span>
         <span class="filter-chip" onclick="filtrarCategoria('streetwear')">Streetwear</span>
@@ -1405,18 +1367,20 @@
     </div>
 
     <!-- PRODUTOS EM DESTAQUE -->
-    <section class="featured-section">
-        <div class="featured-header">
+    <section class="featured-section" data-aos="fade-up" data-aos-delay="300">
+        <div class="featured-header" data-aos="fade-right">
             <h2>🔥 Produtos em destaque</h2>
             <a onclick="filtrarCategoria('todos')">Ver todos →</a>
         </div>
-        <div class="featured-grid" id="produtosDestaque"></div>
+        <div class="featured-grid" id="produtosDestaque">
+            <!-- Será preenchido via JS -->
+        </div>
     </section>
 
     <!-- CONTEÚDO PRINCIPAL -->
     <div id="siteContent" class="main-content">
         <!-- SIDEBAR -->
-        <aside class="sidebar" id="sidebar">
+        <aside class="sidebar" id="sidebar" data-aos="fade-right" data-aos-delay="400">
             <div class="sidebar-title">Categorias</div>
             <ul class="sidebar-menu">
                 <li><a class="active" onclick="filtrarCategoria('todos')"><i class="fas fa-store"></i> Todas as lojas</a></li>
@@ -1442,7 +1406,7 @@
 
         <!-- LISTA DE LOJAS -->
         <div class="lojas-section">
-            <div class="lojas-header">
+            <div class="lojas-header" data-aos="fade-left" data-aos-delay="400">
                 <h2 id="tituloLojas">Lojas em Piracicaba</h2>
                 <div style="display: flex; gap: 15px; align-items: center;">
                     <span id="totalLojas">8 lojas encontradas</span>
@@ -1454,7 +1418,9 @@
                 </div>
             </div>
 
-            <div class="lojas-grid" id="lojasGrid"></div>
+            <div class="lojas-grid" id="lojasGrid">
+                <!-- Será preenchido via JS -->
+            </div>
         </div>
     </div>
 
@@ -1610,7 +1576,7 @@
     <!-- RODAPÉ -->
     <footer class="footer">
         <div class="footer-container">
-            <div class="footer-col">
+            <div class="footer-col" data-aos="fade-up" data-aos-delay="100">
                 <h3>RIMSO</h3>
                 <ul>
                     <li><a href="#" onclick="mostrarToast('Sobre nós - Em breve')">Sobre nós</a></li>
@@ -1619,7 +1585,7 @@
                     <li><a href="#" onclick="mostrarToast('Trabalhe conosco - Em breve')">Trabalhe conosco</a></li>
                 </ul>
             </div>
-            <div class="footer-col">
+            <div class="footer-col" data-aos="fade-up" data-aos-delay="200">
                 <h3>Para lojistas</h3>
                 <ul>
                     <li><a href="#" onclick="mostrarToast('Anuncie sua loja - Em breve')">Anuncie sua loja</a></li>
@@ -1628,7 +1594,7 @@
                     <li><a href="#" onclick="mostrarToast('Central de ajuda - Em breve')">Central de ajuda</a></li>
                 </ul>
             </div>
-            <div class="footer-col">
+            <div class="footer-col" data-aos="fade-up" data-aos-delay="300">
                 <h3>Para clientes</h3>
                 <ul>
                     <li><a href="#" onclick="mostrarToast('Como comprar - Em breve')">Como comprar</a></li>
@@ -1637,7 +1603,7 @@
                     <li><a href="#" onclick="mostrarToast('Fale conosco - Em breve')">Fale conosco</a></li>
                 </ul>
             </div>
-            <div class="footer-col">
+            <div class="footer-col" data-aos="fade-up" data-aos-delay="400">
                 <h3>Contato</h3>
                 <ul>
                     <li><i class="fas fa-phone"></i> <a href="tel:1934345678">(19) 3434-5678</a></li>
@@ -1651,7 +1617,18 @@
         </div>
     </footer>
 
+    <!-- AOS Script -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
     <script>
+        // Inicializar AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100,
+            easing: 'ease-in-out'
+        });
+
         // ==================== DADOS ====================
         const lojas = [
             {
@@ -1805,7 +1782,6 @@
         let usuarios = JSON.parse(localStorage.getItem('rimso_usuarios')) || [];
         let usuarioLogado = null;
         let lojaAtual = null;
-        let map;
 
         // ==================== INICIALIZAÇÃO ====================
         document.addEventListener('DOMContentLoaded', function() {
@@ -1813,6 +1789,11 @@
             carregarProdutosDestaque();
             configurarEventos();
             console.log('🚀 RIMSO inicializado!');
+            
+            // Re-inicializar AOS após carregar conteúdo dinâmico
+            setTimeout(() => {
+                AOS.refresh();
+            }, 1000);
         });
 
         function configurarEventos() {
@@ -1984,6 +1965,11 @@
             if (grid) {
                 grid.innerHTML = lojasParaMostrar.map(loja => criarCardLoja(loja)).join('');
             }
+            
+            // Refresh AOS para novos elementos
+            setTimeout(() => {
+                AOS.refresh();
+            }, 100);
         }
 
         // ==================== LOJAS ====================
@@ -2044,18 +2030,12 @@
                         <div id="avaliacoesLista">
                             ${carregarAvaliacoes(loja.id)}
                         </div>
-                        
-                        <div class="map-container" id="map"></div>
                     </div>
                 `;
             }
             
             if (siteContent) siteContent.classList.add('hidden');
             if (lojaPage) lojaPage.classList.remove('hidden');
-            
-            setTimeout(() => {
-                inicializarMapa(loja);
-            }, 500);
         }
 
         function voltarHome() {
@@ -2195,36 +2175,6 @@
                 const lista = document.getElementById('avaliacoesLista');
                 if (lista) lista.innerHTML = carregarAvaliacoes(lojaId);
             }
-        }
-
-        // ==================== MAPA ====================
-        function inicializarMapa(loja) {
-            if (!window.google) return;
-            
-            const mapDiv = document.getElementById('map');
-            if (!mapDiv) return;
-            
-            // Coordenadas aproximadas de Piracicaba
-            const pos = { lat: -22.7243, lng: -47.6475 };
-            
-            map = new google.maps.Map(mapDiv, {
-                center: pos,
-                zoom: 15,
-                styles: [
-                    {
-                        featureType: 'poi.business',
-                        elementType: 'labels',
-                        stylers: [{ visibility: 'on' }]
-                    }
-                ]
-            });
-            
-            new google.maps.Marker({
-                position: pos,
-                map: map,
-                title: loja.nome,
-                animation: google.maps.Animation.DROP
-            });
         }
 
         // ==================== DASHBOARD ====================
