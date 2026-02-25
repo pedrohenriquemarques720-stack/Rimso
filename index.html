@@ -1376,14 +1376,14 @@
         };
     </script>
 
-       <!-- ==================== SCRIPTS DAS FUNÇÕES ==================== -->
+    <!-- ==================== SCRIPTS DAS FUNÇÕES ==================== -->
     <!-- Sistema de Avaliações -->
     <script src="avaliaçoes.js"></script>
     
     <!-- Feed de Novidades -->
     <script src="feed.js"></script>
     
-    <!-- Listas Personalizadas -->
+    <!-- Favoritos / Listas Personalizadas -->
     <script src="favoritos.js"></script>
     
     <!-- Rotas no Mapa -->
@@ -1406,11 +1406,6 @@
     
     <!-- Admin Avançado -->
     <script src="adminadv.js"></script>
-    
- <!-- ==================== ARQUIVO DE INTEGRAÇÃO ==================== -->
-     <script src="js/integracao.js"></script>
-</body>
-</html>
 
     <!-- ==================== INICIALIZAR FUNÇÕES ==================== -->
     <script>
@@ -1428,15 +1423,14 @@
                     console.log('✅ Feed inicializado');
                 }
                 
-                // Listas Personalizadas
+                // Favoritos / Listas Personalizadas
                 if (typeof criarModalListas === 'function') {
                     criarModalListas();
-                    console.log('✅ Listas inicializado');
+                    console.log('✅ Favoritos inicializado');
                 }
                 
                 // Filtros Avançados
                 if (typeof criarBarraFiltros === 'function') {
-                    // Verificar se estamos na seção de lojas
                     const lojasContainer = document.getElementById('lojasContainer');
                     if (lojasContainer) {
                         criarBarraFiltros();
@@ -1468,5 +1462,3 @@
     </script>
 </body>
 </html>
-
-
