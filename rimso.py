@@ -1,6 +1,7 @@
 import streamlit as st
 from streamlit.components.v1 import html
 import time
+import os
 
 st.set_page_config(
     page_title="RIMSO - Moda em Piracicaba",
@@ -9,7 +10,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# CSS para remover padding do Streamlit
+# CSS para remover padding
 st.markdown("""
 <style>
     .main .block-container {
@@ -45,24 +46,30 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
     
+    # Botão para forçar recarga
     if st.button("🔄 Recarregar", use_container_width=True):
         st.cache_data.clear()
         st.rerun()
     
     st.divider()
-    st.caption("Versão 2.0 - Site Completo")
+    
+    # Mostrar status
+    if os.path.exists('index.html'):
+        tamanho = os.path.getsize('index.html')
+        st.success(f"✅ index.html encontrado ({tamanho} bytes)")
+    else:
+        st.error("❌ index.html não encontrado!")
 
 # Carregar o HTML local
 try:
     with open('index.html', 'r', encoding='utf-8') as f:
         html_content = f.read()
     
-    # Adicionar timestamp para evitar cache
-    html_content = html_content.replace('</head>', f'<meta http-equiv="refresh" content="0"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>')
+    # Adicionar meta tags para evitar cache
+    html_content = html_content.replace('<head>', '<head><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">')
     
     # Mostrar o HTML
     html(html_content, height=1000, scrolling=True)
-    st.sidebar.success("✅ RIMSO funcionando!")
     
 except FileNotFoundError:
     st.error("❌ Arquivo index.html não encontrado!")
