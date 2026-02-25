@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>RIMSO - Moda em Piracicaba</title>
     
     <!-- Font Awesome 6 -->
@@ -30,12 +30,27 @@
             --border: #E5E7EB;
             --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
             --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
-            --transition: all 0.3s ease;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         body {
             background: linear-gradient(135deg, #1a1a1a 0%, var(--dark) 100%);
             min-height: 100vh;
+        }
+
+        /* ==================== ANIMAÇÕES ==================== */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         /* ==================== TOP BAR ==================== */
@@ -118,6 +133,13 @@
             padding-left: 20px;
         }
 
+        .mobile-menu-toggle {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--primary);
+        }
+
         .header-search {
             flex: 1;
             max-width: 500px;
@@ -136,6 +158,7 @@
         .header-search input:focus {
             border-color: var(--primary);
             outline: none;
+            box-shadow: 0 0 0 3px rgba(27,77,110,0.1);
         }
 
         .header-search button {
@@ -154,6 +177,7 @@
 
         .header-search button:hover {
             background: var(--accent);
+            transform: scale(1.05);
         }
 
         .header-actions {
@@ -187,6 +211,8 @@
 
         .btn-post:hover {
             background: #E55A2B;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
         }
 
         /* ==================== MENU CATEGORIAS ==================== */
@@ -194,6 +220,7 @@
             background: white;
             border-bottom: 2px solid var(--border);
             overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .categories-container {
@@ -221,6 +248,23 @@
             white-space: nowrap;
             transition: var(--transition);
             cursor: pointer;
+            position: relative;
+        }
+
+        .categories-list a::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .categories-list a:hover::after {
+            transform: scaleX(1);
         }
 
         .categories-list a:hover {
@@ -230,8 +274,10 @@
         .categories-list a.active {
             color: var(--primary);
             font-weight: 700;
-            border-bottom: 3px solid var(--accent);
-            padding-bottom: 15px;
+        }
+
+        .categories-list a.active::after {
+            transform: scaleX(1);
         }
 
         /* ==================== BANNER ==================== */
@@ -244,15 +290,33 @@
         .banner-content {
             background: linear-gradient(135deg, var(--primary), var(--dark));
             border-radius: 20px;
-            padding: 40px;
+            padding: 60px 40px;
             color: white;
             position: relative;
             overflow: hidden;
         }
 
+        .banner-content::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: rotate(45deg) translateX(-100%); }
+            100% { transform: rotate(45deg) translateX(100%); }
+        }
+
         .banner-content h1 {
             font-size: clamp(28px, 5vw, 48px);
             margin-bottom: 15px;
+            position: relative;
         }
 
         .banner-content p {
@@ -260,6 +324,7 @@
             margin-bottom: 25px;
             opacity: 0.9;
             max-width: 600px;
+            position: relative;
         }
 
         .banner-btn {
@@ -271,12 +336,18 @@
             font-weight: 700;
             font-size: 16px;
             cursor: pointer;
-            transition: var(--transition);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
 
         .banner-btn:hover {
-            transform: scale(1.05);
-            background: #E55A2B;
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255,107,53,0.3);
+        }
+
+        .banner-btn:active {
+            transform: scale(0.98);
         }
 
         /* ==================== FILTROS RÁPIDOS ==================== */
@@ -297,19 +368,40 @@
             font-size: 14px;
             font-weight: 500;
             cursor: pointer;
-            transition: var(--transition);
+            transition: all 0.2s ease;
             white-space: nowrap;
         }
 
         .filter-chip:hover {
             border-color: var(--primary);
             background: var(--light);
+            transform: translateY(-2px);
+        }
+
+        .filter-chip:active {
+            transform: translateY(0);
         }
 
         .filter-chip.active {
             background: var(--primary);
             color: white;
             border-color: var(--primary);
+        }
+
+        /* ==================== LOADING SPINNER ==================== */
+        .loading-spinner {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--border);
+            border-top: 3px solid var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
         }
 
         /* ==================== CONTEÚDO PRINCIPAL ==================== */
@@ -331,6 +423,7 @@
             height: fit-content;
             position: sticky;
             top: 120px;
+            transition: left 0.3s ease;
         }
 
         .sidebar-title {
@@ -365,6 +458,7 @@
         .sidebar-menu a:hover {
             background: var(--light);
             color: var(--primary);
+            transform: translateX(5px);
         }
 
         .sidebar-menu a.active {
@@ -376,6 +470,22 @@
         .sidebar-menu i {
             width: 20px;
             color: var(--accent);
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 99;
+            backdrop-filter: blur(3px);
+        }
+
+        .sidebar-overlay.active {
+            display: block;
         }
 
         /* Grid de Lojas */
@@ -397,6 +507,21 @@
             color: var(--gray);
         }
 
+        .sort-select {
+            padding: 8px 15px;
+            border: 2px solid var(--border);
+            border-radius: 60px;
+            font-size: 14px;
+            background: white;
+            cursor: pointer;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .sort-select:hover {
+            border-color: var(--accent);
+        }
+
         .lojas-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -408,12 +533,23 @@
             border-radius: 20px;
             overflow: hidden;
             border: 2px solid var(--border);
-            transition: var(--transition);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
+            animation: fadeIn 0.5s ease;
+            animation-fill-mode: both;
         }
 
+        .loja-card:nth-child(1) { animation-delay: 0.1s; }
+        .loja-card:nth-child(2) { animation-delay: 0.2s; }
+        .loja-card:nth-child(3) { animation-delay: 0.3s; }
+        .loja-card:nth-child(4) { animation-delay: 0.4s; }
+        .loja-card:nth-child(5) { animation-delay: 0.5s; }
+        .loja-card:nth-child(6) { animation-delay: 0.6s; }
+        .loja-card:nth-child(7) { animation-delay: 0.7s; }
+        .loja-card:nth-child(8) { animation-delay: 0.8s; }
+
         .loja-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-5px) scale(1.02);
             border-color: var(--accent);
             box-shadow: var(--shadow-lg);
         }
@@ -428,11 +564,11 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: var(--transition);
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .loja-card:hover .loja-cover img {
-            transform: scale(1.05);
+            transform: scale(1.1);
         }
 
         .loja-badge {
@@ -446,6 +582,7 @@
             font-size: 12px;
             font-weight: 700;
             z-index: 2;
+            animation: fadeIn 0.3s ease;
         }
 
         .loja-favorite {
@@ -463,11 +600,13 @@
             color: var(--accent);
             box-shadow: var(--shadow);
             z-index: 2;
-            transition: var(--transition);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .loja-favorite:hover {
-            transform: scale(1.1);
+            transform: scale(1.2);
+            background: var(--accent);
+            color: white;
         }
 
         .loja-info {
@@ -521,6 +660,12 @@
             border-radius: 60px;
             font-size: 11px;
             color: var(--gray);
+            transition: var(--transition);
+        }
+
+        .loja-card:hover .categoria-tag {
+            background: var(--warning);
+            color: var(--dark);
         }
 
         .loja-footer {
@@ -540,17 +685,27 @@
             font-weight: 600;
             font-size: 13px;
             cursor: pointer;
-            transition: var(--transition);
+            transition: all 0.2s ease;
         }
 
         .loja-contato:hover {
             background: var(--primary);
             color: white;
+            transform: scale(1.05);
+        }
+
+        .loja-contato:active {
+            transform: scale(0.98);
         }
 
         .loja-whatsapp {
             color: #25D366;
             font-size: 20px;
+            transition: var(--transition);
+        }
+
+        .loja-whatsapp:hover {
+            transform: scale(1.2);
         }
 
         /* ==================== PRODUTOS EM DESTAQUE ==================== */
@@ -579,6 +734,12 @@
             text-decoration: none;
             font-weight: 600;
             cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .featured-header a:hover {
+            color: var(--primary);
+            transform: translateX(5px);
         }
 
         .featured-grid {
@@ -592,12 +753,13 @@
             border-radius: 16px;
             overflow: hidden;
             border: 2px solid var(--border);
-            transition: var(--transition);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
+            animation: slideIn 0.5s ease;
         }
 
         .featured-item:hover {
-            transform: translateY(-5px);
+            transform: translateY(-5px) scale(1.02);
             border-color: var(--accent);
             box-shadow: var(--shadow-lg);
         }
@@ -611,7 +773,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: var(--transition);
+            transition: transform 0.5s ease;
         }
 
         .featured-item:hover .featured-image img {
@@ -645,6 +807,7 @@
             border-radius: 30px;
             padding: 30px;
             border: 2px solid var(--border);
+            animation: fadeIn 0.5s ease;
         }
 
         .loja-page-header {
@@ -660,6 +823,7 @@
             border-radius: 30px;
             overflow: hidden;
             flex-shrink: 0;
+            box-shadow: var(--shadow-lg);
         }
 
         .loja-page-cover img {
@@ -699,6 +863,9 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            padding: 5px 10px;
+            background: var(--light);
+            border-radius: 60px;
         }
 
         .produtos-grid {
@@ -720,6 +887,7 @@
         .produto-card:hover {
             border-color: var(--accent);
             transform: translateY(-3px);
+            box-shadow: var(--shadow);
         }
 
         .produto-image {
@@ -752,6 +920,7 @@
             border-radius: 20px;
             overflow: hidden;
             margin: 20px 0;
+            border: 2px solid var(--border);
         }
 
         #map {
@@ -769,6 +938,7 @@
             border-radius: 16px;
             padding: 20px;
             margin-bottom: 15px;
+            animation: fadeIn 0.3s ease;
         }
 
         .avaliacao-header {
@@ -799,6 +969,7 @@
 
         .avaliacao-nota {
             color: var(--warning);
+            font-size: 18px;
         }
 
         .avaliacao-data {
@@ -809,27 +980,6 @@
         .avaliacao-comentario {
             margin: 10px 0;
             line-height: 1.5;
-        }
-
-        .avaliacao-fotos {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-            flex-wrap: wrap;
-        }
-
-        .avaliacao-foto {
-            width: 60px;
-            height: 60px;
-            border-radius: 12px;
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .avaliacao-foto img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
         }
 
         .btn-avaliar {
@@ -846,7 +996,8 @@
 
         .btn-avaliar:hover {
             background: #E55A2B;
-            transform: scale(1.02);
+            transform: scale(1.02) translateY(-2px);
+            box-shadow: var(--shadow);
         }
 
         /* ==================== MODAIS ==================== */
@@ -862,10 +1013,12 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
+            backdrop-filter: blur(5px);
         }
 
         .modal.active {
             display: flex;
+            animation: fadeIn 0.3s ease;
         }
 
         .modal-content {
@@ -877,6 +1030,7 @@
             max-height: 90vh;
             overflow-y: auto;
             border: 3px solid var(--accent);
+            animation: slideIn 0.3s ease;
         }
 
         .modal-header {
@@ -894,10 +1048,12 @@
             font-size: 28px;
             cursor: pointer;
             color: var(--gray);
+            transition: var(--transition);
         }
 
         .modal-close:hover {
             color: var(--accent);
+            transform: scale(1.2);
         }
 
         .form-group {
@@ -916,11 +1072,13 @@
             border: 2px solid var(--border);
             border-radius: 12px;
             font-size: 14px;
+            transition: var(--transition);
         }
 
         .form-control:focus {
             border-color: var(--primary);
             outline: none;
+            box-shadow: 0 0 0 3px rgba(27,77,110,0.1);
         }
 
         .rating-input {
@@ -930,14 +1088,15 @@
             color: var(--warning);
             cursor: pointer;
             margin: 10px 0;
+            justify-content: center;
         }
 
         .rating-input i {
-            transition: var(--transition);
+            transition: all 0.2s ease;
         }
 
         .rating-input i:hover {
-            transform: scale(1.2);
+            transform: scale(1.3);
         }
 
         /* ==================== TOAST ==================== */
@@ -954,7 +1113,7 @@
             z-index: 1000;
             transform: translateY(100px);
             opacity: 0;
-            transition: var(--transition);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border: 2px solid var(--accent);
         }
 
@@ -1002,6 +1161,7 @@
 
         .footer-col a:hover {
             color: var(--accent);
+            transform: translateX(5px);
         }
 
         .footer-bottom {
@@ -1018,14 +1178,53 @@
             display: none !important;
         }
 
-        /* Responsividade */
+        /* ==================== RESPONSIVIDADE ==================== */
         @media (max-width: 768px) {
-            .main-content {
-                grid-template-columns: 1fr;
+            .mobile-menu-toggle {
+                display: block;
+            }
+            
+            .top-bar-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
             }
             
             .header-container {
                 flex-direction: column;
+                gap: 15px;
+            }
+            
+            .logo-area {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo-tagline {
+                border-left: none;
+                border-top: 2px solid var(--border);
+                padding: 15px 0 0;
+                margin-top: 10px;
+            }
+            
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 80%;
+                height: 100vh;
+                z-index: 1000;
+                overflow-y: auto;
+                border-radius: 0 20px 20px 0;
+                transition: left 0.3s ease;
+            }
+            
+            .sidebar.active {
+                left: 0;
             }
             
             .header-search {
@@ -1033,8 +1232,16 @@
                 max-width: none;
             }
             
-            .sidebar {
-                position: static;
+            .categories-list {
+                gap: 15px;
+            }
+            
+            .featured-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .produtos-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
             
             .loja-page-header {
@@ -1042,8 +1249,82 @@
                 align-items: center;
                 text-align: center;
             }
+            
+            .loja-page-cover {
+                width: 100%;
+                height: auto;
+                max-width: 200px;
+            }
+            
+            .loja-page-meta {
+                flex-direction: column;
+                gap: 10px;
+                align-items: center;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .banner-content {
+                padding: 30px 20px;
+                text-align: center;
+            }
+            
+            .banner-content h1 {
+                font-size: 28px;
+            }
+            
+            .quick-filters {
+                justify-content: center;
+            }
+            
+            .filter-chip {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
         }
 
+        @media (max-width: 480px) {
+            .featured-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .produtos-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .top-bar-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .header-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .header-actions a {
+                width: 100%;
+                text-align: center;
+                justify-content: center;
+            }
+            
+            .btn-post {
+                width: 100%;
+            }
+            
+            .lojas-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .sort-select {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1065,14 +1346,18 @@
     <!-- HEADER -->
     <header class="main-header">
         <div class="header-container">
+            <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+            
             <div class="logo-area">
                 <div class="logo" onclick="voltarHome()">RIM<span>SO</span></div>
                 <div class="logo-tagline">Moda em Piracicaba</div>
             </div>
 
             <div class="header-search">
-                <input type="text" placeholder="Buscar lojas, produtos, marcas..." id="searchInput" onkeyup="buscarLojas()">
-                <button onclick="buscarLojas()"><i class="fas fa-search"></i></button>
+                <input type="text" placeholder="Buscar lojas, produtos, marcas..." id="searchInput" onkeyup="buscarLojasInstantaneo()">
+                <button onclick="buscarLojasInstantaneo()"><i class="fas fa-search"></i></button>
             </div>
 
             <div class="header-actions">
@@ -1125,15 +1410,13 @@
             <h2>🔥 Produtos em destaque</h2>
             <a onclick="filtrarCategoria('todos')">Ver todos →</a>
         </div>
-        <div class="featured-grid" id="produtosDestaque">
-            <!-- Será preenchido via JS -->
-        </div>
+        <div class="featured-grid" id="produtosDestaque"></div>
     </section>
 
     <!-- CONTEÚDO PRINCIPAL -->
     <div id="siteContent" class="main-content">
         <!-- SIDEBAR -->
-        <aside class="sidebar">
+        <aside class="sidebar" id="sidebar">
             <div class="sidebar-title">Categorias</div>
             <ul class="sidebar-menu">
                 <li><a class="active" onclick="filtrarCategoria('todos')"><i class="fas fa-store"></i> Todas as lojas</a></li>
@@ -1161,20 +1444,23 @@
         <div class="lojas-section">
             <div class="lojas-header">
                 <h2 id="tituloLojas">Lojas em Piracicaba</h2>
-                <span id="totalLojas">12 lojas encontradas</span>
+                <div style="display: flex; gap: 15px; align-items: center;">
+                    <span id="totalLojas">8 lojas encontradas</span>
+                    <select class="sort-select" id="sortSelect" onchange="ordenarLojas(this.value)">
+                        <option value="relevancia">Mais relevantes</option>
+                        <option value="avaliacao">Melhor avaliados</option>
+                        <option value="nome">Ordem alfabética</option>
+                    </select>
+                </div>
             </div>
 
-            <div class="lojas-grid" id="lojasGrid">
-                <!-- Será preenchido via JS -->
-            </div>
+            <div class="lojas-grid" id="lojasGrid"></div>
         </div>
     </div>
 
     <!-- PÁGINA DA LOJA (inicialmente oculta) -->
     <div id="lojaPage" class="main-content hidden">
-        <div class="loja-page" id="lojaPageContent">
-            <!-- Será preenchido via JS -->
-        </div>
+        <div class="loja-page" id="lojaPageContent"></div>
         <div style="margin-top: 20px;">
             <button class="loja-contato" onclick="voltarHome()" style="padding: 10px 20px;">
                 <i class="fas fa-arrow-left"></i> Voltar para lojas
@@ -1216,7 +1502,7 @@
         </div>
     </div>
 
-    <!-- MODAL LOGIN -->
+    <!-- MODAIS -->
     <div class="modal" id="modalLogin">
         <div class="modal-content">
             <div class="modal-header">
@@ -1242,7 +1528,6 @@
         </div>
     </div>
 
-    <!-- MODAL CADASTRO -->
     <div class="modal" id="modalCadastro">
         <div class="modal-content">
             <div class="modal-header">
@@ -1273,7 +1558,6 @@
         </div>
     </div>
 
-    <!-- MODAL AVALIAR -->
     <div class="modal" id="modalAvaliar">
         <div class="modal-content">
             <div class="modal-header">
@@ -1292,16 +1576,11 @@
                     <label>Comentário</label>
                     <textarea class="form-control" id="avaliacaoComentario" rows="4" placeholder="Conte sua experiência..."></textarea>
                 </div>
-                <div class="form-group">
-                    <label>Fotos (opcional)</label>
-                    <input type="file" class="form-control" id="avaliacaoFotos" accept="image/*" multiple>
-                </div>
                 <button class="banner-btn" style="width: 100%;" onclick="enviarAvaliacao()">Enviar avaliação</button>
             </div>
         </div>
     </div>
 
-    <!-- MODAL ANUNCIAR -->
     <div class="modal" id="modalAnunciar">
         <div class="modal-content">
             <div class="modal-header">
@@ -1315,16 +1594,13 @@
         </div>
     </div>
 
-    <!-- MODAL PRODUTO -->
     <div class="modal" id="modalProduto">
         <div class="modal-content">
             <div class="modal-header">
                 <h2 id="modalProdutoNome">Produto</h2>
                 <span class="modal-close" onclick="fecharModal('modalProduto')">&times;</span>
             </div>
-            <div class="modal-body" id="modalProdutoContent">
-                <!-- Conteúdo será preenchido via JS -->
-            </div>
+            <div class="modal-body" id="modalProdutoContent"></div>
         </div>
     </div>
 
@@ -1529,204 +1805,96 @@
         let usuarios = JSON.parse(localStorage.getItem('rimso_usuarios')) || [];
         let usuarioLogado = null;
         let lojaAtual = null;
-        let map = null;
-        let mapaInicializado = false;
+        let timeoutBusca;
+        let map;
 
         // ==================== FUNÇÕES DE INICIALIZAÇÃO ====================
-        window.onload = function() {
+        document.addEventListener('DOMContentLoaded', function() {
             carregarLojas();
             carregarProdutosDestaque();
+            configurarEventos();
             console.log('🚀 RIMSO inicializado!');
-        };
+        });
 
-        function carregarLojas() {
-            const grid = document.getElementById('lojasGrid');
-            document.getElementById('totalLojas').textContent = `${lojas.length} lojas encontradas`;
+        function configurarEventos() {
+            // Busca em tempo real
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.addEventListener('input', buscarLojasInstantaneo);
+            }
             
-            grid.innerHTML = lojas.map(loja => `
-                <div class="loja-card" onclick="abrirLoja(${loja.id})">
-                    <div class="loja-cover">
-                        <img src="${loja.imagem}" alt="${loja.nome}">
-                        <span class="loja-badge">${loja.categoria.toUpperCase()}</span>
-                        <div class="loja-favorite" onclick="event.stopPropagation(); toggleFavorito(${loja.id})">
-                            <i class="fa${favoritos.includes(loja.id) ? 's' : 'r'} fa-heart"></i>
-                        </div>
-                    </div>
-                    <div class="loja-info">
-                        <div class="loja-nome">${loja.nome}</div>
-                        <div class="loja-endereco">
-                            <i class="fas fa-map-marker-alt"></i> ${loja.endereco}
-                        </div>
-                        <div class="loja-avaliacao">
-                            <span class="stars">${'★'.repeat(Math.floor(loja.avaliacao))}${loja.avaliacao % 1 ? '½' : ''}</span>
-                            <span class="avaliacao-numero">(${loja.totalAvaliacoes})</span>
-                        </div>
-                        <div class="loja-categorias">
-                            ${loja.produtos.slice(0,3).map(p => `<span class="categoria-tag">${p.nome}</span>`).join('')}
-                        </div>
-                        <div class="loja-footer">
-                            <button class="loja-contato" onclick="event.stopPropagation(); contatoWhatsapp('${loja.whatsapp}')">
-                                <i class="fab fa-whatsapp"></i> Contato
-                            </button>
-                            <span class="loja-whatsapp"><i class="fab fa-whatsapp"></i></span>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function carregarProdutosDestaque() {
-            const destaques = lojas.flatMap(l => l.produtos).slice(0, 8);
-            const grid = document.getElementById('produtosDestaque');
-            
-            grid.innerHTML = destaques.map(p => `
-                <div class="featured-item" onclick="abrirProduto(${p.id})">
-                    <div class="featured-image">
-                        <img src="${p.imagem}" alt="${p.nome}">
-                    </div>
-                    <div class="featured-info">
-                        <div class="featured-nome">${p.nome}</div>
-                        <div class="featured-preco">R$ ${p.preco.toFixed(2)}</div>
-                        <div class="featured-loja">${lojas.find(l => l.produtos.some(prod => prod.id === p.id)).nome}</div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // ==================== FILTROS ====================
-        function filtrarCategoria(categoria) {
-            // Atualizar classes active
-            document.querySelectorAll('.filter-chip, .categories-list a, .sidebar-menu a').forEach(el => {
-                el.classList.remove('active');
+            // Estrelas da avaliação
+            const ratingStars = document.querySelectorAll('#ratingStars i');
+            ratingStars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const rating = parseInt(this.dataset.rating);
+                    ratingStars.forEach((s, i) => {
+                        s.className = i < rating ? 'fas fa-star' : 'far fa-star';
+                    });
+                });
             });
             
-            event?.currentTarget.classList.add('active');
-            
-            // Filtrar lojas
-            const lojasFiltradas = categoria === 'todos' 
-                ? lojas 
-                : lojas.filter(l => l.categoria === categoria);
-            
-            const grid = document.getElementById('lojasGrid');
-            document.getElementById('tituloLojas').textContent = 
-                categoria === 'todos' ? 'Todas as lojas' : `Lojas de ${categoria}`;
-            document.getElementById('totalLojas').textContent = `${lojasFiltradas.length} lojas encontradas`;
-            
-            grid.innerHTML = lojasFiltradas.map(loja => `
-                <div class="loja-card" onclick="abrirLoja(${loja.id})">
-                    <div class="loja-cover">
-                        <img src="${loja.imagem}" alt="${loja.nome}">
-                        <span class="loja-badge">${loja.categoria.toUpperCase()}</span>
-                        <div class="loja-favorite" onclick="event.stopPropagation(); toggleFavorito(${loja.id})">
-                            <i class="fa${favoritos.includes(loja.id) ? 's' : 'r'} fa-heart"></i>
-                        </div>
-                    </div>
-                    <div class="loja-info">
-                        <div class="loja-nome">${loja.nome}</div>
-                        <div class="loja-endereco">
-                            <i class="fas fa-map-marker-alt"></i> ${loja.endereco}
-                        </div>
-                        <div class="loja-avaliacao">
-                            <span class="stars">${'★'.repeat(Math.floor(loja.avaliacao))}${loja.avaliacao % 1 ? '½' : ''}</span>
-                            <span class="avaliacao-numero">(${loja.totalAvaliacoes})</span>
-                        </div>
-                        <div class="loja-categorias">
-                            ${loja.produtos.slice(0,3).map(p => `<span class="categoria-tag">${p.nome}</span>`).join('')}
-                        </div>
-                        <div class="loja-footer">
-                            <button class="loja-contato" onclick="event.stopPropagation(); contatoWhatsapp('${loja.whatsapp}')">
-                                <i class="fab fa-whatsapp"></i> Contato
-                            </button>
-                            <span class="loja-whatsapp"><i class="fab fa-whatsapp"></i></span>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function filtrarBairro(bairro) {
-            const lojasFiltradas = lojas.filter(l => l.bairro === bairro);
-            
-            const grid = document.getElementById('lojasGrid');
-            document.getElementById('tituloLojas').textContent = `Lojas em ${bairro}`;
-            document.getElementById('totalLojas').textContent = `${lojasFiltradas.length} lojas encontradas`;
-            
-            grid.innerHTML = lojasFiltradas.map(loja => `
-                <div class="loja-card" onclick="abrirLoja(${loja.id})">
-                    <div class="loja-cover">
-                        <img src="${loja.imagem}" alt="${loja.nome}">
-                        <span class="loja-badge">${loja.categoria.toUpperCase()}</span>
-                        <div class="loja-favorite" onclick="event.stopPropagation(); toggleFavorito(${loja.id})">
-                            <i class="fa${favoritos.includes(loja.id) ? 's' : 'r'} fa-heart"></i>
-                        </div>
-                    </div>
-                    <div class="loja-info">
-                        <div class="loja-nome">${loja.nome}</div>
-                        <div class="loja-endereco">
-                            <i class="fas fa-map-marker-alt"></i> ${loja.endereco}
-                        </div>
-                        <div class="loja-avaliacao">
-                            <span class="stars">${'★'.repeat(Math.floor(loja.avaliacao))}${loja.avaliacao % 1 ? '½' : ''}</span>
-                            <span class="avaliacao-numero">(${loja.totalAvaliacoes})</span>
-                        </div>
-                        <div class="loja-categorias">
-                            ${loja.produtos.slice(0,3).map(p => `<span class="categoria-tag">${p.nome}</span>`).join('')}
-                        </div>
-                        <div class="loja-footer">
-                            <button class="loja-contato" onclick="event.stopPropagation(); contatoWhatsapp('${loja.whatsapp}')">
-                                <i class="fab fa-whatsapp"></i> Contato
-                            </button>
-                            <span class="loja-whatsapp"><i class="fab fa-whatsapp"></i></span>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function buscarLojas() {
-            const termo = document.getElementById('searchInput').value.toLowerCase();
-            const lojasFiltradas = lojas.filter(l => 
-                l.nome.toLowerCase().includes(termo) || 
-                l.descricao.toLowerCase().includes(termo)
-            );
-            
-            const grid = document.getElementById('lojasGrid');
-            document.getElementById('tituloLojas').textContent = 'Resultados da busca';
-            document.getElementById('totalLojas').textContent = `${lojasFiltradas.length} lojas encontradas`;
-            
-            grid.innerHTML = lojasFiltradas.map(loja => `
-                <div class="loja-card" onclick="abrirLoja(${loja.id})">
-                    <div class="loja-cover">
-                        <img src="${loja.imagem}" alt="${loja.nome}">
-                        <span class="loja-badge">${loja.categoria.toUpperCase()}</span>
-                        <div class="loja-favorite" onclick="event.stopPropagation(); toggleFavorito(${loja.id})">
-                            <i class="fa${favoritos.includes(loja.id) ? 's' : 'r'} fa-heart"></i>
-                        </div>
-                    </div>
-                    <div class="loja-info">
-                        <div class="loja-nome">${loja.nome}</div>
-                        <div class="loja-endereco">
-                            <i class="fas fa-map-marker-alt"></i> ${loja.endereco}
-                        </div>
-                        <div class="loja-avaliacao">
-                            <span class="stars">${'★'.repeat(Math.floor(loja.avaliacao))}${loja.avaliacao % 1 ? '½' : ''}</span>
-                            <span class="avaliacao-numero">(${loja.totalAvaliacoes})</span>
-                        </div>
-                        <div class="loja-categorias">
-                            ${loja.produtos.slice(0,3).map(p => `<span class="categoria-tag">${p.nome}</span>`).join('')}
-                        </div>
-                        <div class="loja-footer">
-                            <button class="loja-contato" onclick="event.stopPropagation(); contatoWhatsapp('${loja.whatsapp}')">
-                                <i class="fab fa-whatsapp"></i> Contato
-                            </button>
-                            <span class="loja-whatsapp"><i class="fab fa-whatsapp"></i></span>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
+            // Fechar modais clicando fora
+            window.addEventListener('click', function(event) {
+                if (event.target.classList.contains('modal')) {
+                    event.target.classList.remove('active');
+                }
+            });
         }
 
         // ==================== LOJAS ====================
+        function carregarLojas() {
+            mostrarLoading(true);
+            
+            setTimeout(() => {
+                const grid = document.getElementById('lojasGrid');
+                const total = document.getElementById('totalLojas');
+                
+                if (total) total.textContent = `${lojas.length} lojas encontradas`;
+                
+                if (grid) {
+                    grid.innerHTML = lojas.map(loja => criarCardLoja(loja)).join('');
+                }
+                
+                mostrarLoading(false);
+            }, 500);
+        }
+
+        function criarCardLoja(loja) {
+            const isFavorito = favoritos.includes(loja.id);
+            
+            return `
+                <div class="loja-card" onclick="abrirLoja(${loja.id})">
+                    <div class="loja-cover">
+                        <img src="${loja.imagem}" alt="${loja.nome}" loading="lazy">
+                        <span class="loja-badge">${loja.categoria.toUpperCase()}</span>
+                        <div class="loja-favorite" onclick="event.stopPropagation(); toggleFavorito(${loja.id})">
+                            <i class="fa${isFavorito ? 's' : 'r'} fa-heart"></i>
+                        </div>
+                    </div>
+                    <div class="loja-info">
+                        <div class="loja-nome">${loja.nome}</div>
+                        <div class="loja-endereco">
+                            <i class="fas fa-map-marker-alt"></i> ${loja.endereco}
+                        </div>
+                        <div class="loja-avaliacao">
+                            <span class="stars">${'★'.repeat(Math.floor(loja.avaliacao))}${loja.avaliacao % 1 ? '½' : ''}</span>
+                            <span class="avaliacao-numero">(${loja.totalAvaliacoes})</span>
+                        </div>
+                        <div class="loja-categorias">
+                            ${loja.produtos.slice(0,3).map(p => `<span class="categoria-tag">${p.nome}</span>`).join('')}
+                        </div>
+                        <div class="loja-footer">
+                            <button class="loja-contato" onclick="event.stopPropagation(); contatoWhatsapp('${loja.whatsapp}')">
+                                <i class="fab fa-whatsapp"></i> Contato
+                            </button>
+                            <span class="loja-whatsapp"><i class="fab fa-whatsapp"></i></span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
         function abrirLoja(id) {
             const loja = lojas.find(l => l.id === id);
             if (!loja) return;
@@ -1734,59 +1902,64 @@
             lojaAtual = loja;
             
             const content = document.getElementById('lojaPageContent');
-            content.innerHTML = `
-                <div style="margin-bottom: 30px;">
-                    <div class="loja-page-header">
-                        <div class="loja-page-cover">
-                            <img src="${loja.imagem}" alt="${loja.nome}">
-                        </div>
-                        <div class="loja-page-info">
-                            <div class="loja-page-nome">${loja.nome}</div>
-                            <div class="loja-page-endereco">
-                                <i class="fas fa-map-marker-alt"></i> ${loja.endereco}
-                            </div>
-                            <div class="loja-page-meta">
-                                <div class="loja-page-meta-item">
-                                    <i class="fas fa-phone" style="color: var(--accent);"></i> ${loja.telefone}
-                                </div>
-                                <div class="loja-page-meta-item">
-                                    <i class="fab fa-whatsapp" style="color: #25D366;"></i> ${loja.whatsapp}
-                                </div>
-                                <div class="loja-page-meta-item">
-                                    <i class="fas fa-star" style="color: var(--warning);"></i> ${loja.avaliacao} (${loja.totalAvaliacoes} avaliações)
-                                </div>
-                            </div>
-                            <p style="color: var(--gray); margin-top: 15px;">${loja.descricao}</p>
-                            <button class="banner-btn" style="margin-top: 15px;" onclick="abrirModalAvaliacao(${loja.id})">
-                                <i class="fas fa-star"></i> Avaliar esta loja
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <h3 style="margin: 30px 0 20px;">Produtos</h3>
-                    <div class="produtos-grid">
-                        ${loja.produtos.map(p => `
-                            <div class="produto-card" onclick="abrirProduto(${p.id})">
-                                <div class="produto-image">
-                                    <img src="${p.imagem}" alt="${p.nome}">
-                                </div>
-                                <div class="produto-nome">${p.nome}</div>
-                                <div class="produto-preco">R$ ${p.preco.toFixed(2)}</div>
-                            </div>
-                        `).join('')}
-                    </div>
-                    
-                    <h3 style="margin: 30px 0 20px;">Avaliações</h3>
-                    <div id="avaliacoesLista">
-                        ${carregarAvaliacoes(loja.id)}
-                    </div>
-                    
-                    <div class="map-container" id="map"></div>
-                </div>
-            `;
+            const siteContent = document.getElementById('siteContent');
+            const lojaPage = document.getElementById('lojaPage');
             
-            document.getElementById('siteContent').classList.add('hidden');
-            document.getElementById('lojaPage').classList.remove('hidden');
+            if (content) {
+                content.innerHTML = `
+                    <div style="margin-bottom: 30px;">
+                        <div class="loja-page-header">
+                            <div class="loja-page-cover">
+                                <img src="${loja.imagem}" alt="${loja.nome}">
+                            </div>
+                            <div class="loja-page-info">
+                                <div class="loja-page-nome">${loja.nome}</div>
+                                <div class="loja-page-endereco">
+                                    <i class="fas fa-map-marker-alt"></i> ${loja.endereco}
+                                </div>
+                                <div class="loja-page-meta">
+                                    <div class="loja-page-meta-item">
+                                        <i class="fas fa-phone" style="color: var(--accent);"></i> ${loja.telefone}
+                                    </div>
+                                    <div class="loja-page-meta-item">
+                                        <i class="fab fa-whatsapp" style="color: #25D366;"></i> ${loja.whatsapp}
+                                    </div>
+                                    <div class="loja-page-meta-item">
+                                        <i class="fas fa-star" style="color: var(--warning);"></i> ${loja.avaliacao} (${loja.totalAvaliacoes} avaliações)
+                                    </div>
+                                </div>
+                                <p style="color: var(--gray); margin-top: 15px;">${loja.descricao}</p>
+                                <button class="banner-btn" style="margin-top: 15px;" onclick="abrirModalAvaliacao(${loja.id})">
+                                    <i class="fas fa-star"></i> Avaliar esta loja
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <h3 style="margin: 30px 0 20px;">Produtos</h3>
+                        <div class="produtos-grid">
+                            ${loja.produtos.map(p => `
+                                <div class="produto-card" onclick="abrirProduto(${p.id})">
+                                    <div class="produto-image">
+                                        <img src="${p.imagem}" alt="${p.nome}" loading="lazy">
+                                    </div>
+                                    <div class="produto-nome">${p.nome}</div>
+                                    <div class="produto-preco">R$ ${p.preco.toFixed(2)}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        
+                        <h3 style="margin: 30px 0 20px;">Avaliações</h3>
+                        <div id="avaliacoesLista">
+                            ${carregarAvaliacoes(loja.id)}
+                        </div>
+                        
+                        <div class="map-container" id="map"></div>
+                    </div>
+                `;
+            }
+            
+            if (siteContent) siteContent.classList.add('hidden');
+            if (lojaPage) lojaPage.classList.remove('hidden');
             
             setTimeout(() => {
                 inicializarMapa(loja);
@@ -1794,13 +1967,43 @@
         }
 
         function voltarHome() {
-            document.getElementById('lojaPage').classList.add('hidden');
-            document.getElementById('dashboardLojista').classList.add('hidden');
-            document.getElementById('siteContent').classList.remove('hidden');
+            const lojaPage = document.getElementById('lojaPage');
+            const dashboard = document.getElementById('dashboardLojista');
+            const siteContent = document.getElementById('siteContent');
+            const sidebar = document.getElementById('sidebar');
+            
+            if (lojaPage) lojaPage.classList.add('hidden');
+            if (dashboard) dashboard.classList.add('hidden');
+            if (siteContent) siteContent.classList.remove('hidden');
+            if (sidebar) sidebar.classList.remove('active');
+            
             carregarLojas();
         }
 
         // ==================== PRODUTOS ====================
+        function carregarProdutosDestaque() {
+            const destaques = lojas.flatMap(l => l.produtos).slice(0, 8);
+            const grid = document.getElementById('produtosDestaque');
+            
+            if (grid) {
+                grid.innerHTML = destaques.map(p => {
+                    const loja = lojas.find(l => l.produtos.some(prod => prod.id === p.id));
+                    return `
+                        <div class="featured-item" onclick="abrirProduto(${p.id})">
+                            <div class="featured-image">
+                                <img src="${p.imagem}" alt="${p.nome}" loading="lazy">
+                            </div>
+                            <div class="featured-info">
+                                <div class="featured-nome">${p.nome}</div>
+                                <div class="featured-preco">R$ ${p.preco.toFixed(2)}</div>
+                                <div class="featured-loja">${loja.nome}</div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+
         function abrirProduto(id) {
             let produtoEncontrado = null;
             let lojaEncontrada = null;
@@ -1831,6 +2034,82 @@
             abrirModal('modalProduto');
         }
 
+        // ==================== FILTROS ====================
+        function filtrarCategoria(categoria) {
+            // Atualizar classes active
+            document.querySelectorAll('.filter-chip, .categories-list a, .sidebar-menu a').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            if (event?.currentTarget) {
+                event.currentTarget.classList.add('active');
+            }
+            
+            const lojasFiltradas = categoria === 'todos' 
+                ? lojas 
+                : lojas.filter(l => l.categoria === categoria);
+            
+            atualizarGridLojas(lojasFiltradas, categoria === 'todos' ? 'Todas as lojas' : `Lojas de ${categoria}`);
+        }
+
+        function filtrarBairro(bairro) {
+            const lojasFiltradas = lojas.filter(l => l.bairro === bairro);
+            atualizarGridLojas(lojasFiltradas, `Lojas em ${bairro}`);
+        }
+
+        function buscarLojasInstantaneo() {
+            clearTimeout(timeoutBusca);
+            
+            const termo = document.getElementById('searchInput').value.toLowerCase();
+            
+            if (termo.length < 2 && termo.length > 0) return;
+            
+            timeoutBusca = setTimeout(() => {
+                const lojasFiltradas = lojas.filter(l => 
+                    l.nome.toLowerCase().includes(termo) || 
+                    l.descricao.toLowerCase().includes(termo) ||
+                    l.produtos.some(p => p.nome.toLowerCase().includes(termo))
+                );
+                
+                atualizarGridLojas(lojasFiltradas, termo ? `Resultados para "${termo}"` : 'Todas as lojas');
+            }, 300);
+        }
+
+        function ordenarLojas(tipo) {
+            let lojasOrdenadas = [...lojas];
+            
+            switch(tipo) {
+                case 'avaliacao':
+                    lojasOrdenadas.sort((a, b) => b.avaliacao - a.avaliacao);
+                    break;
+                case 'nome':
+                    lojasOrdenadas.sort((a, b) => a.nome.localeCompare(b.nome));
+                    break;
+                default:
+                    lojasOrdenadas = lojas;
+            }
+            
+            atualizarGridLojas(lojasOrdenadas, document.getElementById('tituloLojas').textContent);
+        }
+
+        function atualizarGridLojas(lojasParaMostrar, titulo) {
+            const grid = document.getElementById('lojasGrid');
+            const tituloEl = document.getElementById('tituloLojas');
+            const totalEl = document.getElementById('totalLojas');
+            
+            if (tituloEl) tituloEl.textContent = titulo;
+            if (totalEl) totalEl.textContent = `${lojasParaMostrar.length} lojas encontradas`;
+            
+            if (lojasParaMostrar.length === 0) {
+                if (grid) grid.innerHTML = '<div style="text-align: center; padding: 50px; grid-column: 1/-1;">Nenhuma loja encontrada</div>';
+                return;
+            }
+            
+            if (grid) {
+                grid.innerHTML = lojasParaMostrar.map(loja => criarCardLoja(loja)).join('');
+            }
+        }
+
         // ==================== FAVORITOS ====================
         function toggleFavorito(id) {
             const index = favoritos.indexOf(id);
@@ -1842,7 +2121,14 @@
                 mostrarToast('Removido dos favoritos');
             }
             localStorage.setItem('rimso_favoritos', JSON.stringify(favoritos));
-            carregarLojas();
+            
+            // Atualizar ícones na página atual
+            document.querySelectorAll(`.loja-favorite i`).forEach(icon => {
+                const card = icon.closest('.loja-card');
+                if (card && card.querySelector(`[onclick*="abrirLoja(${id})"]`)) {
+                    icon.className = favoritos.includes(id) ? 'fas fa-heart' : 'far fa-heart';
+                }
+            });
         }
 
         // ==================== AVALIAÇÕES ====================
@@ -1857,37 +2143,41 @@
                 <div class="avaliacao-item">
                     <div class="avaliacao-header">
                         <div class="avaliacao-usuario">
-                            <div class="avaliacao-avatar">${av.usuario.charAt(0)}</div>
-                            <span>${av.usuario}</span>
+                            <div class="avaliacao-avatar">${av.usuario?.charAt(0) || 'U'}</div>
+                            <span>${av.usuario || 'Cliente'}</span>
                         </div>
                         <div class="avaliacao-nota">${'★'.repeat(av.nota)}${'☆'.repeat(5-av.nota)}</div>
                     </div>
                     <div class="avaliacao-data">${new Date(av.data).toLocaleDateString()}</div>
                     <div class="avaliacao-comentario">${av.comentario}</div>
-                    ${av.fotos ? `
-                        <div class="avaliacao-fotos">
-                            ${av.fotos.map(() => `<div class="avaliacao-foto" style="background: var(--light); display: flex; align-items: center; justify-content: center;">📸</div>`).join('')}
-                        </div>
-                    ` : ''}
                 </div>
             `).join('');
         }
 
         function abrirModalAvaliacao(lojaId) {
-            document.getElementById('modalAvaliar').dataset.lojaId = lojaId;
-            
-            // Resetar estrelas
-            document.querySelectorAll('#ratingStars i').forEach(star => {
-                star.className = 'far fa-star';
-            });
-            
-            abrirModal('modalAvaliar');
+            const modal = document.getElementById('modalAvaliar');
+            if (modal) {
+                modal.dataset.lojaId = lojaId;
+                
+                // Resetar estrelas
+                const stars = modal.querySelectorAll('#ratingStars i');
+                stars.forEach(star => {
+                    star.className = 'far fa-star';
+                });
+                
+                // Limpar comentário
+                const comentario = document.getElementById('avaliacaoComentario');
+                if (comentario) comentario.value = '';
+                
+                abrirModal('modalAvaliar');
+            }
         }
 
         function enviarAvaliacao() {
-            const lojaId = parseInt(document.getElementById('modalAvaliar').dataset.lojaId);
+            const modal = document.getElementById('modalAvaliar');
+            const lojaId = parseInt(modal?.dataset.lojaId || '0');
             const nota = document.querySelectorAll('#ratingStars i.fas').length;
-            const comentario = document.getElementById('avaliacaoComentario').value;
+            const comentario = document.getElementById('avaliacaoComentario')?.value || '';
             
             if (nota === 0) {
                 mostrarToast('Selecione uma nota', 'error');
@@ -1897,7 +2187,7 @@
             const novaAvaliacao = {
                 id: Date.now(),
                 lojaId,
-                usuario: 'Cliente',
+                usuario: usuarioLogado?.nome || 'Cliente',
                 nota,
                 comentario,
                 data: new Date().toISOString()
@@ -1911,26 +2201,10 @@
             
             // Se estiver na página da loja, recarregar avaliações
             if (lojaAtual && lojaAtual.id === lojaId) {
-                document.getElementById('avaliacoesLista').innerHTML = carregarAvaliacoes(lojaId);
+                const lista = document.getElementById('avaliacoesLista');
+                if (lista) lista.innerHTML = carregarAvaliacoes(lojaId);
             }
         }
-
-        // Evento das estrelas
-        document.addEventListener('DOMContentLoaded', function() {
-            const stars = document.querySelectorAll('#ratingStars i');
-            stars.forEach(star => {
-                star.addEventListener('click', function() {
-                    const rating = parseInt(this.dataset.rating);
-                    stars.forEach((s, i) => {
-                        if (i < rating) {
-                            s.className = 'fas fa-star';
-                        } else {
-                            s.className = 'far fa-star';
-                        }
-                    });
-                });
-            });
-        });
 
         // ==================== MAPA ====================
         function inicializarMapa(loja) {
@@ -1942,23 +2216,35 @@
             // Coordenadas aproximadas de Piracicaba
             const pos = { lat: -22.7243, lng: -47.6475 };
             
-            const map = new google.maps.Map(mapDiv, {
+            map = new google.maps.Map(mapDiv, {
                 center: pos,
-                zoom: 15
+                zoom: 15,
+                styles: [
+                    {
+                        featureType: 'poi.business',
+                        elementType: 'labels',
+                        stylers: [{ visibility: 'on' }]
+                    }
+                ]
             });
             
             new google.maps.Marker({
                 position: pos,
                 map: map,
-                title: loja.nome
+                title: loja.nome,
+                animation: google.maps.Animation.DROP
             });
         }
 
         // ==================== DASHBOARD ====================
         function mostrarDashboard() {
-            document.getElementById('siteContent').classList.add('hidden');
-            document.getElementById('lojaPage').classList.add('hidden');
-            document.getElementById('dashboardLojista').classList.remove('hidden');
+            const siteContent = document.getElementById('siteContent');
+            const lojaPage = document.getElementById('lojaPage');
+            const dashboard = document.getElementById('dashboardLojista');
+            
+            if (siteContent) siteContent.classList.add('hidden');
+            if (lojaPage) lojaPage.classList.add('hidden');
+            if (dashboard) dashboard.classList.remove('hidden');
         }
 
         // ==================== CONTATO ====================
@@ -1970,8 +2256,8 @@
         // ==================== LOGIN / CADASTRO ====================
         function fazerLogin(event) {
             event.preventDefault();
-            const email = document.getElementById('loginEmail').value;
-            const senha = document.getElementById('loginSenha').value;
+            const email = document.getElementById('loginEmail')?.value;
+            const senha = document.getElementById('loginSenha')?.value;
             
             // Simular login
             usuarioLogado = { nome: 'Lojista', email };
@@ -1981,40 +2267,75 @@
 
         function fazerCadastro(event) {
             event.preventDefault();
-            const nome = document.getElementById('cadastroNome').value;
+            const nome = document.getElementById('cadastroNome')?.value;
             
-            usuarios.push({ nome });
-            localStorage.setItem('rimso_usuarios', JSON.stringify(usuarios));
-            
-            mostrarToast('✅ Cadastro realizado com sucesso!');
-            fecharModal('modalCadastro');
+            if (nome) {
+                usuarios.push({ nome });
+                localStorage.setItem('rimso_usuarios', JSON.stringify(usuarios));
+                
+                mostrarToast('✅ Cadastro realizado com sucesso!');
+                fecharModal('modalCadastro');
+            }
         }
 
         // ==================== MODAIS ====================
         function abrirModal(modalId) {
-            document.getElementById(modalId).classList.add('active');
+            const modal = document.getElementById(modalId);
+            if (modal) modal.classList.add('active');
         }
 
         function fecharModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
+            const modal = document.getElementById(modalId);
+            if (modal) modal.classList.remove('active');
         }
 
         // ==================== TOAST ====================
         function mostrarToast(mensagem, tipo = 'success') {
             const toast = document.getElementById('toast');
+            if (!toast) return;
+            
             toast.textContent = mensagem;
             toast.className = `toast ${tipo} show`;
-            setTimeout(() => toast.classList.remove('show'), 3000);
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
         }
 
-        // Fechar modais clicando fora
-        window.onclick = function(event) {
-            if (event.target.classList.contains('modal')) {
-                event.target.classList.remove('active');
+        // ==================== LOADING ====================
+        function mostrarLoading(mostrar = true) {
+            let loading = document.getElementById('loading-spinner');
+            
+            if (mostrar) {
+                if (!loading) {
+                    loading = document.createElement('div');
+                    loading.id = 'loading-spinner';
+                    loading.className = 'loading-spinner';
+                    document.body.appendChild(loading);
+                }
+            } else {
+                if (loading) {
+                    loading.remove();
+                }
             }
-        };
+        }
+
+        // ==================== MENU MOBILE ====================
+        function toggleMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.querySelector('.sidebar-overlay') || criarOverlay();
+            
+            if (sidebar) sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        function criarOverlay() {
+            const overlay = document.createElement('div');
+            overlay.className = 'sidebar-overlay';
+            overlay.onclick = toggleMobileMenu;
+            document.body.appendChild(overlay);
+            return overlay;
+        }
     </script>
 </body>
 </html>
-
-
