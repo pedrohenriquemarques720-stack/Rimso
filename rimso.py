@@ -17,71 +17,82 @@ st.set_page_config(
 # URL do seu index.html no GitHub
 GITHUB_HTML_URL = "https://raw.githubusercontent.com/pedrohenriquemarques720-stack/Rimso/refs/heads/main/index.html"
 
-# ==================== FUNÇÃO PARA LER ARQUIVOS JS DIRETAMENTE ====================
+# ==================== LISTA CORRETA DOS ARQUIVOS (SEM ACENTO) ====================
+ARQUIVOS_JS = [
+    "avaliacoes.js",      # antes era avaliaçoes.js
+    "feed.js",
+    "favoritos.js",
+    "rotas.js",
+    "filtros.js",         # antes era filtrosavan.js
+    "notificacoes.js",    # antes era notificaçoes.js
+    "estatisticas.js",
+    "promocoes.js",       # antes era promoçoes.js
+    "compartilhar.js",
+    "admin.js"            # antes era adminadv.js
+]
+
+# ==================== FUNÇÃO PARA LER ARQUIVOS JS ====================
 def ler_arquivo_js(nome_arquivo):
-    """Lê um arquivo JS da pasta static"""
-    try:
-        # Tentar diferentes caminhos
+    """Lê um arquivo JS da pasta static tentando diferentes nomes"""
+    
+    # Tentar diferentes variações do nome (com e sem acento)
+    variacoes = [
+        nome_arquivo,
+        nome_arquivo.replace('coes', 'çoes'),  # notificacoes -> notificaçoes
+        nome_arquivo.replace('coes', 'ções'),  # promocoes -> promoções
+        nome_arquivo.replace('coes', 'cões'),  # variante
+    ]
+    
+    for variacao in variacoes:
         caminhos_possiveis = [
-            f"static/{nome_arquivo}",
-            f"./static/{nome_arquivo}",
-            f"/mount/src/rimso/static/{nome_arquivo}",  # Caminho absoluto no Streamlit Cloud
+            f"static/{variacao}",
+            f"./static/{variacao}",
+            f"/mount/src/rimso/static/{variacao}",
         ]
         
         for caminho in caminhos_possiveis:
             if os.path.exists(caminho):
                 with open(caminho, 'r', encoding='utf-8') as f:
                     conteudo = f.read()
-                    print(f"✅ Arquivo {nome_arquivo} encontrado em: {caminho}")
-                    return conteudo
-        
-        print(f"❌ Arquivo {nome_arquivo} NÃO encontrado")
-        return None
-    except Exception as e:
-        print(f"❌ Erro ao ler {nome_arquivo}: {e}")
-        return None
+                    print(f"✅ Arquivo encontrado: {caminho}")
+                    return conteudo, variacao
+    
+    return None, nome_arquivo
 
 # ==================== CARREGAR TODOS OS SCRIPTS ====================
 def carregar_todos_scripts():
     """Carrega todos os arquivos JS e retorna como string única"""
     
-    # Lista de arquivos para carregar (COM ACENTOS)
-    arquivos = [
-        "avaliaçoes.js",
-        "feed.js",
-        "favoritos.js",
-        "rotas.js",
-        "filtrosavan.js",
-        "notificaçoes.js",
-        "estatisticas.js",
-        "promoçoes.js",
-        "compartilhar.js",
-        "adminadv.js"
-    ]
-    
     scripts = []
+    arquivos_encontrados = []
+    arquivos_nao_encontrados = []
     
-    for arquivo in arquivos:
-        conteudo = ler_arquivo_js(arquivo)
+    for arquivo in ARQUIVOS_JS:
+        conteudo, nome_encontrado = ler_arquivo_js(arquivo)
+        
         if conteudo:
-            # Envolver cada script em um bloco com console.log para debug
+            arquivos_encontrados.append(nome_encontrado)
             script_bloco = f"""
-// ========== INÍCIO DO ARQUIVO: {arquivo} ==========
-console.log('✅ Carregando: {arquivo}');
+// ========== INÍCIO: {nome_encontrado} ==========
+console.log('✅ Carregando: {nome_encontrado}');
 {conteudo}
-console.log('✅ Arquivo {arquivo} carregado com sucesso!');
-// ========== FIM DO ARQUIVO: {arquivo} ==========
+console.log('✅ Arquivo {nome_encontrado} carregado!');
+// ========== FIM: {nome_encontrado} ==========
 """
             scripts.append(script_bloco)
         else:
-            # Criar um script vazio com aviso
+            arquivos_nao_encontrados.append(arquivo)
             scripts.append(f"""
 // ========== ARQUIVO NÃO ENCONTRADO: {arquivo} ==========
 console.warn('⚠️ Arquivo {arquivo} não encontrado na pasta static');
 // ========== FIM ==========
 """)
     
-    return "\n\n".join(scripts)
+    # Log resumo
+    print(f"📊 Arquivos encontrados: {len(arquivos_encontrados)}")
+    print(f"📊 Arquivos não encontrados: {len(arquivos_nao_encontrados)}")
+    
+    return "\n\n".join(scripts), arquivos_encontrados, arquivos_nao_encontrados
 
 # ==================== FUNÇÃO PARA CARREGAR HTML ====================
 def carregar_html_github():
@@ -163,17 +174,14 @@ with st.sidebar:
         st.write(f"**URL:** {GITHUB_HTML_URL}")
         st.write(f"**Timestamp:** {datetime.now().strftime('%H:%M:%S')}")
         
-        # Verificar se a pasta static existe
+        # Verificar arquivos na pasta static
         if os.path.exists('static'):
             arquivos = os.listdir('static')
-            arquivos_js = [f for f in arquivos if f.endswith('.js')]
-            st.write(f"**Arquivos JS encontrados:** {len(arquivos_js)}")
-            for js in arquivos_js:
-                st.write(f"  - {js}")
+            st.write(f"**Arquivos na pasta static:** {len(arquivos)}")
+            for arquivo in arquivos[:10]:  # Mostrar apenas 10
+                st.write(f"  - {arquivo}")
         else:
             st.write("**Pasta 'static' NÃO encontrada!**")
-            st.write("**Diretório atual:**", os.getcwd())
-            st.write("**Conteúdo do diretório:**", os.listdir('.'))
 
 # ==================== ÁREA PRINCIPAL ====================
 status_placeholder.info("⏳ Carregando RIMSO...")
@@ -184,42 +192,40 @@ with st.spinner("🔄 Carregando interface..."):
     
     if html_content:
         # Carregar todos os scripts
-        todos_scripts = carregar_todos_scripts()
+        todos_scripts, encontrados, nao_encontrados = carregar_todos_scripts()
         
         # REMOVER todas as tags <script src="..."> do HTML original
-        # Isso evita que o navegador tente baixar arquivos que não existem
         html_content = re.sub(r'<script\s+src="[^"]*\.js"[^>]*>\s*</script>', '', html_content)
         html_content = re.sub(r'<script\s+src="[^"]*\.js"[^>]*>', '', html_content)
         
-        # REMOVER também tags com caminhos errados
-        html_content = re.sub(r'<link[^>]*href="[^"]*\.css"[^>]*>', '', html_content)
-        
-        # Injetar TODOS os scripts antes do fechamento do body
+        # Injetar TODOS os scripts
         script_completo = f"""
 <script>
-// ===== TODOS OS SCRIPTS CARREGADOS DIRETAMENTE =====
-console.log('🚀 Iniciando carregamento dos scripts RIMSO...');
+// ===== TODOS OS SCRIPTS RIMSO =====
+console.log('🚀 Iniciando carregamento dos scripts...');
+console.log('📊 Arquivos encontrados: {len(encontrados)}');
+console.log('📊 Arquivos não encontrados: {len(nao_encontrados)}');
 {todos_scripts}
-console.log('✅ Todos os scripts RIMSO carregados com sucesso!');
+console.log('✅ Todos os scripts processados!');
 </script>
 """
         
         html_content = html_content.replace('</body>', f'{script_completo}</body>')
         
-        # Injetar o HTML modificado
+        # Injetar o HTML
         html(html_content, height=1000, scrolling=True)
         
         # Atualizar status
-        status_placeholder.success(f"✅ RIMSO carregado com {len(todos_scripts)} caracteres de scripts!")
+        if len(encontrados) > 0:
+            status_placeholder.success(f"✅ {len(encontrados)} arquivos carregados, {len(nao_encontrados)} não encontrados")
+        else:
+            status_placeholder.error("❌ Nenhum arquivo JS encontrado!")
         
         # Mostrar na sidebar
         with st.sidebar:
-            st.success(f"✅ Scripts injetados: {len(todos_scripts)} caracteres")
+            if encontrados:
+                st.success(f"✅ Encontrados: {', '.join(encontrados)}")
+            if nao_encontrados:
+                st.error(f"❌ Não encontrados: {', '.join(nao_encontrados)}")
     else:
         status_placeholder.error("❌ Falha ao carregar")
-        st.markdown("""
-        <div style="text-align: center; padding: 50px;">
-            <h1 style="color: #DD0000;">😕 Erro ao carregar</h1>
-            <p style="color: #6B7280;">Não foi possível carregar o RIMSO do GitHub</p>
-        </div>
-        """, unsafe_allow_html=True)
