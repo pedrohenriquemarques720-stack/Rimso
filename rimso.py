@@ -50,9 +50,9 @@ def ler_arquivo_js(nome_arquivo):
                 pass
     return None, None
 
-# ==================== CARREGAR TODOS OS SCRIPTS COM PROTEÇÃO ====================
+# ==================== CARREGAR TODOS OS SCRIPTS ====================
 def carregar_todos_scripts():
-    """Carrega todos os arquivos JS e adiciona proteção contra erros"""
+    """Carrega todos os arquivos JS"""
     
     scripts = []
     todos_conteudos = []
@@ -61,19 +61,11 @@ def carregar_todos_scripts():
         conteudo, caminho = ler_arquivo_js(arquivo)
         
         if conteudo:
-            # Adicionar proteção para evitar declarações duplicadas
-            if 'avaliacoes' in arquivo:
-                conteudo = re.sub(r'(let|const|var)\s+avaliacoes\s*=', '// REMOVIDO: variável avaliacoes já declarada', conteudo)
-            
             script_bloco = f"""
 // ========== {arquivo} ==========
 console.log('✅ Carregando: {arquivo}');
-try {{
 {conteudo}
-}} catch(e) {{
-    console.warn('⚠️ Erro em {arquivo}:', e.message);
-}}
-console.log('✅ {arquivo} processado');
+console.log('✅ {arquivo} carregado');
 """
             scripts.append(script_bloco)
             todos_conteudos.append(arquivo)
@@ -137,58 +129,107 @@ with st.spinner("🔄 Carregando..."):
         # Carregar scripts
         todos_scripts, encontrados = carregar_todos_scripts()
         
-        # Remover tags script do HTML
+        # Remover tags script do HTML original (para não duplicar)
         html_content = re.sub(r'<script\s+src="[^"]*\.js"[^>]*>.*?</script>', '', html_content, flags=re.DOTALL)
         
-        # Script de inicialização com proteções
+        # ===== SCRIPT DE INICIALIZAÇÃO QUE REALMENTE CHAMA AS FUNÇÕES =====
         script_inicializacao = """
 <script>
-// ===== SISTEMA DE INICIALIZAÇÃO RIMSO =====
-console.log('🚀 Inicializando RIMSO...');
+// ===== INICIALIZAÇÃO DAS FUNÇÕES =====
+console.log('🚀 Inicializando módulos do RIMSO...');
 
-// Aguardar DOM carregar
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('📦 DOM carregado, iniciando módulos...');
+function inicializarTodosModulos() {
+    console.log('📦 Iniciando criação dos elementos na interface...');
     
+    // Aguardar um pouco para o DOM estar pronto
     setTimeout(() => {
         try {
-            // Inicializar cada módulo com proteção
-            if (typeof inicializarAvaliacoes === 'function') {
-                inicializarAvaliacoes();
-                console.log('✅ Avaliações OK');
+            // ===== 1. CRIAR MODAIS =====
+            if (typeof criarModalAvaliacao === 'function') {
+                criarModalAvaliacao();
+                console.log('✅ Modal de avaliação criado');
             }
             
-            if (typeof inicializarFeed === 'function') {
-                inicializarFeed();
-                console.log('✅ Feed OK');
+            if (typeof criarModalListas === 'function') {
+                criarModalListas();
+                console.log('✅ Modal de listas criado');
             }
             
-            if (typeof inicializarFavoritos === 'function') {
-                inicializarFavoritos();
-                console.log('✅ Favoritos OK');
+            if (typeof criarPainelNotificacoes === 'function') {
+                criarPainelNotificacoes();
+                console.log('✅ Painel de notificações criado');
             }
             
-            if (typeof inicializarNotificacoes === 'function') {
-                inicializarNotificacoes();
-                console.log('✅ Notificações OK');
+            if (typeof criarModalPromocao === 'function') {
+                criarModalPromocao();
+                console.log('✅ Modal de promoções criado');
             }
             
-            console.log('🎉 RIMSO inicializado com sucesso!');
+            // ===== 2. ADICIONAR ELEMENTOS NA INTERFACE =====
+            if (typeof adicionarBotoesAvaliacao === 'function') {
+                adicionarBotoesAvaliacao();
+                console.log('✅ Botões de avaliação adicionados');
+            }
+            
+            if (typeof adicionarBotaoCompartilhar === 'function') {
+                adicionarBotaoCompartilhar();
+                console.log('✅ Botões de compartilhar adicionados');
+            }
+            
+            if (typeof modificarBotoesFavorito === 'function') {
+                modificarBotoesFavorito();
+                console.log('✅ Botões de favorito modificados');
+            }
+            
+            if (typeof adicionarItemMenuFeed === 'function') {
+                adicionarItemMenuFeed();
+                console.log('✅ Item Feed adicionado ao menu');
+            }
+            
+            if (typeof adicionarBotaoPromocoes === 'function') {
+                adicionarBotaoPromocoes();
+                console.log('✅ Botão de promoções adicionado');
+            }
+            
+            // ===== 3. INICIALIZAR DADOS =====
+            if (typeof criarFeedInicial === 'function') {
+                criarFeedInicial();
+                console.log('✅ Feed inicializado');
+            }
+            
+            console.log('🎉 TODOS os módulos foram inicializados com sucesso!');
+            
         } catch(e) {
-            console.warn('⚠️ Erro na inicialização:', e);
+            console.warn('⚠️ Erro durante inicialização:', e);
         }
-    }, 500);
+    }, 1000); // Aguardar 1 segundo para o DOM estar pronto
+}
+
+// Iniciar quando a página carregar
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('📄 DOM carregado, iniciando módulos...');
+    inicializarTodosModulos();
 });
+
+// Também tentar quando o iframe estiver pronto
+window.onload = function() {
+    console.log('🖼️ Janela carregada, verificando módulos...');
+    inicializarTodosModulos();
+};
 </script>
 """
         
-        # Injetar scripts
+        # Injetar scripts no HTML
         html_content = html_content.replace('</head>', f'{script_inicializacao}</head>')
         html_content = html_content.replace('</body>', f'<script>{todos_scripts}</script></body>')
         
-        # Mostrar resultado
+        # Injetar o HTML modificado
         html(html_content, height=1000, scrolling=True)
         
-        status_placeholder.success(f"✅ {len(encontrados)} arquivos carregados")
+        status_placeholder.success(f"✅ {len(encontrados)} arquivos carregados e funções inicializadas!")
+        
+        # Mostrar quais arquivos foram encontrados
+        with st.sidebar:
+            st.success(f"✅ Arquivos carregados: {', '.join(encontrados)}")
     else:
         status_placeholder.error("❌ Falha ao carregar")
