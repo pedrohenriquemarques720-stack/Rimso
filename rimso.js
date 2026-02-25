@@ -1,4 +1,4 @@
-// ==================== RIMSO - FASE 1 COMPLETA ====================
+// ==================== RIMSO - FASE 1 COMPLETA (TUDO ATIVADO) ====================
 console.log('🚀 RIMSO Fase 1 - Carregando...');
 
 // ==================== 1. DADOS ====================
@@ -68,6 +68,18 @@ const feed = [
         curtidas: 89,
         comentarios: 23,
         data: new Date().toISOString()
+    },
+    {
+        id: 3,
+        tipo: 'cliente',
+        usuario: 'João Pedro',
+        avatar: '👨',
+        loja: 'Kids Fashion',
+        mensagem: 'Roupas lindas para meu bebê! 🧸',
+        imagem: '👶',
+        curtidas: 67,
+        comentarios: 15,
+        data: new Date(Date.now() - 86400000).toISOString()
     }
 ];
 
@@ -127,7 +139,7 @@ function timeAgo(dataISO) {
     return `há ${diffDia} dias`;
 }
 
-// ==================== 3. TELA DE LOJAS ====================
+// ==================== 3. TELA DE LOJAS (FUNCIONANDO) ====================
 function mostrarLojas() {
     console.log('🏪 Mostrando lojas');
     
@@ -164,7 +176,15 @@ function mostrarLojas() {
     lojasHTML += '</div>';
     clienteContent.innerHTML = lojasHTML;
     
-    // Adicionar eventos
+    // Eventos
+    adicionarEventosLojas();
+}
+
+// ==================== 4. EVENTOS DAS LOJAS ====================
+function adicionarEventosLojas() {
+    const doc = getDoc();
+    
+    // Clique no card (detalhes)
     doc.querySelectorAll('.loja-card').forEach(card => {
         card.addEventListener('click', (e) => {
             if (!e.target.classList.contains('btn-avaliar') && 
@@ -176,6 +196,7 @@ function mostrarLojas() {
         });
     });
     
+    // Botão Avaliar
     doc.querySelectorAll('.btn-avaliar').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -184,13 +205,15 @@ function mostrarLojas() {
         });
     });
     
+    // Botão Favorito
     doc.querySelectorAll('.btn-favorito').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
-            const id = btn.dataset.id;
-            const index = favoritos.indexOf(parseInt(id));
+            const id = parseInt(btn.dataset.id);
+            const index = favoritos.indexOf(id);
+            
             if (index === -1) {
-                favoritos.push(parseInt(id));
+                favoritos.push(id);
                 btn.style.background = '#DD0000';
                 btn.style.color = 'white';
                 mostrarToast('❤️ Adicionado aos favoritos');
@@ -204,18 +227,28 @@ function mostrarLojas() {
         });
     });
     
+    // Botão Compartilhar
     doc.querySelectorAll('.btn-compartilhar').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
-            const id = btn.dataset.id;
-            const loja = lojas.find(l => l.id == id);
-            navigator.clipboard.writeText(`Confira ${loja.nome} no RIMSO!`);
-            mostrarToast('📤 Link copiado!');
+            const id = parseInt(btn.dataset.id);
+            const loja = lojas.find(l => l.id === id);
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: loja.nome,
+                    text: `Confira ${loja.nome} no RIMSO!`,
+                    url: window.location.href
+                });
+            } else {
+                navigator.clipboard.writeText(`Confira ${loja.nome} no RIMSO!`);
+                mostrarToast('📤 Link copiado!');
+            }
         });
     });
 }
 
-// ==================== 4. DETALHES DA LOJA ====================
+// ==================== 5. DETALHES DA LOJA ====================
 function mostrarDetalhesLoja(id) {
     const loja = lojas.find(l => l.id === id);
     if (!loja) return;
@@ -269,7 +302,7 @@ function mostrarDetalhesLoja(id) {
     doc.querySelector('.btn-voltar').addEventListener('click', mostrarLojas);
 }
 
-// ==================== 5. MODAL DE AVALIAÇÃO ====================
+// ==================== 6. MODAL DE AVALIAÇÃO ====================
 function criarModalAvaliacao() {
     const doc = getDoc();
     if (doc.getElementById('modalAvaliacao')) return;
@@ -311,7 +344,7 @@ function criarModalAvaliacao() {
     
     doc.body.appendChild(modal);
     
-    // Eventos
+    // Eventos das estrelas
     let notaSelecionada = 0;
     const estrelas = modal.querySelectorAll('#estrelas i');
     
@@ -373,8 +406,10 @@ function abrirModalAvaliacao(id) {
     }
 }
 
-// ==================== 6. FEED ====================
+// ==================== 7. FEED DE NOVIDADES ====================
 function mostrarFeed() {
+    console.log('📱 Mostrando feed');
+    
     const doc = getDoc();
     const clienteContent = doc.getElementById('clienteContent');
     
@@ -394,6 +429,7 @@ function mostrarFeed() {
                         <strong>${post.tipo === 'cliente' ? post.usuario : post.loja}</strong>
                         <div style="font-size:12px; color:#6B7280;">${timeAgo(post.data)}</div>
                     </div>
+                    ${post.tipo === 'promocao' ? '<span style="background:#DD0000; color:white; padding:2px 8px; border-radius:20px; font-size:11px;">PROMO</span>' : ''}
                 </div>
                 
                 <p style="margin:10px 0;">${post.mensagem}</p>
@@ -403,7 +439,7 @@ function mostrarFeed() {
                 </div>
                 
                 <div style="display:flex; gap:20px; margin-top:15px;">
-                    <div style="display:flex; align-items:center; gap:5px; cursor:pointer;" onclick="curtirPost(${post.id})">
+                    <div style="display:flex; align-items:center; gap:5px; cursor:pointer;" class="curtir-post" data-id="${post.id}">
                         <i class="fa${curtido ? 's' : 'r'} fa-heart" style="color:#DD0000;"></i>
                         <span>${post.curtidas + (curtido ? 1 : 0)}</span>
                     </div>
@@ -418,6 +454,14 @@ function mostrarFeed() {
     
     feedHTML += '</div>';
     clienteContent.innerHTML = feedHTML;
+    
+    // Eventos de curtir
+    doc.querySelectorAll('.curtir-post').forEach(el => {
+        el.addEventListener('click', () => {
+            const id = parseInt(el.dataset.id);
+            curtirPost(id);
+        });
+    });
 }
 
 function curtirPost(id) {
@@ -429,14 +473,19 @@ function curtirPost(id) {
         curtidas.splice(index, 1);
     }
     localStorage.setItem('rimso_curtidas', JSON.stringify(curtidas));
-    mostrarFeed();
+    mostrarFeed(); // Recarrega o feed
 }
 
-// ==================== 7. MENU DO CLIENTE ====================
+// ==================== 8. MENU DO CLIENTE ====================
 function configurarMenu() {
     const doc = getDoc();
     const menu = doc.querySelector('#appCliente .sidebar-cliente');
-    if (!menu || menu.querySelector('[data-feed]')) return;
+    if (!menu) return;
+    
+    // Verificar se já tem o item Feed
+    if (menu.querySelector('[data-feed]')) return;
+    
+    console.log('📱 Configurando menu...');
     
     const feedItem = doc.createElement('div');
     feedItem.className = 'menu-item';
@@ -448,14 +497,23 @@ function configurarMenu() {
         mostrarFeed();
     };
     
-    const voltar = Array.from(menu.children).find(el => el.textContent.includes('Voltar'));
-    if (voltar) menu.insertBefore(feedItem, voltar);
+    // Inserir antes do Voltar
+    const itens = Array.from(menu.children);
+    const voltarItem = itens.find(el => el.textContent.includes('Voltar'));
+    if (voltarItem) {
+        menu.insertBefore(feedItem, voltarItem);
+    } else {
+        menu.appendChild(feedItem);
+    }
+    
+    console.log('✅ Menu configurado');
 }
 
-// ==================== 8. INICIALIZAÇÃO ====================
+// ==================== 9. INICIALIZAÇÃO ====================
 function iniciar() {
     console.log('🚀 Inicializando RIMSO Fase 1...');
     
+    // Criar modal de avaliação
     criarModalAvaliacao();
     
     // Observar modo cliente
@@ -464,11 +522,17 @@ function iniciar() {
         const appCliente = doc.getElementById('appCliente');
         
         if (appCliente && !appCliente.classList.contains('hidden')) {
+            // Configurar menu (só executa uma vez)
             configurarMenu();
             
+            // Verificar se precisa mostrar lojas
             const content = doc.getElementById('clienteContent');
             if (content && content.children.length === 1) {
-                mostrarLojas();
+                const primeiroFilho = content.children[0];
+                // Se for a mensagem de boas-vindas, mostra as lojas
+                if (primeiroFilho.textContent.includes('Bem-vindo')) {
+                    mostrarLojas();
+                }
             }
         }
     }, 1000);
@@ -476,7 +540,7 @@ function iniciar() {
     console.log('✅ RIMSO Fase 1 pronto!');
 }
 
-// Iniciar
+// Iniciar quando a página carregar
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', iniciar);
 } else {
