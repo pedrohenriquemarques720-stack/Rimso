@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RIMSO - Classificados de Roupas</title>
+    <title>RIMSO - Moda em Piracicaba</title>
     
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Google Maps -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&libraries=places"></script>
     
     <style>
         * {
@@ -21,36 +19,35 @@
         }
 
         :root {
-            --black: #000000;
-            --red: #DD0000;
-            --gold: #FFCE00;
-            --gold-light: #FFE55C;
-            --red-dark: #AA0000;
-            --gray: #6B7280;
-            --light: #F9FAFB;
-            --success: #10b981;
-            --border: #E5E7EB;
-            --gradient: linear-gradient(145deg, var(--red), var(--gold));
+            /* 🎯 NOVA PALETA 2026 - BASEADA EM PESQUISA DE MERCADO */
+            --cloud-dancer: #F8F9FA;      /* Branco suave - tendência #1 2026 */
+            --rich-teal: #1B4D6E;          /* Azul profundo - sofisticação */
+            --tangerine: #FF6B35;           /* Laranja vibrante - ação/urgência */
+            --banana: #FFE55C;               /* Amarelo pastel - otimismo */
+            --deep-luxe: #4A3B2F;            /* Marrom sofisticado - premium */
+            --primary-blue: #2563EB;         /* Azul confiável */
+            --soft-gray: #6B7280;             /* Cinza neutro */
+            --light-gray: #E5E7EB;            /* Cinza claro para bordas */
             
-            --bg-primary: #FFFFFF;
-            --bg-secondary: #F9FAFB;
+            /* Cores funcionais */
+            --bg-primary: var(--cloud-dancer);
             --text-primary: #1A1A1A;
             --text-secondary: #4A4A4A;
-            --card-bg: #FFFFFF;
+            --border: var(--light-gray);
             --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
             --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
             --transition: all 0.3s ease;
         }
 
         body {
-            background: linear-gradient(135deg, var(--black) 0%, var(--red-dark) 100%);
+            background: linear-gradient(135deg, #1A1A1A 0%, var(--deep-luxe) 100%);
             min-height: 100vh;
         }
 
-        /* ==================== HEADER DO SITE (IGUAL CARROSP) ==================== */
+        /* ==================== HEADER ==================== */
         .site-header {
-            background: white;
-            border-bottom: 3px solid var(--gold);
+            background: var(--cloud-dancer);
+            border-bottom: 3px solid var(--tangerine);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -78,11 +75,11 @@
         }
 
         .logo span {
-            color: var(--red);
+            color: var(--rich-teal);
         }
 
         .logo-tagline {
-            color: var(--text-secondary);
+            color: var(--soft-gray);
             font-size: 14px;
             border-left: 2px solid var(--border);
             padding-left: 15px;
@@ -96,8 +93,8 @@
 
         .btn-login {
             background: transparent;
-            border: 2px solid var(--red);
-            color: var(--red);
+            border: 2px solid var(--rich-teal);
+            color: var(--rich-teal);
             padding: 10px 25px;
             border-radius: 60px;
             font-weight: 600;
@@ -106,13 +103,13 @@
         }
 
         .btn-login:hover {
-            background: var(--red);
+            background: var(--rich-teal);
             color: white;
         }
 
         .btn-post {
-            background: var(--gold);
-            color: var(--black);
+            background: var(--tangerine);
+            color: white;
             border: none;
             padding: 10px 25px;
             border-radius: 60px;
@@ -125,13 +122,13 @@
         }
 
         .btn-post:hover {
-            background: var(--gold-light);
+            background: #E55A2B; /* Tangerine mais escuro */
             transform: scale(1.05);
         }
 
-        /* ==================== BARRA DE BUSCA (IGUAL CARROSP) ==================== */
+        /* ==================== BARRA DE BUSCA ==================== */
         .search-section {
-            background: var(--bg-secondary);
+            background: var(--cloud-dancer);
             padding: 30px;
             border-bottom: 2px solid var(--border);
         }
@@ -149,7 +146,7 @@
         }
 
         .search-title span {
-            color: var(--red);
+            color: var(--rich-teal);
         }
 
         .search-grid {
@@ -172,7 +169,7 @@
         }
 
         .search-input:focus {
-            border-color: var(--red);
+            border-color: var(--tangerine);
             outline: none;
         }
 
@@ -186,7 +183,7 @@
         }
 
         .search-btn {
-            background: var(--red);
+            background: var(--tangerine);
             color: white;
             border: none;
             padding: 15px 40px;
@@ -199,7 +196,7 @@
         }
 
         .search-btn:hover {
-            background: var(--red-dark);
+            background: #E55A2B;
             transform: scale(1.02);
         }
 
@@ -228,14 +225,14 @@
         }
 
         .filter-chip:hover {
-            border-color: var(--red);
-            background: var(--light);
+            border-color: var(--rich-teal);
+            background: var(--cloud-dancer);
         }
 
         .filter-chip.active {
-            background: var(--red);
+            background: var(--rich-teal);
             color: white;
-            border-color: var(--red);
+            border-color: var(--rich-teal);
         }
 
         /* ==================== CONTEÚDO PRINCIPAL ==================== */
@@ -266,10 +263,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            color: var(--rich-teal);
         }
 
         .clear-filters {
-            color: var(--red);
+            color: var(--tangerine);
             font-size: 14px;
             cursor: pointer;
         }
@@ -278,10 +276,6 @@
             margin-bottom: 25px;
             border-bottom: 1px solid var(--border);
             padding-bottom: 20px;
-        }
-
-        .filter-group:last-child {
-            border-bottom: none;
         }
 
         .filter-group h4 {
@@ -302,6 +296,7 @@
             width: 18px;
             height: 18px;
             cursor: pointer;
+            accent-color: var(--rich-teal);
         }
 
         .filter-option label {
@@ -311,7 +306,7 @@
         }
 
         .filter-option span {
-            color: var(--gray);
+            color: var(--soft-gray);
             font-size: 14px;
         }
 
@@ -343,7 +338,7 @@
         }
 
         .results-count strong {
-            color: var(--red);
+            color: var(--rich-teal);
             font-size: 20px;
         }
 
@@ -374,13 +369,13 @@
 
         .listing-card:hover {
             transform: translateY(-5px);
-            border-color: var(--red);
+            border-color: var(--tangerine);
             box-shadow: var(--shadow-lg);
         }
 
         .listing-image {
             height: 200px;
-            background: linear-gradient(145deg, rgba(221,0,0,0.05), rgba(255,206,0,0.05));
+            background: linear-gradient(145deg, var(--rich-teal)10, var(--tangerine)10);
             position: relative;
             display: flex;
             align-items: center;
@@ -392,8 +387,8 @@
             position: absolute;
             top: 15px;
             left: 15px;
-            background: var(--gold);
-            color: var(--black);
+            background: var(--banana);
+            color: var(--text-primary);
             padding: 5px 10px;
             border-radius: 60px;
             font-size: 12px;
@@ -412,7 +407,7 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            color: var(--red);
+            color: var(--tangerine);
             box-shadow: var(--shadow);
         }
 
@@ -430,14 +425,14 @@
         .listing-price {
             font-size: 24px;
             font-weight: 800;
-            color: var(--red);
+            color: var(--rich-teal);
             margin-bottom: 10px;
         }
 
         .listing-details {
             display: flex;
             gap: 15px;
-            color: var(--text-secondary);
+            color: var(--soft-gray);
             font-size: 14px;
             margin-bottom: 10px;
         }
@@ -446,7 +441,7 @@
             display: flex;
             align-items: center;
             gap: 5px;
-            color: var(--text-secondary);
+            color: var(--soft-gray);
             font-size: 14px;
             margin-bottom: 15px;
         }
@@ -460,173 +455,37 @@
         }
 
         .listing-store {
-            color: var(--text-primary);
+            color: var(--deep-luxe);
             font-weight: 600;
             font-size: 14px;
         }
 
         .listing-date {
-            color: var(--gray);
+            color: var(--soft-gray);
             font-size: 12px;
         }
 
-        /* ==================== PÁGINA DO ANÚNCIO ==================== */
-        .listing-detail {
-            background: white;
-            border-radius: 24px;
-            border: 2px solid var(--border);
-            overflow: hidden;
-        }
-
-        .detail-header {
-            padding: 30px;
-            border-bottom: 2px solid var(--border);
-        }
-
-        .detail-title {
-            font-size: 32px;
-            font-weight: 800;
-            margin-bottom: 10px;
-        }
-
-        .detail-price {
-            font-size: 36px;
-            font-weight: 800;
-            color: var(--red);
-            margin-bottom: 20px;
-        }
-
-        .detail-meta {
-            display: flex;
-            gap: 30px;
-            color: var(--text-secondary);
-        }
-
-        .detail-gallery {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 2px;
-            background: var(--border);
-        }
-
-        .main-image {
-            aspect-ratio: 1;
-            background: var(--light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 80px;
-        }
-
-        .thumbnails {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2px;
-        }
-
-        .thumbnail {
-            aspect-ratio: 1;
-            background: var(--light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-            cursor: pointer;
-        }
-
-        .detail-info {
-            padding: 30px;
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 30px;
-        }
-
-        .detail-section {
-            margin-bottom: 30px;
-        }
-
-        .detail-section h3 {
-            font-size: 20px;
-            margin-bottom: 15px;
-        }
-
-        .detail-seller {
-            background: var(--light);
-            border-radius: 20px;
-            padding: 25px;
-            position: sticky;
-            top: 100px;
-        }
-
-        .seller-name {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-
-        .seller-rating {
-            color: var(--gold);
-            margin-bottom: 20px;
-        }
-
-        .seller-contact {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .contact-btn {
-            padding: 15px;
-            border-radius: 60px;
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .btn-whatsapp {
-            background: #25D366;
-            color: white;
-        }
-
-        .btn-whatsapp:hover {
-            background: #128C7E;
-        }
-
-        .btn-phone {
-            background: var(--red);
-            color: white;
-        }
-
-        .btn-phone:hover {
-            background: var(--red-dark);
-        }
-
-        /* ==================== DASHBOARD DO LOJISTA (MANTIDO) ==================== */
+        /* ==================== DASHBOARD LOJISTA ==================== */
         .app-lojista {
             max-width: 1600px;
             margin: 0 auto;
-            background: var(--bg-primary);
+            background: var(--cloud-dancer);
             border-radius: 40px;
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
             overflow: hidden;
             display: grid;
             grid-template-columns: 280px 1fr;
             min-height: 95vh;
-            border: 3px solid var(--gold);
+            border: 3px solid var(--tangerine);
         }
 
         .sidebar-lojista {
-            background: var(--black);
+            background: var(--deep-luxe);
             color: white;
             padding: 30px 20px;
             display: flex;
             flex-direction: column;
-            border-right: 3px solid var(--gold);
+            border-right: 3px solid var(--tangerine);
             height: 95vh;
             overflow-y: auto;
         }
@@ -640,15 +499,15 @@
         }
 
         .logo span {
-            color: var(--red);
+            color: var(--tangerine);
         }
 
         .user-info {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             padding: 15px;
             margin-bottom: 20px;
-            border: 1px solid var(--gold);
+            border: 1px solid var(--tangerine);
         }
 
         .menu-item {
@@ -665,12 +524,12 @@
 
         .menu-item:hover {
             background: rgba(255, 255, 255, 0.1);
-            color: var(--gold);
+            color: var(--tangerine);
         }
 
         .menu-item.active {
-            background: var(--red);
-            color: white;
+            background: var(--tangerine);
+            color: var(--deep-luxe);
         }
 
         .stats-grid {
@@ -690,7 +549,7 @@
         .stat-value {
             font-size: 32px;
             font-weight: 800;
-            color: var(--red);
+            color: var(--tangerine);
             margin-top: 10px;
         }
 
@@ -718,7 +577,28 @@
             padding: 30px;
             max-width: 500px;
             width: 90%;
-            border: 3px solid var(--gold);
+            border: 3px solid var(--tangerine);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h2 {
+            color: var(--rich-teal);
+        }
+
+        .modal-close {
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--soft-gray);
+        }
+
+        .modal-close:hover {
+            color: var(--tangerine);
         }
 
         .hidden {
@@ -739,54 +619,68 @@
             transform: translateY(100px);
             opacity: 0;
             transition: var(--transition);
-            border: 2px solid var(--gold);
+            border: 2px solid var(--tangerine);
         }
 
         .toast.show {
             transform: translateY(0);
             opacity: 1;
         }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .search-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- HEADER IGUAL CARROSP -->
+    <!-- HEADER -->
     <header class="site-header">
         <div class="header-container">
             <div class="logo-area">
                 <div class="logo">RIM<span>SO</span></div>
-                <div class="logo-tagline">Roupas novas e usadas em Piracicaba</div>
+                <div class="logo-tagline">Moda em Piracicaba</div>
             </div>
             <div class="user-actions">
                 <button class="btn-login" onclick="abrirModal('modalLogin')">
                     <i class="fas fa-user"></i> Entrar
                 </button>
                 <button class="btn-post" onclick="window.location.href='#lojista'">
-                    <i class="fas fa-plus-circle"></i> Anunciar Agora
+                    <i class="fas fa-plus-circle"></i> Anunciar
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- BARRA DE BUSCA PRINCIPAL -->
+    <!-- BARRA DE BUSCA -->
     <section class="search-section">
         <div class="search-container">
             <div class="search-title">
-                Encontre <span>roupas</span> perto de você
+                Encontre <span>moda</span> perto de você
             </div>
             <div class="search-grid">
-                <input type="text" class="search-input" placeholder="O que você procura? (ex: vestido, calça, jaqueta)">
+                <input type="text" class="search-input" placeholder="O que você procura?">
                 <select class="search-select">
                     <option value="">Todos os bairros</option>
                     <option value="centro">Centro</option>
                     <option value="alto">Alto</option>
                     <option value="pauliceia">Pauliceia</option>
-                    <option value="cecap">Cecap</option>
                 </select>
                 <select class="search-select">
+                    <option value="">Todos os preços</option>
                     <option value="">Até R$ 100</option>
                     <option value="">R$ 100 - R$ 200</option>
-                    <option value="">R$ 200 - R$ 500</option>
-                    <option value="">Acima de R$ 500</option>
                 </select>
                 <button class="search-btn" onclick="buscarAnuncios()">
                     <i class="fas fa-search"></i> Buscar
@@ -797,24 +691,23 @@
 
     <!-- FILTROS RÁPIDOS -->
     <div class="quick-filters">
-        <span class="filter-chip active"><i class="fas fa-fire"></i> Todos</span>
-        <span class="filter-chip"><i class="fas fa-female"></i> Feminino</span>
-        <span class="filter-chip"><i class="fas fa-male"></i> Masculino</span>
-        <span class="filter-chip"><i class="fas fa-child"></i> Infantil</span>
-        <span class="filter-chip"><i class="fas fa-star"></i> Plus Size</span>
-        <span class="filter-chip"><i class="fas fa-hat-cowboy"></i> Streetwear</span>
-        <span class="filter-chip"><i class="fas fa-shoe-prints"></i> Calçados</span>
-        <span class="filter-chip"><i class="fas fa-tshirt"></i> Camisetas</span>
-        <span class="filter-chip"><i class="fas fa-vest"></i> Vestidos</span>
+        <span class="filter-chip active">Todos</span>
+        <span class="filter-chip">Feminino</span>
+        <span class="filter-chip">Masculino</span>
+        <span class="filter-chip">Infantil</span>
+        <span class="filter-chip">Plus Size</span>
+        <span class="filter-chip">Streetwear</span>
+        <span class="filter-chip">Calçados</span>
+        <span class="filter-chip">Acessórios</span>
     </div>
 
-    <!-- CONTEÚDO PRINCIPAL (SITE) -->
+    <!-- CONTEÚDO PRINCIPAL -->
     <div id="siteContent" class="main-content">
-        <!-- SIDEBAR DE FILTROS -->
+        <!-- SIDEBAR FILTROS -->
         <aside class="filters-sidebar">
             <div class="filter-title">
                 Filtros
-                <span class="clear-filters">Limpar todos</span>
+                <span class="clear-filters">Limpar</span>
             </div>
 
             <div class="filter-group">
@@ -834,11 +727,6 @@
                     <label for="cat3">Infantil</label>
                     <span>(89)</span>
                 </div>
-                <div class="filter-option">
-                    <input type="checkbox" id="cat4">
-                    <label for="cat4">Plus Size</label>
-                    <span>(67)</span>
-                </div>
             </div>
 
             <div class="filter-group">
@@ -847,64 +735,6 @@
                     <input type="text" class="price-input" placeholder="R$ min">
                     <input type="text" class="price-input" placeholder="R$ máx">
                 </div>
-                <div class="filter-option">
-                    <input type="checkbox" id="price1">
-                    <label for="price1">Até R$ 50</label>
-                    <span>(145)</span>
-                </div>
-                <div class="filter-option">
-                    <input type="checkbox" id="price2">
-                    <label for="price2">R$ 50 - R$ 100</label>
-                    <span>(234)</span>
-                </div>
-                <div class="filter-option">
-                    <input type="checkbox" id="price3">
-                    <label for="price3">R$ 100 - R$ 200</label>
-                    <span>(178)</span>
-                </div>
-            </div>
-
-            <div class="filter-group">
-                <h4>Condição</h4>
-                <div class="filter-option">
-                    <input type="checkbox" id="new">
-                    <label for="new">Novo</label>
-                    <span>(345)</span>
-                </div>
-                <div class="filter-option">
-                    <input type="checkbox" id="used">
-                    <label for="used">Usado</label>
-                    <span>(234)</span>
-                </div>
-            </div>
-
-            <div class="filter-group">
-                <h4>Tamanho</h4>
-                <div class="filter-option">
-                    <input type="checkbox" id="pp">
-                    <label for="pp">PP</label>
-                    <span>(89)</span>
-                </div>
-                <div class="filter-option">
-                    <input type="checkbox" id="p">
-                    <label for="p">P</label>
-                    <span>(156)</span>
-                </div>
-                <div class="filter-option">
-                    <input type="checkbox" id="m">
-                    <label for="m">M</label>
-                    <span>(234)</span>
-                </div>
-                <div class="filter-option">
-                    <input type="checkbox" id="g">
-                    <label for="g">G</label>
-                    <span>(178)</span>
-                </div>
-                <div class="filter-option">
-                    <input type="checkbox" id="gg">
-                    <label for="gg">GG</label>
-                    <span>(98)</span>
-                </div>
             </div>
         </aside>
 
@@ -912,13 +742,12 @@
         <div class="listings-section">
             <div class="listings-header">
                 <div class="results-count">
-                    <strong>156</strong> anúncios encontrados
+                    <strong>156</strong> anúncios
                 </div>
                 <select class="sort-select">
                     <option>Mais relevantes</option>
                     <option>Menor preço</option>
                     <option>Maior preço</option>
-                    <option>Mais recentes</option>
                 </select>
             </div>
 
@@ -936,11 +765,11 @@
                         <div class="listing-title">Vestido Floral</div>
                         <div class="listing-price">R$ 129,90</div>
                         <div class="listing-details">
-                            <span><i class="fas fa-tag"></i> Feminino</span>
-                            <span><i class="fas fa-ruler"></i> M</span>
+                            <span>Feminino</span>
+                            <span>M</span>
                         </div>
                         <div class="listing-location">
-                            <i class="fas fa-map-marker-alt"></i> Centro - 2km
+                            <i class="fas fa-map-marker-alt"></i> Centro
                         </div>
                         <div class="listing-footer">
                             <span class="listing-store">Moda Center</span>
@@ -961,11 +790,11 @@
                         <div class="listing-title">Camiseta Oversized</div>
                         <div class="listing-price">R$ 89,90</div>
                         <div class="listing-details">
-                            <span><i class="fas fa-tag"></i> Streetwear</span>
-                            <span><i class="fas fa-ruler"></i> G</span>
+                            <span>Streetwear</span>
+                            <span>G</span>
                         </div>
                         <div class="listing-location">
-                            <i class="fas fa-map-marker-alt"></i> Alto - 5min
+                            <i class="fas fa-map-marker-alt"></i> Alto
                         </div>
                         <div class="listing-footer">
                             <span class="listing-store">StreetWear Club</span>
@@ -977,7 +806,7 @@
                 <!-- Anúncio 3 -->
                 <div class="listing-card" onclick="abrirAnuncio(3)">
                     <div class="listing-image">
-                        <span class="listing-badge">PROMOÇÃO</span>
+                        <span class="listing-badge">PROMO</span>
                         <div class="listing-favorite" onclick="event.stopPropagation(); favoritar(3)">
                             <i class="far fa-heart"></i>
                         </div>
@@ -987,11 +816,11 @@
                         <div class="listing-title">Calça Cargo</div>
                         <div class="listing-price">R$ 159,90</div>
                         <div class="listing-details">
-                            <span><i class="fas fa-tag"></i> Streetwear</span>
-                            <span><i class="fas fa-ruler"></i> 42</span>
+                            <span>Streetwear</span>
+                            <span>42</span>
                         </div>
                         <div class="listing-location">
-                            <i class="fas fa-map-marker-alt"></i> Pauliceia - 8min
+                            <i class="fas fa-map-marker-alt"></i> Pauliceia
                         </div>
                         <div class="listing-footer">
                             <span class="listing-store">Urban Style</span>
@@ -999,42 +828,17 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Anúncio 4 -->
-                <div class="listing-card" onclick="abrirAnuncio(4)">
-                    <div class="listing-image">
-                        <div class="listing-favorite" onclick="event.stopPropagation(); favoritar(4)">
-                            <i class="far fa-heart"></i>
-                        </div>
-                        🧥
-                    </div>
-                    <div class="listing-info">
-                        <div class="listing-title">Jaqueta Jeans</div>
-                        <div class="listing-price">R$ 199,90</div>
-                        <div class="listing-details">
-                            <span><i class="fas fa-tag"></i> Feminino</span>
-                            <span><i class="fas fa-ruler"></i> M</span>
-                        </div>
-                        <div class="listing-location">
-                            <i class="fas fa-map-marker-alt"></i> Cidade Alta - 12min
-                        </div>
-                        <div class="listing-footer">
-                            <span class="listing-store">Fashion Hub</span>
-                            <span class="listing-date">5 dias</span>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 
-    <!-- ÁREA DO LOJISTA (DASHBOARD - MANTIDA IGUAL) -->
+    <!-- ÁREA DO LOJISTA -->
     <div id="appLojista" class="app-lojista hidden">
         <div class="sidebar-lojista">
-            <div class="logo">RIM<span>SO</span> LOJISTA</div>
+            <div class="logo">RIM<span>SO</span></div>
             <div class="user-info">
                 <div style="display: flex; align-items: center; gap: 12px;">
-                    <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--gold); display: flex; align-items: center; justify-content: center; color: var(--black);">
+                    <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--tangerine); display: flex; align-items: center; justify-content: center;">
                         <i class="fas fa-store"></i>
                     </div>
                     <div>
@@ -1044,56 +848,54 @@
                 </div>
             </div>
 
-            <div class="menu-item active" onclick="mostrarSecaoLojista('dashboard')">
-                <i class="fas fa-chart-pie"></i> Dashboard
-            </div>
-            <div class="menu-item" onclick="mostrarSecaoLojista('anuncios')">
-                <i class="fas fa-tshirt"></i> Meus Anúncios
-            </div>
-            <div class="menu-item" onclick="mostrarSecaoLojista('vendas')">
-                <i class="fas fa-shopping-cart"></i> Vendas
-            </div>
-            <div class="menu-item" onclick="mostrarSecaoLojista('promocoes')">
-                <i class="fas fa-bolt"></i> Promoções
-            </div>
-            <div class="menu-item" onclick="mostrarSecaoLojista('estatisticas')">
-                <i class="fas fa-chart-line"></i> Estatísticas
-            </div>
-            <div class="menu-item" onclick="voltarSite()">
-                <i class="fas fa-globe"></i> Ver Site
-            </div>
+            <div class="menu-item active">Dashboard</div>
+            <div class="menu-item">Meus Anúncios</div>
+            <div class="menu-item">Vendas</div>
+            <div class="menu-item">Promoções</div>
+            <div class="menu-item">Estatísticas</div>
+            <div class="menu-item" onclick="voltarSite()">Ver Site</div>
         </div>
 
         <div class="main-content">
             <div class="top-bar">
-                <div class="page-title">Dashboard do Lojista</div>
+                <div class="page-title">Dashboard</div>
             </div>
             <div class="content-area" id="lojistaContent">
-                <!-- Conteúdo será preenchido via JS -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div>Visualizações</div>
+                        <div class="stat-value">1.247</div>
+                    </div>
+                    <div class="stat-card">
+                        <div>Contatos</div>
+                        <div class="stat-value">89</div>
+                    </div>
+                    <div class="stat-card">
+                        <div>Vendas</div>
+                        <div class="stat-value">34</div>
+                    </div>
+                    <div class="stat-card">
+                        <div>Faturamento</div>
+                        <div class="stat-value">R$ 3.450</div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- MODAL DE LOGIN -->
+    <!-- MODAL LOGIN -->
     <div class="modal" id="modalLogin">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Entrar no RIMSO</h2>
+                <h2>Entrar</h2>
                 <span class="modal-close" onclick="fecharModal('modalLogin')">&times;</span>
             </div>
             <div class="modal-body">
                 <form onsubmit="fazerLogin(event)">
-                    <div style="margin-bottom: 15px;">
-                        <input type="email" class="search-input" placeholder="Email" style="width: 100%;" id="loginEmail" value="contatorimso@outlook.com">
-                    </div>
-                    <div style="margin-bottom: 15px;">
-                        <input type="password" class="search-input" placeholder="Senha" style="width: 100%;" id="loginSenha" value="rimso#17">
-                    </div>
+                    <input type="email" class="search-input" placeholder="Email" style="width: 100%; margin-bottom: 15px;" id="loginEmail" value="contatorimso@outlook.com">
+                    <input type="password" class="search-input" placeholder="Senha" style="width: 100%; margin-bottom: 15px;" id="loginSenha" value="rimso#17">
                     <button type="submit" class="search-btn" style="width: 100%;">Entrar</button>
                 </form>
-                <div style="text-align: center; margin-top: 15px;">
-                    <small>Use a conta admin para teste</small>
-                </div>
             </div>
         </div>
     </div>
@@ -1102,17 +904,15 @@
     <div class="toast" id="toast"></div>
 
     <script>
-        // ==================== DADOS ====================
         let usuarioLogado = null;
         let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
 
-        // ==================== FUNÇÕES DO SITE ====================
         function buscarAnuncios() {
-            mostrarToast('🔍 Buscando anúncios...');
+            mostrarToast('🔍 Buscando...');
         }
 
         function abrirAnuncio(id) {
-            alert(`Abrindo anúncio ${id} - Em breve página detalhada`);
+            alert(`Abrindo anúncio ${id}`);
         }
 
         function favoritar(id) {
@@ -1122,49 +922,32 @@
             if (index === -1) {
                 favoritos.push(id);
                 icon.className = 'fas fa-heart';
-                mostrarToast('❤️ Adicionado aos favoritos');
+                mostrarToast('❤️ Adicionado');
             } else {
                 favoritos.splice(index, 1);
                 icon.className = 'far fa-heart';
-                mostrarToast('Removido dos favoritos');
+                mostrarToast('Removido');
             }
             localStorage.setItem('favoritos', JSON.stringify(favoritos));
         }
 
-        // ==================== FUNÇÕES DO LOJISTA ====================
-        function mostrarSecaoLojista(secao) {
-            document.querySelectorAll('#appLojista .menu-item').forEach(i => i.classList.remove('active'));
-            event.currentTarget.classList.add('active');
+        function fazerLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const senha = document.getElementById('loginSenha').value;
 
-            const content = document.getElementById('lojistaContent');
-
-            if (secao === 'dashboard') {
-                content.innerHTML = `
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div>Visualizações hoje</div>
-                            <div class="stat-value">1.247</div>
-                        </div>
-                        <div class="stat-card">
-                            <div>Contatos WhatsApp</div>
-                            <div class="stat-value">89</div>
-                        </div>
-                        <div class="stat-card">
-                            <div>Vendas</div>
-                            <div class="stat-value">34</div>
-                        </div>
-                        <div class="stat-card">
-                            <div>Faturamento</div>
-                            <div class="stat-value">R$ 3.450</div>
-                        </div>
-                    </div>
-                    <div style="background: white; border-radius: 20px; padding: 20px; border: 2px solid var(--border);">
-                        <h3>Últimos anúncios</h3>
-                        <p style="color: var(--text-secondary);">Nenhum anúncio recente</p>
-                    </div>
-                `;
+            if (email === 'contatorimso@outlook.com' && senha === 'rimso#17') {
+                usuarioLogado = { nome: 'Admin' };
+                mostrarToast('✅ Bem-vindo!');
+                fecharModal('modalLogin');
+                
+                document.getElementById('siteContent').classList.add('hidden');
+                document.querySelector('.site-header').classList.add('hidden');
+                document.querySelector('.search-section').classList.add('hidden');
+                document.querySelector('.quick-filters').classList.add('hidden');
+                document.getElementById('appLojista').classList.remove('hidden');
             } else {
-                content.innerHTML = `<div style="text-align: center; padding: 50px;">Seção ${secao} em desenvolvimento</div>`;
+                mostrarToast('❌ Inválido', 'error');
             }
         }
 
@@ -1176,29 +959,6 @@
             document.querySelector('.quick-filters').classList.remove('hidden');
         }
 
-        // ==================== LOGIN ====================
-        function fazerLogin(event) {
-            event.preventDefault();
-            const email = document.getElementById('loginEmail').value;
-            const senha = document.getElementById('loginSenha').value;
-
-            if (email === 'contatorimso@outlook.com' && senha === 'rimso#17') {
-                usuarioLogado = { nome: 'Administrador', tipo: 'admin' };
-                mostrarToast('✅ Bem-vindo ao RIMSO!');
-                fecharModal('modalLogin');
-                
-                // Mostrar área do lojista
-                document.getElementById('siteContent').classList.add('hidden');
-                document.querySelector('.site-header').classList.add('hidden');
-                document.querySelector('.search-section').classList.add('hidden');
-                document.querySelector('.quick-filters').classList.add('hidden');
-                document.getElementById('appLojista').classList.remove('hidden');
-            } else {
-                mostrarToast('❌ Email ou senha inválidos', 'error');
-            }
-        }
-
-        // ==================== MODAIS ====================
         function abrirModal(modalId) {
             document.getElementById(modalId).classList.add('active');
         }
@@ -1207,18 +967,12 @@
             document.getElementById(modalId).classList.remove('active');
         }
 
-        // ==================== TOAST ====================
         function mostrarToast(mensagem, tipo = 'success') {
             const toast = document.getElementById('toast');
             toast.textContent = mensagem;
             toast.className = `toast ${tipo} show`;
             setTimeout(() => toast.classList.remove('show'), 3000);
         }
-
-        // ==================== INICIALIZAÇÃO ====================
-        window.onload = function() {
-            console.log('🚀 RIMSO - Versão CarroSP');
-        };
     </script>
 </body>
 </html>
