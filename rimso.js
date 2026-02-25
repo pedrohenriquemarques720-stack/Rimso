@@ -1,54 +1,10 @@
-// ==================== RIMSO - VERSÃO CORRIGIDA ====================
-console.log('🚀 RIMSO - Carregando...');
+// ==================== RIMSO - VERSÃO CORRIGIDA (PRIMEIRO LOJAS, DEPOIS BOTÕES) ====================
+console.log('🚀 RIMSO - Iniciando...');
 
 // ==================== 1. VARIÁVEIS GLOBAIS ====================
-let lojasInjetadas = false;
-let botoesAdicionados = false;
+let sistemaInicializado = false;
 
-// ==================== 2. FUNÇÃO PARA ACESSAR DOCUMENTO ====================
-function getDoc() {
-    return window.top?.document || document;
-}
-
-// ==================== 3. FUNÇÃO PARA MOSTRAR TOAST ====================
-function mostrarToast(mensagem, tipo = 'success') {
-    const doc = getDoc();
-    let toast = doc.getElementById('toast');
-    
-    if (!toast) {
-        toast = doc.createElement('div');
-        toast.id = 'toast';
-        toast.style.cssText = `
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: white;
-            color: #1A1A1A;
-            padding: 12px 20px;
-            border-radius: 40px;
-            font-size: 13px;
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
-            z-index: 1000;
-            transform: translateY(100px);
-            opacity: 0;
-            transition: all 0.3s;
-            border: 2px solid #FFCE00;
-        `;
-        doc.body.appendChild(toast);
-    }
-    
-    toast.textContent = mensagem;
-    toast.style.borderColor = tipo === 'success' ? '#10b981' : '#DD0000';
-    toast.style.transform = 'translateY(0)';
-    toast.style.opacity = '1';
-    
-    setTimeout(() => {
-        toast.style.transform = 'translateY(100px)';
-        toast.style.opacity = '0';
-    }, 3000);
-}
-
-// ==================== 4. LOJAS DE EXEMPLO ====================
+// ==================== 2. LOJAS DE EXEMPLO ====================
 const lojasExemplo = [
     {
         id: 1,
@@ -76,8 +32,15 @@ const lojasExemplo = [
     }
 ];
 
-// ==================== 5. FUNÇÃO PARA CRIAR LOJAS (APENAS UMA VEZ) ====================
-function criarLojasUmaVez() {
+// ==================== 3. FUNÇÃO PARA ACESSAR DOCUMENTO ====================
+function getDoc() {
+    return window.top?.document || document;
+}
+
+// ==================== 4. FUNÇÃO PARA CRIAR LOJAS ====================
+function criarLojas() {
+    console.log('🏪 Criando lojas...');
+    
     const doc = getDoc();
     const clienteContent = doc.getElementById('clienteContent');
     
@@ -86,14 +49,10 @@ function criarLojasUmaVez() {
         return false;
     }
     
-    // Verificar se já tem lojas
-    if (clienteContent.querySelector('.lojas-grid')) {
-        console.log('✅ Lojas já existem');
-        return true;
-    }
+    // Limpar conteúdo existente
+    clienteContent.innerHTML = '';
     
-    console.log('🏪 Criando lojas...');
-    
+    // Criar HTML das lojas
     const lojasHTML = `
         <div style="padding: 20px;">
             <h2 style="margin-bottom: 20px; color: #1A1A1A; font-size: 24px;">Todas as Lojas</h2>
@@ -104,8 +63,6 @@ function criarLojasUmaVez() {
                         <p style="margin-bottom: 5px; color: #DD0000;">📍 ${loja.bairro}</p>
                         <p style="margin-bottom: 5px; color: #FFCE00;">⭐ ${loja.avaliacao} (${loja.totalAvaliacoes} avaliações)</p>
                         <p style="color: #6B7280;">${loja.categoria}</p>
-                        
-                        <!-- Container fixo para botões -->
                         <div class="botoes-container" style="display: flex; gap: 10px; margin-top: 15px;"></div>
                     </div>
                 `).join('')}
@@ -114,29 +71,26 @@ function criarLojasUmaVez() {
     `;
     
     clienteContent.innerHTML = lojasHTML;
-    console.log('✅ Lojas criadas');
+    console.log(`✅ ${lojasExemplo.length} lojas criadas`);
     return true;
 }
 
-// ==================== 6. FUNÇÃO PARA ADICIONAR BOTÕES (APENAS UMA VEZ) ====================
-function adicionarBotoesUmaVez() {
+// ==================== 5. FUNÇÃO PARA ADICIONAR BOTÕES ====================
+function adicionarBotoes() {
+    console.log('🔧 Adicionando botões...');
+    
     const doc = getDoc();
     const containers = doc.querySelectorAll('.botoes-container');
     
     if (containers.length === 0) {
-        console.log('⏳ Containers não encontrados ainda');
+        console.log('❌ Nenhum container encontrado');
         return false;
     }
     
-    // Verificar se já tem botões
-    if (doc.querySelector('.botoes-container button')) {
-        console.log('✅ Botões já existem');
-        return true;
-    }
-    
-    console.log(`🔧 Adicionando botões em ${containers.length} containers...`);
-    
     containers.forEach((container, index) => {
+        // Limpar container
+        container.innerHTML = '';
+        
         // Botão Avaliar
         const btnAvaliar = doc.createElement('button');
         btnAvaliar.textContent = '⭐ Avaliar';
@@ -194,18 +148,18 @@ function adicionarBotoesUmaVez() {
         };
         btnShare.onclick = (e) => {
             e.stopPropagation();
-            alert('🔗 Link copiado!');
+            alert('📤 Link copiado!');
         };
         
         container.appendChild(btnAvaliar);
         container.appendChild(btnShare);
     });
     
-    console.log('✅ Botões adicionados com sucesso!');
+    console.log(`✅ Botões adicionados em ${containers.length} cards`);
     return true;
 }
 
-// ==================== 7. FUNÇÃO PRINCIPAL (EXECUTA APENAS UMA VEZ) ====================
+// ==================== 6. FUNÇÃO PRINCIPAL ====================
 function inicializarModoCliente() {
     console.log('👀 Verificando modo cliente...');
     
@@ -218,30 +172,30 @@ function inicializarModoCliente() {
     
     console.log('✅ Modo cliente ativo!');
     
-    // Criar lojas se necessário
-    if (!lojasInjetadas) {
-        lojasInjetadas = criarLojasUmaVez();
-    }
+    // PASSO 1: Criar lojas
+    const lojasCriadas = criarLojas();
     
-    // Adicionar botões se necessário
-    if (!botoesAdicionados) {
-        botoesAdicionados = adicionarBotoesUmaVez();
+    if (lojasCriadas) {
+        // PASSO 2: Adicionar botões (com pequeno delay)
+        setTimeout(() => {
+            adicionarBotoes();
+            sistemaInicializado = true;
+        }, 100);
     }
 }
 
-// ==================== 8. OBSERVAR MUDANÇAS (SEM RECRIAR) ====================
+// ==================== 7. OBSERVAR MUDANÇAS ====================
 function observarModoCliente() {
     console.log('👀 Iniciando observação...');
     
-    // Verificar a cada segundo
     setInterval(() => {
-        inicializarModoCliente();
+        if (!sistemaInicializado) {
+            inicializarModoCliente();
+        }
     }, 1000);
-    
-    console.log('✅ Observação iniciada');
 }
 
-// ==================== 9. SOBRESCREVER FUNÇÃO DO ADMIN ====================
+// ==================== 8. SOBRESCREVER FUNÇÃO DO ADMIN ====================
 function sobrescreverFuncaoAdmin() {
     if (window.top?.abrirModoCliente) {
         const original = window.top.abrirModoCliente;
@@ -250,16 +204,14 @@ function sobrescreverFuncaoAdmin() {
             if (typeof original === 'function') {
                 original();
             }
-            // Resetar flags para recriar se necessário
-            lojasInjetadas = false;
-            botoesAdicionados = false;
-            setTimeout(inicializarModoCliente, 1000);
+            sistemaInicializado = false;
+            setTimeout(inicializarModoCliente, 500);
         };
         console.log('✅ Função abrirModoCliente sobrescrita');
     }
 }
 
-// ==================== 10. INICIAR TUDO ====================
+// ==================== 9. INICIAR ====================
 function iniciar() {
     console.log('🚀 Sistema iniciado');
     sobrescreverFuncaoAdmin();
