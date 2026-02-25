@@ -622,6 +622,7 @@
             padding: 20px;
             border: 2px solid var(--border);
             cursor: pointer;
+            position: relative;
         }
 
         .loja-card:hover {
@@ -1066,7 +1067,43 @@
             }
         ];
 
-        const lojas = [];
+        // ==================== LOJAS DE EXEMPLO PARA TESTE ====================
+        const lojas = [
+            {
+                id: 1,
+                nome: 'Moda Center Piracicaba',
+                bairro: 'Centro',
+                endereco: 'Rua do Rosário, 500',
+                categoria: 'Roupas',
+                avaliacao: 4.8,
+                totalAvaliacoes: 156,
+                whatsapp: '1999991234',
+                favoritos: 45
+            },
+            {
+                id: 2,
+                nome: 'StreetWear Club',
+                bairro: 'Alto',
+                endereco: 'Av. Independência, 1200',
+                categoria: 'Streetwear',
+                avaliacao: 4.6,
+                totalAvaliacoes: 89,
+                whatsapp: '1998885678',
+                favoritos: 23
+            },
+            {
+                id: 3,
+                nome: 'Kids Fashion',
+                bairro: 'Pauliceia',
+                endereco: 'Rua Voluntários, 300',
+                categoria: 'Infantil',
+                avaliacao: 4.9,
+                totalAvaliacoes: 234,
+                whatsapp: '1997779012',
+                favoritos: 67
+            }
+        ];
+        
         let usuarioLogado = null;
 
         // ==================== FUNÇÕES DE MODAL ====================
@@ -1205,6 +1242,8 @@
             document.getElementById('adminPanel').classList.add('hidden');
             document.getElementById('appCliente').classList.remove('hidden');
             document.getElementById('clienteNomeDisplay').textContent = 'Admin (Modo Cliente)';
+            // Carregar lojas quando entrar no modo cliente
+            mostrarSecaoCliente('lojas');
         }
 
         function abrirModoLojista() {
@@ -1256,7 +1295,7 @@
                         ${bairrosPiracicaba.map(b => `
                             <div class="bairro-card" onclick="verLojasBairro('${b}')">
                                 <span>${b}</span>
-                                <span style="color: var(--gray);">${Math.floor(Math.random() * 10) + 1} lojas</span>
+                                <span style="color: var(--gray);">${Math.floor(Math.random() * 5) + 1} lojas</span>
                             </div>
                         `).join('')}
                     </div>
@@ -1264,22 +1303,23 @@
             } else if (secao === 'lojas') {
                 content.innerHTML = `
                     <h2 style="margin-bottom: 20px;">Todas as Lojas</h2>
-                    <div class="lojas-grid">
-                        ${lojas.length > 0 ? lojas.map(l => `
-                            <div class="loja-card">
+                    <div class="lojas-grid" id="lojasGrid">
+                        ${lojas.map(l => `
+                            <div class="loja-card" data-loja-id="${l.id}">
                                 <h3>${l.nome}</h3>
                                 <p>📍 ${l.bairro}</p>
-                                <p>⭐ 4.8 (120 avaliações)</p>
-                                <p><small>Plano: ${l.plano}</small></p>
+                                <p>⭐ ${l.avaliacao} (${l.totalAvaliacoes} avaliações)</p>
+                                <p><small>${l.categoria}</small></p>
                             </div>
-                        `).join('') : `
-                            <div style="text-align: center; padding: 40px; grid-column: 1/-1;">
-                                <p>Nenhuma loja cadastrada ainda</p>
-                                <p>Seja o primeiro a cadastrar sua loja!</p>
-                            </div>
-                        `}
+                        `).join('')}
                     </div>
                 `;
+                
+                // Disparar evento para que os scripts adicionem os botões
+                setTimeout(() => {
+                    const event = new CustomEvent('lojasCarregadas');
+                    document.dispatchEvent(event);
+                }, 500);
             } else if (secao === 'favoritos') {
                 content.innerHTML = `
                     <h2 style="margin-bottom: 20px;">Minhas Lojas Favoritas</h2>
@@ -1293,7 +1333,28 @@
 
         function verLojasBairro(bairro) {
             mostrarToast(`Buscando lojas em ${bairro}...`);
-            mostrarSecaoCliente('lojas');
+            // Filtrar lojas pelo bairro
+            const lojasFiltradas = lojas.filter(l => l.bairro === bairro);
+            const content = document.getElementById('clienteContent');
+            content.innerHTML = `
+                <h2 style="margin-bottom: 20px;">Lojas em ${bairro}</h2>
+                <div class="lojas-grid" id="lojasGrid">
+                    ${lojasFiltradas.length > 0 ? 
+                        lojasFiltradas.map(l => `
+                            <div class="loja-card" data-loja-id="${l.id}">
+                                <h3>${l.nome}</h3>
+                                <p>📍 ${l.bairro}</p>
+                                <p>⭐ ${l.avaliacao} (${l.totalAvaliacoes} avaliações)</p>
+                                <p><small>${l.categoria}</small></p>
+                            </div>
+                        `).join('') 
+                        : '<p style="grid-column: 1/-1; text-align: center;">Nenhuma loja encontrada neste bairro</p>'}
+                </div>
+            `;
+            setTimeout(() => {
+                const event = new CustomEvent('lojasCarregadas');
+                document.dispatchEvent(event);
+            }, 500);
         }
 
         // ==================== FUNÇÕES LOJISTA ====================
@@ -1373,25 +1434,26 @@
             carregarBairros();
             atualizarTabelaAdmin();
             console.log(`✅ ${bairrosPiracicaba.length} bairros carregados!`);
+            
+            // Adicionar lojas ao array global para outros scripts
+            window.lojasExemplo = lojas;
         };
     </script>
 
-       <!-- ==================== SCRIPTS DAS FUNÇÕES ==================== -->
-    <script src="static/avaliaçoes.js"></script>
-    <script src="static/feed.js"></script>
-    <script src="static/favoritos.js"></script>
-    <script src="static/rotas.js"></script>
-    <script src="static/filtrosavan.js"></script>
-    <script src="static/notificaçoes.js"></script>
-    <script src="static/estatisticas.js"></script>
-    <script src="static/promoçoes.js"></script>
-    <script src="static/compartilhar.js"></script>
-    <script src="static/adminadv.js"></script>
+    <!-- ==================== SCRIPTS DAS FUNÇÕES ==================== -->
+    <script src="avaliacoes.js"></script>
+    <script src="feed.js"></script>
+    <script src="favoritos.js"></script>
+    <script src="rotas.js"></script>
+    <script src="filtrosavan.js"></script>
+    <script src="notificacoes.js"></script>
+    <script src="estatisticas.js"></script>
+    <script src="promocoes.js"></script>
+    <script src="compartilhar.js"></script>
+    <script src="adminadv.js"></script>
     
     <!-- ==================== ARQUIVO DE INTEGRAÇÃO ==================== -->
     <script src="integracao.js"></script>
-</body>
-</html>
 
     <!-- ==================== INICIALIZAR FUNÇÕES ==================== -->
     <script>
@@ -1448,5 +1510,3 @@
     </script>
 </body>
 </html>
-
-
