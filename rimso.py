@@ -83,7 +83,7 @@ with st.spinner("🔄 Carregando interface..."):
     html_content = carregar_html_github()
     
     if html_content:
-        # --- INJEÇÃO DOS ARQUIVOS JS DIRETAMENTE NO HTML ---
+        # --- INJEÇÃO DOS ARQUIVOS JS ---
         scripts_completos = ""
         arquivos_encontrados = []
         
@@ -94,119 +94,77 @@ with st.spinner("🔄 Carregando interface..."):
                 scripts_completos += f"""
 <script>
 // ===== {arquivo} =====
-console.log('✅ Carregando: {arquivo}');
 {conteudo}
 console.log('✅ {arquivo} carregado');
 </script>
 """
         
-        # Script de inicialização da interface (COM OBSERVER ÚNICO)
-        script_inicializacao = """
+        # === SCRIPT DE INTERFACE OTIMIZADO ===
+        script_interface = """
 <script>
-// ===== SCRIPT DE INICIALIZAÇÃO DA INTERFACE =====
-console.log('🚀 Inicializando interface...');
+// ===== INTERFACE RIMSO =====
+console.log('🚀 Iniciando RIMSO...');
 
-// Função para adicionar elementos na interface
-function adicionarElementosInterface() {
-    const lojaCards = document.querySelectorAll('.loja-card');
+// Função para adicionar botões nos cards
+function adicionarBotoes() {
+    const cards = document.querySelectorAll('.loja-card');
+    console.log(`📦 Encontrados ${cards.length} cards de loja`);
     
-    lojaCards.forEach((card, index) => {
+    cards.forEach((card, index) => {
+        // Já tem botões?
+        if (card.querySelector('.btn-avaliar')) return;
+        
         // Botão Avaliar
-        if (!card.querySelector('.btn-avaliar')) {
-            const btnAvaliar = document.createElement('button');
-            btnAvaliar.className = 'btn-avaliar';
-            btnAvaliar.innerHTML = '<i class="fas fa-star"></i> Avaliar';
-            btnAvaliar.style.cssText = `
-                background: transparent;
-                border: 2px solid #FFCE00;
-                color: #FFCE00;
-                padding: 8px 12px;
-                border-radius: 20px;
-                font-size: 13px;
-                margin-top: 10px;
-                cursor: pointer;
-                width: 100%;
-                transition: all 0.3s;
-            `;
-            btnAvaliar.onmouseover = () => {
-                btnAvaliar.style.background = '#FFCE00';
-                btnAvaliar.style.color = '#000000';
-            };
-            btnAvaliar.onmouseout = () => {
-                btnAvaliar.style.background = 'transparent';
-                btnAvaliar.style.color = '#FFCE00';
-            };
-            btnAvaliar.onclick = (e) => {
-                e.stopPropagation();
-                alert(`Avaliar loja ${index + 1}`);
-            };
-            card.appendChild(btnAvaliar);
-        }
+        const btnAvaliar = document.createElement('button');
+        btnAvaliar.className = 'btn-avaliar';
+        btnAvaliar.innerHTML = '<i class="fas fa-star"></i> Avaliar';
+        btnAvaliar.style.cssText = 'background:#FFCE00; color:#000; border:none; padding:8px; border-radius:20px; margin-top:10px; width:100%; cursor:pointer;';
+        btnAvaliar.onclick = () => alert('Função de avaliação em breve!');
+        card.appendChild(btnAvaliar);
         
         // Botão Compartilhar
-        if (!card.querySelector('.btn-compartilhar')) {
-            const btnCompartilhar = document.createElement('button');
-            btnCompartilhar.className = 'btn-compartilhar';
-            btnCompartilhar.innerHTML = '<i class="fas fa-share-alt"></i>';
-            btnCompartilhar.style.cssText = `
-                position: absolute;
-                top: 10px;
-                right: 45px;
-                background: #FFCE00;
-                color: #000000;
-                border: none;
-                width: 35px;
-                height: 35px;
-                border-radius: 50%;
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                z-index: 10;
-                transition: all 0.3s;
-            `;
-            btnCompartilhar.onmouseover = () => {
-                btnCompartilhar.style.transform = 'scale(1.1)';
-            };
-            btnCompartilhar.onmouseout = () => {
-                btnCompartilhar.style.transform = 'scale(1)';
-            };
-            btnCompartilhar.onclick = (e) => {
-                e.stopPropagation();
-                navigator.clipboard.writeText(window.location.href);
-                alert('Link copiado!');
-            };
-            card.style.position = 'relative';
-            card.appendChild(btnCompartilhar);
-        }
+        const btnShare = document.createElement('button');
+        btnShare.className = 'btn-compartilhar';
+        btnShare.innerHTML = '<i class="fas fa-share-alt"></i>';
+        btnShare.style.cssText = 'position:absolute; top:10px; right:45px; background:#FFCE00; border:none; width:35px; height:35px; border-radius:50%; cursor:pointer; z-index:10;';
+        btnShare.onclick = () => {
+            navigator.clipboard.writeText(window.location.href);
+            alert('Link copiado!');
+        };
+        card.style.position = 'relative';
+        card.appendChild(btnShare);
     });
 }
 
 // Executar quando a página carregar
-document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(adicionarElementosInterface, 1000);
-});
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', adicionarBotoes);
+} else {
+    adicionarBotoes();
+}
 
-// Observer ÚNICO para detectar mudanças
+// Observar mudanças (APENAS UMA VEZ)
 if (!window.rimsoObserver) {
-    window.rimsoObserver = new MutationObserver(function() {
-        setTimeout(adicionarElementosInterface, 500);
-    });
+    window.rimsoObserver = new MutationObserver(adicionarBotoes);
     window.rimsoObserver.observe(document.body, { childList: true, subtree: true });
 }
 
-console.log('🎉 Interface configurada!');
+console.log('✅ RIMSO pronto!');
 </script>
 """
         
-        # Remover tags script antigas
+        # Remover tags antigas
         import re
         html_content = re.sub(r'<script\s+src="[^"]*\.js"[^>]*>.*?</script>', '', html_content, flags=re.DOTALL)
         
-        # Injetar tudo
-        html_content = html_content.replace('</body>', f'{scripts_completos}{script_inicializacao}</body>')
+        # Injetar tudo na ordem correta
+        html_content = html_content.replace('</body>', f'{scripts_completos}{script_interface}</body>')
         
+        # Mostrar o resultado
         html(html_content, height=1000, scrolling=True)
         status_placeholder.success(f"✅ {len(arquivos_encontrados)} arquivos carregados")
+        
+        with st.sidebar:
+            st.info("👉 Clique em 'Modo Cliente' para ver os botões")
     else:
         status_placeholder.error("❌ Falha ao carregar")
