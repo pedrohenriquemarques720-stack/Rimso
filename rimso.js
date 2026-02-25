@@ -1,85 +1,108 @@
-// ==================== RIMSO - ARQUIVO ÚNICO CORRIGIDO ====================
-console.log('🚀 RIMSO - Carregando...');
+// ==================== RIMSO - ARQUIVO ÚNICO CORRIGIDO PARA IFRAME ====================
+console.log('🚀 RIMSO - Iniciando...');
 
-// ==================== VARIÁVEIS GLOBAIS ====================
-let usuarioLogado = null;
-let lojasExemplo = [];
-
-// ==================== FUNÇÃO PARA MOSTRAR TOAST ====================
-function mostrarToast(mensagem, tipo = 'success') {
-    const toast = document.getElementById('toast');
-    if (toast) {
-        toast.textContent = mensagem;
-        toast.className = `toast ${tipo} show`;
-        setTimeout(() => toast.classList.remove('show'), 3000);
-    } else {
-        console.log('📢', mensagem);
+// Função para acessar o documento correto (dentro ou fora do iframe)
+function getDocument() {
+    // Tenta acessar o documento principal
+    if (window.top.document) {
+        return window.top.document;
     }
+    return document;
 }
 
-// ==================== FUNÇÃO PARA CRIAR LOJAS DE EXEMPLO ====================
-function criarLojasExemplo() {
-    console.log('🏪 Criando lojas de exemplo...');
+// Função para aguardar elemento aparecer
+function waitForElement(selector, callback, maxAttempts = 20) {
+    let attempts = 0;
     
-    lojasExemplo = [
+    const checkInterval = setInterval(() => {
+        attempts++;
+        const doc = getDocument();
+        const element = doc.querySelector(selector);
+        
+        if (element) {
+            clearInterval(checkInterval);
+            console.log(`✅ Elemento encontrado: ${selector}`);
+            callback(element);
+        } else if (attempts >= maxAttempts) {
+            clearInterval(checkInterval);
+            console.log(`❌ Elemento não encontrado após ${maxAttempts} tentativas: ${selector}`);
+        }
+    }, 500);
+}
+
+// Função para injetar lojas diretamente no DOM
+function injetarLojas() {
+    console.log('🏪 Tentando injetar lojas...');
+    
+    const doc = getDocument();
+    
+    // Procurar pelo conteúdo do cliente
+    const clienteContent = doc.getElementById('clienteContent');
+    if (!clienteContent) {
+        console.log('⏳ Aguardando clienteContent...');
+        return false;
+    }
+    
+    // Verificar se está no modo cliente
+    const appCliente = doc.getElementById('appCliente');
+    if (appCliente && appCliente.classList.contains('hidden')) {
+        console.log('⏳ Modo cliente não está ativo');
+        return false;
+    }
+    
+    console.log('✅ ClienteContent encontrado, injetando lojas...');
+    
+    // Lojas de exemplo
+    const lojas = [
         {
             id: 1,
             nome: 'Moda Center Piracicaba',
             bairro: 'Centro',
-            endereco: 'Rua do Rosário, 500',
             categoria: 'Roupas',
             avaliacao: 4.8,
-            totalAvaliacoes: 156,
-            whatsapp: '1999991234'
+            totalAvaliacoes: 156
         },
         {
             id: 2,
             nome: 'StreetWear Club',
             bairro: 'Alto',
-            endereco: 'Av. Independência, 1200',
             categoria: 'Streetwear',
             avaliacao: 4.6,
-            totalAvaliacoes: 89,
-            whatsapp: '1998885678'
+            totalAvaliacoes: 89
         },
         {
             id: 3,
             nome: 'Kids Fashion',
             bairro: 'Pauliceia',
-            endereco: 'Rua Voluntários, 300',
             categoria: 'Infantil',
             avaliacao: 4.9,
-            totalAvaliacoes: 234,
-            whatsapp: '1997779012'
+            totalAvaliacoes: 234
+        },
+        {
+            id: 4,
+            nome: 'Plus Size Store',
+            bairro: 'Cidade Alta',
+            categoria: 'Plus Size',
+            avaliacao: 4.7,
+            totalAvaliacoes: 67
+        },
+        {
+            id: 5,
+            nome: 'Calçados City',
+            bairro: 'Centro',
+            categoria: 'Calçados',
+            avaliacao: 4.5,
+            totalAvaliacoes: 112
         }
     ];
     
-    return lojasExemplo;
-}
-
-// ==================== FUNÇÃO PARA MOSTRAR LOJAS ====================
-function mostrarLojas() {
-    console.log('🔄 Tentando mostrar lojas...');
-    
-    // Procurar o content area do cliente
-    const clienteContent = document.getElementById('clienteContent');
-    if (!clienteContent) {
-        console.log('⚠️ clienteContent não encontrado');
-        return;
-    }
-    
-    // Criar lojas se não existirem
-    if (lojasExemplo.length === 0) {
-        criarLojasExemplo();
-    }
-    
-    // Injetar HTML com as lojas
-    clienteContent.innerHTML = `
-        <h2 style="margin-bottom: 20px; color: #1A1A1A;">Todas as Lojas</h2>
-        <div class="lojas-grid" id="lojasGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
-            ${lojasExemplo.map(loja => `
+    // Criar HTML das lojas
+    const lojasHTML = `
+        <h2 style="margin-bottom: 20px; color: #1A1A1A;">Lojas em Piracicaba</h2>
+        <div class="lojas-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
+            ${lojas.map(loja => `
                 <div class="loja-card" data-loja-id="${loja.id}" style="background: white; border-radius: 20px; padding: 20px; border: 2px solid #E5E7EB; cursor: pointer; position: relative; transition: all 0.3s;">
-                    <h3 style="margin-bottom: 10px; color: #1A1A1A;">${loja.nome}</h3>
+                    <h3 style="margin-bottom: 10px; color: #1A1A1A; font-size: 18px;">${loja.nome}</h3>
                     <p style="margin-bottom: 5px; color: #DD0000;">📍 ${loja.bairro}</p>
                     <p style="margin-bottom: 5px; color: #FFCE00;">⭐ ${loja.avaliacao} (${loja.totalAvaliacoes} avaliações)</p>
                     <p style="color: #6B7280; font-size: 14px;">${loja.categoria}</p>
@@ -88,19 +111,22 @@ function mostrarLojas() {
         </div>
     `;
     
-    console.log('✅ Lojas inseridas no DOM');
+    clienteContent.innerHTML = lojasHTML;
+    console.log('✅ Lojas injetadas com sucesso!');
     
-    // Disparar evento para adicionar botões
-    setTimeout(() => {
-        adicionarBotoesNosCards();
-    }, 500);
+    // Adicionar botões após injetar as lojas
+    setTimeout(adicionarBotoes, 500);
+    
+    return true;
 }
 
-// ==================== FUNÇÃO PARA ADICIONAR BOTÕES NOS CARDS ====================
-function adicionarBotoesNosCards() {
-    console.log('🔍 Procurando cards para adicionar botões...');
+// Função para adicionar botões nos cards
+function adicionarBotoes() {
+    console.log('🔧 Adicionando botões nos cards...');
     
-    const cards = document.querySelectorAll('.loja-card');
+    const doc = getDocument();
+    const cards = doc.querySelectorAll('.loja-card');
+    
     console.log(`📦 Encontrados ${cards.length} cards`);
     
     if (cards.length === 0) {
@@ -109,16 +135,16 @@ function adicionarBotoesNosCards() {
     }
     
     cards.forEach((card, index) => {
-        // Evitar duplicar botões
+        // Evitar duplicar
         if (card.querySelector('.botoes-rimso')) return;
         
-        // Criar container
-        const container = document.createElement('div');
+        // Container
+        const container = doc.createElement('div');
         container.className = 'botoes-rimso';
         container.style.cssText = 'display: flex; gap: 10px; margin-top: 15px;';
         
         // Botão Avaliar
-        const btnAvaliar = document.createElement('button');
+        const btnAvaliar = doc.createElement('button');
         btnAvaliar.innerHTML = '⭐ Avaliar';
         btnAvaliar.style.cssText = `
             background: #FFCE00;
@@ -146,7 +172,7 @@ function adicionarBotoesNosCards() {
         };
         
         // Botão Compartilhar
-        const btnShare = document.createElement('button');
+        const btnShare = doc.createElement('button');
         btnShare.innerHTML = '📤';
         btnShare.style.cssText = `
             background: #FFCE00;
@@ -183,58 +209,52 @@ function adicionarBotoesNosCards() {
         card.appendChild(container);
     });
     
-    console.log('✅ Botões adicionados!');
+    console.log(`✅ Botões adicionados em ${cards.length} cards!`);
 }
 
-// ==================== FUNÇÃO PARA INICIALIZAR ====================
-function inicializar() {
-    console.log('🚀 Inicializando RIMSO...');
+// Função para observar mudanças
+function observarMudancas() {
+    console.log('👀 Iniciando observação...');
     
-    // Criar lojas de exemplo
-    criarLojasExemplo();
+    const doc = getDocument();
     
-    // Observar mudanças no DOM de forma segura
-    if (document.body) {
-        try {
-            const observer = new MutationObserver(() => {
-                // Verificar se estamos no modo cliente
-                if (document.getElementById('appCliente') && !document.getElementById('appCliente').classList.contains('hidden')) {
-                    mostrarLojas();
+    // Verificar a cada segundo se o modo cliente foi ativado
+    setInterval(() => {
+        const appCliente = doc.getElementById('appCliente');
+        const clienteContent = doc.getElementById('clienteContent');
+        
+        if (appCliente && !appCliente.classList.contains('hidden')) {
+            // Verificar se já tem lojas
+            const lojasGrid = doc.querySelector('.lojas-grid');
+            if (!lojasGrid) {
+                console.log('🔄 Modo cliente ativo, injetando lojas...');
+                injetarLojas();
+            } else {
+                // Se já tem lojas mas não tem botões, adicionar botões
+                const primeiroCard = doc.querySelector('.loja-card');
+                if (primeiroCard && !primeiroCard.querySelector('.botoes-rimso')) {
+                    console.log('🔄 Cards encontrados sem botões, adicionando...');
+                    adicionarBotoes();
                 }
-            });
-            observer.observe(document.body, { childList: true, subtree: true });
-            console.log('✅ Observer configurado');
-        } catch (e) {
-            console.error('❌ Erro no observer:', e);
+            }
         }
+    }, 1000);
+    
+    // Também observar quando o admin clicar no botão de modo cliente
+    const originalAbrirModoCliente = window.top.abrirModoCliente;
+    if (originalAbrirModoCliente) {
+        window.top.abrirModoCliente = function() {
+            console.log('👤 Modo cliente ativado por clique');
+            if (typeof originalAbrirModoCliente === 'function') {
+                originalAbrirModoCliente();
+            }
+            setTimeout(injetarLojas, 1000);
+        };
     }
     
-    // Verificar se já estamos no modo cliente
-    setTimeout(() => {
-        if (document.getElementById('appCliente') && !document.getElementById('appCliente').classList.contains('hidden')) {
-            mostrarLojas();
-        }
-    }, 2000);
-    
-    console.log('✅ RIMSO inicializado!');
+    console.log('✅ Observação iniciada');
 }
 
-// ==================== FUNÇÃO PARA ABRIR MODO CLIENTE ====================
-// Sobrescrever a função original se existir
-window.abrirModoClienteOriginal = window.abrirModoCliente;
-window.abrirModoCliente = function() {
-    console.log('👤 Abrindo modo cliente');
-    if (typeof abrirModoClienteOriginal === 'function') {
-        abrirModoClienteOriginal();
-    }
-    setTimeout(mostrarLojas, 1000);
-};
-
-// Inicializar quando a página carregar
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', inicializar);
-} else {
-    inicializar();
-}
-
-console.log('🎯 Script carregado com sucesso!');
+// Iniciar tudo
+console.log('🚀 Sistema RIMSO iniciando...');
+setTimeout(observarMudancas, 2000);
