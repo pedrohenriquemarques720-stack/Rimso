@@ -17,47 +17,55 @@ st.set_page_config(
 # URL do seu index.html no GitHub
 GITHUB_HTML_URL = "https://raw.githubusercontent.com/pedrohenriquemarques720-stack/Rimso/refs/heads/main/index.html"
 
-# ==================== LISTA CORRETA DOS ARQUIVOS (SEM ACENTO) ====================
+# ==================== LISTA CORRETA DOS ARQUIVOS (COM OS NOVOS NOMES) ====================
 ARQUIVOS_JS = [
-    "avaliacoes.js",      # antes era avaliaçoes.js
+    "avaliacoes.js",
     "feed.js",
     "favoritos.js",
     "rotas.js",
-    "filtros.js",         # antes era filtrosavan.js
-    "notificacoes.js",    # antes era notificaçoes.js
+    "filtrosavan.js",
+    "notificacoes.js",
     "estatisticas.js",
-    "promocoes.js",       # antes era promoçoes.js
+    "promocoes.js",
     "compartilhar.js",
-    "admin.js"            # antes era adminadv.js
+    "adminadv.js"
 ]
 
 # ==================== FUNÇÃO PARA LER ARQUIVOS JS ====================
 def ler_arquivo_js(nome_arquivo):
-    """Lê um arquivo JS da pasta static tentando diferentes nomes"""
+    """Lê um arquivo JS da pasta static"""
     
-    # Tentar diferentes variações do nome (com e sem acento)
-    variacoes = [
-        nome_arquivo,
-        nome_arquivo.replace('coes', 'çoes'),  # notificacoes -> notificaçoes
-        nome_arquivo.replace('coes', 'ções'),  # promocoes -> promoções
-        nome_arquivo.replace('coes', 'cões'),  # variante
+    # Tentar diferentes caminhos possíveis no Streamlit Cloud
+    caminhos_possiveis = [
+        f"static/{nome_arquivo}",
+        f"./static/{nome_arquivo}",
+        f"/mount/src/rimso/static/{nome_arquivo}",  # Caminho absoluto no Streamlit Cloud
+        f"/app/static/{nome_arquivo}",              # Outro caminho possível
     ]
     
-    for variacao in variacoes:
-        caminhos_possiveis = [
-            f"static/{variacao}",
-            f"./static/{variacao}",
-            f"/mount/src/rimso/static/{variacao}",
-        ]
-        
-        for caminho in caminhos_possiveis:
-            if os.path.exists(caminho):
+    for caminho in caminhos_possiveis:
+        if os.path.exists(caminho):
+            try:
                 with open(caminho, 'r', encoding='utf-8') as f:
                     conteudo = f.read()
                     print(f"✅ Arquivo encontrado: {caminho}")
-                    return conteudo, variacao
+                    return conteudo, caminho
+            except Exception as e:
+                print(f"⚠️ Erro ao ler {caminho}: {e}")
     
-    return None, nome_arquivo
+    # Se não encontrar, procurar em qualquer lugar
+    for root, dirs, files in os.walk('.'):
+        if nome_arquivo in files:
+            caminho = os.path.join(root, nome_arquivo)
+            try:
+                with open(caminho, 'r', encoding='utf-8') as f:
+                    conteudo = f.read()
+                    print(f"✅ Arquivo encontrado em: {caminho}")
+                    return conteudo, caminho
+            except:
+                pass
+    
+    return None, None
 
 # ==================== CARREGAR TODOS OS SCRIPTS ====================
 def carregar_todos_scripts():
@@ -68,29 +76,25 @@ def carregar_todos_scripts():
     arquivos_nao_encontrados = []
     
     for arquivo in ARQUIVOS_JS:
-        conteudo, nome_encontrado = ler_arquivo_js(arquivo)
+        conteudo, caminho = ler_arquivo_js(arquivo)
         
         if conteudo:
-            arquivos_encontrados.append(nome_encontrado)
+            arquivos_encontrados.append(arquivo)
             script_bloco = f"""
-// ========== INÍCIO: {nome_encontrado} ==========
-console.log('✅ Carregando: {nome_encontrado}');
+// ========== INÍCIO: {arquivo} ==========
+console.log('✅ Carregando: {arquivo}');
 {conteudo}
-console.log('✅ Arquivo {nome_encontrado} carregado!');
-// ========== FIM: {nome_encontrado} ==========
+console.log('✅ Arquivo {arquivo} carregado!');
+// ========== FIM: {arquivo} ==========
 """
             scripts.append(script_bloco)
         else:
             arquivos_nao_encontrados.append(arquivo)
             scripts.append(f"""
 // ========== ARQUIVO NÃO ENCONTRADO: {arquivo} ==========
-console.warn('⚠️ Arquivo {arquivo} não encontrado na pasta static');
+console.warn('⚠️ Arquivo {arquivo} não encontrado');
 // ========== FIM ==========
 """)
-    
-    # Log resumo
-    print(f"📊 Arquivos encontrados: {len(arquivos_encontrados)}")
-    print(f"📊 Arquivos não encontrados: {len(arquivos_nao_encontrados)}")
     
     return "\n\n".join(scripts), arquivos_encontrados, arquivos_nao_encontrados
 
@@ -174,14 +178,30 @@ with st.sidebar:
         st.write(f"**URL:** {GITHUB_HTML_URL}")
         st.write(f"**Timestamp:** {datetime.now().strftime('%H:%M:%S')}")
         
-        # Verificar arquivos na pasta static
+        # Mostrar diretório atual
+        st.write(f"**Diretório atual:** {os.getcwd()}")
+        
+        # Listar arquivos no diretório atual
+        try:
+            arquivos_raiz = os.listdir('.')
+            st.write(f"**Arquivos na raiz:** {len(arquivos_raiz)}")
+            for arquivo in arquivos_raiz[:10]:
+                st.write(f"  - {arquivo}")
+        except:
+            st.write("  Erro ao listar arquivos")
+        
+        # Verificar pasta static
         if os.path.exists('static'):
-            arquivos = os.listdir('static')
-            st.write(f"**Arquivos na pasta static:** {len(arquivos)}")
-            for arquivo in arquivos[:10]:  # Mostrar apenas 10
+            arquivos_static = os.listdir('static')
+            st.write(f"**Arquivos na pasta static:** {len(arquivos_static)}")
+            for arquivo in arquivos_static:
                 st.write(f"  - {arquivo}")
         else:
             st.write("**Pasta 'static' NÃO encontrada!**")
+            # Tentar encontrar a pasta static
+            for root, dirs, files in os.walk('.'):
+                if 'static' in dirs:
+                    st.write(f"**Pasta static encontrada em:** {root}")
 
 # ==================== ÁREA PRINCIPAL ====================
 status_placeholder.info("⏳ Carregando RIMSO...")
