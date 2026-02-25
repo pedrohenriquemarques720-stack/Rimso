@@ -1224,91 +1224,34 @@
             opacity: 1;
         }
 
-        /* ==================== RODAPÉ ==================== */
-        .footer {
-            background: var(--dark);
-            color: white;
-            margin-top: 60px;
-            padding: 60px 0 30px;
-        }
-
-        .footer-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 30px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-        }
-
-        .footer-col h3 {
-            font-size: 18px;
-            margin-bottom: 20px;
-            color: var(--accent);
-        }
-
-        .footer-col ul {
-            list-style: none;
-        }
-
-        .footer-col li {
-            margin-bottom: 10px;
-        }
-
-        .footer-col a {
-            color: rgba(255,255,255,0.7);
-            text-decoration: none;
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-        .footer-col a:hover {
-            color: var(--accent);
-            transform: translateX(5px);
-        }
-
-        .footer-bottom {
-            max-width: 1400px;
-            margin: 40px auto 0;
-            padding: 20px 30px 0;
-            border-top: 2px solid rgba(255,255,255,0.1);
-            text-align: center;
-            color: rgba(255,255,255,0.5);
-            font-size: 14px;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        /* ==================== ÁREA DE ROLAGEM INTERNA (ANUNCIE SUA LOJA) ==================== */
-        .scrollable-anuncio-area {
-            max-height: 350px;
+        /* ==================== ÁREA DE ROLAGEM INTERNA ==================== */
+        .scrollable-area {
+            max-height: 400px;
             overflow-y: auto;
             padding-right: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             scroll-behavior: smooth;
             border-radius: 16px;
             scrollbar-width: thin;
             scrollbar-color: var(--accent) var(--border);
         }
 
-        .scrollable-anuncio-area::-webkit-scrollbar {
+        .scrollable-area::-webkit-scrollbar {
             width: 8px;
         }
 
-        .scrollable-anuncio-area::-webkit-scrollbar-track {
+        .scrollable-area::-webkit-scrollbar-track {
             background: var(--border);
             border-radius: 20px;
         }
 
-        .scrollable-anuncio-area::-webkit-scrollbar-thumb {
+        .scrollable-area::-webkit-scrollbar-thumb {
             background: var(--accent);
             border-radius: 20px;
             border: 2px solid var(--border);
         }
 
-        .scrollable-anuncio-area::-webkit-scrollbar-thumb:hover {
+        .scrollable-area::-webkit-scrollbar-thumb:hover {
             background: var(--primary);
         }
 
@@ -1367,6 +1310,564 @@
             padding: 2px 6px;
             border-radius: 60px;
             font-weight: 700;
+        }
+
+        /* ==================== PÁGINAS INSTITUCIONAIS ==================== */
+        .institutional-page {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 30px;
+        }
+
+        .institutional-container {
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            border: 3px solid var(--accent);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .institutional-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .institutional-header h1 {
+            font-size: 36px;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .institutional-header p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .institutional-badge {
+            background: var(--accent);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 60px;
+            display: inline-block;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        /* ==================== SOBRE NÓS ==================== */
+        .missao-visao-valores {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .mvv-card {
+            background: var(--light);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            border: 2px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .mvv-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .mvv-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 32px;
+        }
+
+        .mvv-card h3 {
+            font-size: 24px;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .mvv-card p {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .team-section {
+            margin-top: 50px;
+        }
+
+        .team-section h2 {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .team-member {
+            text-align: center;
+            background: var(--light);
+            border-radius: 20px;
+            padding: 20px;
+            border: 2px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        .team-member img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 4px solid var(--accent);
+        }
+
+        .team-member h3 {
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .team-member p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        /* ==================== COMO COMPRAR ==================== */
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .step-card {
+            text-align: center;
+            padding: 30px 20px;
+            background: var(--light);
+            border-radius: 20px;
+            border: 2px solid var(--border);
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .step-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 20px;
+            margin: 0 auto 20px;
+        }
+
+        .step-card i {
+            font-size: 48px;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .step-card h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .step-card p {
+            color: var(--gray);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* ==================== FAQ ==================== */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--light);
+            border-radius: 16px;
+            margin-bottom: 15px;
+            border: 2px solid var(--border);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .faq-item:hover {
+            border-color: var(--accent);
+        }
+
+        .faq-question {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .faq-question i {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 0 20px 20px;
+            max-height: 200px;
+        }
+
+        /* ==================== TRABALHE CONOSCO ==================== */
+        .vantagens-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .vantagem-card {
+            background: var(--light);
+            border-radius: 20px;
+            padding: 30px;
+            border: 2px solid var(--border);
+            transition: var(--transition);
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .vantagem-card:hover {
+            transform: translateX(5px);
+            border-color: var(--accent);
+            box-shadow: var(--shadow);
+        }
+
+        .vantagem-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .vantagem-content h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .vantagem-content p {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .vantagem-content .stats {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-top: 10px;
+        }
+
+        /* ==================== CENTRAL DE AJUDA - CHATBOT ==================== */
+        .chatbot-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 999;
+        }
+
+        .chatbot-button {
+            width: 60px;
+            height: 60px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+            animation: pulse 2s infinite;
+        }
+
+        .chatbot-button:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255,107,53,0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(255,107,53,0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255,107,53,0);
+            }
+        }
+
+        .chatbot-window {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 350px;
+            height: 500px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            border: 3px solid var(--accent);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chatbot-window.active {
+            display: flex;
+        }
+
+        .chatbot-header {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chatbot-header h3 {
+            font-size: 16px;
+        }
+
+        .chatbot-close {
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .chatbot-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .chatbot-message {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 16px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .chatbot-message.bot {
+            background: var(--light);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+
+        .chatbot-message.user {
+            background: var(--primary);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chatbot-input {
+            padding: 15px;
+            border-top: 2px solid var(--border);
+            display: flex;
+            gap: 10px;
+        }
+
+        .chatbot-input input {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid var(--border);
+            border-radius: 60px;
+            font-size: 14px;
+        }
+
+        .chatbot-input input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .chatbot-input button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .chatbot-input button:hover {
+            transform: scale(1.1);
+        }
+
+        /* ==================== COMO FUNCIONA ==================== */
+        .how-it-works {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .how-card {
+            background: var(--light);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            border: 2px solid var(--border);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .how-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .how-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .how-icon {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: var(--accent);
+            font-size: 32px;
+            border: 3px solid var(--accent);
+        }
+
+        .how-card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+
+        .how-card p {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* ==================== RODAPÉ ==================== */
+        .footer {
+            background: var(--dark);
+            color: white;
+            margin-top: 60px;
+            padding: 60px 0 30px;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-col h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .footer-col a:hover {
+            color: var(--accent);
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 40px auto 0;
+            padding: 20px 30px 0;
+            border-top: 2px solid rgba(255,255,255,0.1);
+            text-align: center;
+            color: rgba(255,255,255,0.5);
+            font-size: 14px;
+        }
+
+        .hidden {
+            display: none !important;
         }
 
         /* ==================== RESPONSIVIDADE ==================== */
@@ -1494,6 +1995,18 @@
             
             .planos-mini-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .missao-visao-valores,
+            .steps-container,
+            .vantagens-grid,
+            .how-it-works {
+                grid-template-columns: 1fr;
+            }
+            
+            .chatbot-window {
+                width: 300px;
+                right: -20px;
             }
         }
 
@@ -1730,6 +2243,334 @@
         </div>
     </div>
 
+    <!-- PÁGINA SOBRE NÓS -->
+    <div id="sobreNosPage" class="institutional-page hidden">
+        <div class="institutional-container">
+            <div class="institutional-header">
+                <span class="institutional-badge"><i class="fas fa-heart"></i> Quem somos</span>
+                <h1>Sobre o RIMSO</h1>
+                <p>Conectando sua loja ao seu bairro desde 2024</p>
+            </div>
+            
+            <div class="missao-visao-valores">
+                <div class="mvv-card" data-aos="fade-up">
+                    <div class="mvv-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3>Missão</h3>
+                    <p>Conectar lojistas locais a clientes em seus bairros, fortalecendo o comércio de Piracicaba e criando uma comunidade de moda autêntica e acessível.</p>
+                </div>
+                
+                <div class="mvv-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="mvv-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>Visão</h3>
+                    <p>Ser a maior plataforma de moda local do Brasil, reconhecida por conectar pessoas às lojas dos seus bairros de forma simples, rápida e segura.</p>
+                </div>
+                
+                <div class="mvv-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="mvv-icon">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h3>Valores</h3>
+                    <p>Transparência, inovação, comunidade, sustentabilidade e paixão pela moda local são os pilares que movem o RIMSO todos os dias.</p>
+                </div>
+            </div>
+            
+            <div class="team-section">
+                <h2>Nossa História</h2>
+                <p style="text-align: center; max-width: 800px; margin: 0 auto 40px; color: var(--gray); line-height: 1.8;">
+                    O RIMSO nasceu em Piracicaba da necessidade de conectar lojistas locais a clientes que valorizam o comércio do bairro. 
+                    Percebemos que muitas lojas incríveis estavam escondidas e os clientes não conseguiam encontrá-las facilmente. 
+                    Criamos então uma plataforma que une tecnologia e moda local, facilitando descobertas e compras na sua região.
+                </p>
+                
+                <h2 style="margin-top: 50px;">Nossa Equipe</h2>
+                <div class="team-grid">
+                    <div class="team-member" data-aos="fade-up">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Ana Silva">
+                        <h3>Ana Silva</h3>
+                        <p>CEO & Fundadora</p>
+                        <p style="margin-top: 10px; font-size: 13px;">"Moda local é minha paixão"</p>
+                    </div>
+                    <div class="team-member" data-aos="fade-up" data-aos-delay="200">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Carlos Santos">
+                        <h3>Carlos Santos</h3>
+                        <p>CTO & Inovação</p>
+                        <p style="margin-top: 10px; font-size: 13px;">"Tecnologia a serviço do comércio"</p>
+                    </div>
+                    <div class="team-member" data-aos="fade-up" data-aos-delay="400">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Marina Costa">
+                        <h3>Marina Costa</h3>
+                        <p>Relações com Lojistas</p>
+                        <p style="margin-top: 10px; font-size: 13px;">"Conectando sonhos e negócios"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PÁGINA COMO COMPRAR -->
+    <div id="comoComprarPage" class="institutional-page hidden">
+        <div class="institutional-container">
+            <div class="institutional-header">
+                <span class="institutional-badge"><i class="fas fa-shopping-bag"></i> Guia rápido</span>
+                <h1>Como comprar no RIMSO</h1>
+                <p>Simples, rápido e seguro - compre das melhores lojas do seu bairro</p>
+            </div>
+            
+            <div class="steps-container">
+                <div class="step-card" data-aos="fade-up">
+                    <div class="step-number">1</div>
+                    <i class="fas fa-search"></i>
+                    <h3>Encontre a loja</h3>
+                    <p>Use nossa busca ou filtros para encontrar lojas por categoria, bairro ou estilo. Explore produtos e avaliações.</p>
+                </div>
+                
+                <div class="step-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="step-number">2</div>
+                    <i class="fas fa-heart"></i>
+                    <h3>Escolha seus produtos</h3>
+                    <p>Navegue pelo catálogo da loja, favorite itens e veja detalhes como preço, fotos e descrições completas.</p>
+                </div>
+                
+                <div class="step-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="step-number">3</div>
+                    <i class="fab fa-whatsapp"></i>
+                    <h3>Contato direto</h3>
+                    <p>Clique no botão do WhatsApp e seja redirecionado para conversar diretamente com o lojista. Negocie preços e formas de pagamento.</p>
+                </div>
+                
+                <div class="step-card" data-aos="fade-up" data-aos-delay="600">
+                    <div class="step-number">4</div>
+                    <i class="fas fa-truck"></i>
+                    <h3>Receba ou retire</h3>
+                    <p>Combine com o lojista se prefere retirar na loja ou receber em casa. Pronto, sua compra está garantida!</p>
+                </div>
+            </div>
+            
+            <div style="background: var(--light); border-radius: 20px; padding: 30px; margin-top: 40px;">
+                <h3 style="color: var(--primary); margin-bottom: 15px;"><i class="fas fa-shield-alt" style="color: var(--accent);"></i> Compra segura</h3>
+                <p style="color: var(--gray); line-height: 1.8;">
+                    O RIMSO não processa pagamentos - você negocia diretamente com o lojista via WhatsApp. 
+                    Isso garante mais flexibilidade e segurança, pois você combina a forma de pagamento que preferir 
+                    com um lojista verificado e avaliado pela comunidade. Sempre confira as avaliações antes de comprar!
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PÁGINA DÚVIDAS FREQUENTES -->
+    <div id="faqPage" class="institutional-page hidden">
+        <div class="institutional-container">
+            <div class="institutional-header">
+                <span class="institutional-badge"><i class="fas fa-question-circle"></i> FAQ</span>
+                <h1>Dúvidas frequentes</h1>
+                <p>Tire suas principais dúvidas sobre o RIMSO</p>
+            </div>
+            
+            <div class="faq-container">
+                <div class="faq-item" data-aos="fade-up">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>O RIMSO cobra alguma taxa do cliente?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Não! O RIMSO é completamente gratuito para clientes. Você pode buscar lojas, ver produtos e entrar em contato sem pagar nada. As taxas são apenas para os lojistas que anunciam conosco.
+                    </div>
+                </div>
+                
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Como faço para me cadastrar como lojista?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Basta clicar em "Anunciar" no menu superior, escolher um plano e preencher o formulário. Após a contratação, nossa equipe entra em contato para ativar seu perfil e ajudar com o cadastro dos produtos.
+                    </div>
+                </div>
+                
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>É seguro comprar pelo RIMSO?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Sim! Trabalhamos apenas com lojistas verificados e com avaliações reais de clientes. Além disso, você negocia diretamente com a loja via WhatsApp, podendo tirar todas as dúvidas antes de finalizar a compra.
+                    </div>
+                </div>
+                
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Como as avaliações funcionam?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Após visitar ou comprar em uma loja, você pode avaliar sua experiência dando nota de 1 a 5 estrelas e deixando um comentário. Isso ajuda outros clientes a escolherem as melhores lojas e incentiva os lojistas a oferecerem um serviço de qualidade.
+                    </div>
+                </div>
+                
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="400">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Posso cancelar meu plano de assinatura?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Sim, o cancelamento pode ser feito a qualquer momento. Basta entrar em contato com nosso suporte. O plano continua ativo até o final do período já pago.
+                    </div>
+                </div>
+                
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="500">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Como entro em contato com o suporte?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Você pode usar nosso chatbot no canto inferior direito para respostas rápidas, enviar um email para contato@rimso.com.br ou ligar para (19) 3434-5678. Estamos sempre prontos para ajudar!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PÁGINA TRABALHE CONOSCO -->
+    <div id="trabalheConoscoPage" class="institutional-page hidden">
+        <div class="institutional-container">
+            <div class="institutional-header">
+                <span class="institutional-badge"><i class="fas fa-briefcase"></i> Seja parceiro</span>
+                <h1>Vantagens para sua loja</h1>
+                <p>Descubra por que mais de 50 lojas já escolheram o RIMSO</p>
+            </div>
+            
+            <div class="vantagens-grid">
+                <div class="vantagem-card" data-aos="fade-right">
+                    <div class="vantagem-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <div class="vantagem-content">
+                        <h3>Visibilidade garantida</h3>
+                        <p>Sua loja aparece para milhares de clientes em Piracicaba que buscam moda local. Destaque em buscas por categoria e bairro.</p>
+                        <div class="stats">+15.000 visualizações/mês</div>
+                    </div>
+                </div>
+                
+                <div class="vantagem-card" data-aos="fade-left">
+                    <div class="vantagem-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="vantagem-content">
+                        <h3>Taxa de conversão maior</h3>
+                        <p>Clientes que chegam até você já estão interessados no seu segmento. Negociação direta via WhatsApp aumenta as vendas.</p>
+                        <div class="stats">+35% de conversão</div>
+                    </div>
+                </div>
+                
+                <div class="vantagem-card" data-aos="fade-right" data-aos-delay="200">
+                    <div class="vantagem-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="vantagem-content">
+                        <h3>Credibilidade e confiança</h3>
+                        <p>Avaliações reais de clientes constroem sua reputação. Quanto mais avaliações positivas, mais clientes confiam na sua loja.</p>
+                        <div class="stats">Nota média 4.8</div>
+                    </div>
+                </div>
+                
+                <div class="vantagem-card" data-aos="fade-left" data-aos-delay="200">
+                    <div class="vantagem-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="vantagem-content">
+                        <h3>Gestão simplificada</h3>
+                        <p>Painel exclusivo para gerenciar produtos, fotos e promoções. Atualize seu catálogo quando quiser, de onde estiver.</p>
+                        <div class="stats">100% online</div>
+                    </div>
+                </div>
+                
+                <div class="vantagem-card" data-aos="fade-right" data-aos-delay="400">
+                    <div class="vantagem-icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <div class="vantagem-content">
+                        <h3>Marketing incluso</h3>
+                        <p>Divulgação nas redes sociais do RIMSO e campanhas segmentadas. Sua loja participa de promoções e destaques mensais.</p>
+                        <div class="stats">+50 posts/ano</div>
+                    </div>
+                </div>
+                
+                <div class="vantagem-card" data-aos="fade-left" data-aos-delay="400">
+                    <div class="vantagem-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <div class="vantagem-content">
+                        <h3>Suporte prioritário</h3>
+                        <p>Atendimento rápido e personalizado para resolver qualquer questão. Ajuda na configuração e otimização do seu perfil.</p>
+                        <div class="stats">24h para resposta</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 40px; background: linear-gradient(135deg, var(--primary), var(--accent)); padding: 40px; border-radius: 20px; color: white;">
+                <h2 style="margin-bottom: 20px;">Pronto para crescer?</h2>
+                <p style="margin-bottom: 20px; font-size: 18px;">Junte-se às melhores lojas de Piracicaba e comece a vender mais hoje mesmo!</p>
+                <button class="banner-btn" style="background: white; color: var(--primary);" onclick="abrirModal('modalPlanos')">Anunciar agora</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PÁGINA COMO FUNCIONA -->
+    <div id="comoFuncionaPage" class="institutional-page hidden">
+        <div class="institutional-container">
+            <div class="institutional-header">
+                <span class="institutional-badge"><i class="fas fa-cogs"></i> Plataforma</span>
+                <h1>Como o RIMSO funciona</h1>
+                <p>A lógica por trás da maior vitrine de moda local de Piracicaba</p>
+            </div>
+            
+            <div class="how-it-works">
+                <div class="how-card" data-aos="fade-up">
+                    <div class="how-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <h3>Para lojistas</h3>
+                    <p>Cadastre sua loja, escolha um plano e comece a exibir seus produtos. Clientes do seu bairro encontram você facilmente e entram em contato direto via WhatsApp. Você gerencia tudo pelo painel.</p>
+                </div>
+                
+                <div class="how-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="how-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Para clientes</h3>
+                    <p>Busque por lojas, categorias ou bairros. Veja produtos, avaliações e entre em contato com o lojista. Negocie direto e combine entrega ou retirada. Tudo gratuito e sem complicação.</p>
+                </div>
+                
+                <div class="how-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="how-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>Conexão real</h3>
+                    <p>O RIMSO é a ponte entre quem vende e quem compra no mesmo bairro. Fortalecemos o comércio local, gerando confiança através de avaliações e transparência. Sem taxas extras para o cliente.</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 50px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; text-align: center;">
+                <div>
+                    <div style="font-size: 48px; font-weight: 800; color: var(--accent);">50+</div>
+                    <div style="color: var(--gray);">Lojas cadastradas</div>
+                </div>
+                <div>
+                    <div style="font-size: 48px; font-weight: 800; color: var(--accent);">15k+</div>
+                    <div style="color: var(--gray);">Clientes mensais</div>
+                </div>
+                <div>
+                    <div style="font-size: 48px; font-weight: 800; color: var(--accent);">4.8</div>
+                    <div style="color: var(--gray);">Nota média das lojas</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- MODAL LOGIN -->
     <div class="modal" id="modalLogin">
         <div class="modal-content">
@@ -1756,7 +2597,7 @@
         </div>
     </div>
 
-    <!-- MODAL CADASTRO -->
+    <!-- MODAL CADASTRO COM ROLAGEM -->
     <div class="modal" id="modalCadastro">
         <div class="modal-content">
             <div class="modal-header">
@@ -1764,43 +2605,63 @@
                 <span class="modal-close" onclick="fecharModal('modalCadastro')">&times;</span>
             </div>
             <div class="modal-body">
-                <form onsubmit="fazerCadastro(event)">
-                    <div class="form-group">
-                        <label>Nome completo</label>
-                        <input type="text" class="form-control" id="cadastroNome" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" class="form-control" id="cadastroEmail" required>
-                    </div>
-                    <div class="form-row">
+                <div class="scrollable-area">
+                    <form onsubmit="fazerCadastro(event)">
                         <div class="form-group">
-                            <label>Telefone</label>
-                            <input type="tel" class="form-control" id="cadastroTelefone" placeholder="(19) 99999-9999" required>
+                            <label>Nome completo</label>
+                            <input type="text" class="form-control" id="cadastroNome" required>
                         </div>
                         <div class="form-group">
-                            <label>Tipo</label>
-                            <select class="form-control" id="cadastroTipo" required>
-                                <option value="cliente">Cliente</option>
-                                <option value="lojista">Lojista</option>
-                            </select>
+                            <label>Email</label>
+                            <input type="email" class="form-control" id="cadastroEmail" required>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Senha</label>
-                        <input type="password" class="form-control" id="cadastroSenha" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Confirmar senha</label>
-                        <input type="password" class="form-control" id="cadastroConfirmarSenha" required>
-                    </div>
-                    <button type="submit" class="banner-btn" style="width: 100%;">Cadastrar</button>
-                </form>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Telefone</label>
+                                <input type="tel" class="form-control" id="cadastroTelefone" placeholder="(19) 99999-9999" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Tipo</label>
+                                <select class="form-control" id="cadastroTipo" required>
+                                    <option value="cliente">Cliente</option>
+                                    <option value="lojista">Lojista</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Data de nascimento</label>
+                            <input type="date" class="form-control" id="cadastroData" required>
+                        </div>
+                        <div class="form-group">
+                            <label>CPF</label>
+                            <input type="text" class="form-control" id="cadastroCpf" placeholder="000.000.000-00" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Endereço</label>
+                            <input type="text" class="form-control" id="cadastroEndereco" placeholder="Rua, número - Bairro" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Senha</label>
+                            <input type="password" class="form-control" id="cadastroSenha" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Confirmar senha</label>
+                            <input type="password" class="form-control" id="cadastroConfirmarSenha" required>
+                        </div>
+                        
+                        <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" id="termos" required>
+                            <label style="margin: 0; font-size: 13px;">Li e aceito os <a href="#" onclick="mostrarToast('Política de privacidade - Em breve')">termos de uso</a> e <a href="#" onclick="mostrarToast('Política de privacidade - Em breve')">política de privacidade</a></label>
+                        </div>
+                        
+                        <button type="submit" class="banner-btn" style="width: 100%;">Cadastrar</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- MODAL PLANOS COM ROLAGEM INTERNA -->
+    <!-- MODAL PLANOS COM ROLAGEM -->
     <div class="modal" id="modalPlanos">
         <div class="modal-content">
             <div class="modal-header">
@@ -1808,7 +2669,7 @@
                 <span class="modal-close" onclick="fecharModal('modalPlanos')">&times;</span>
             </div>
             <div class="modal-body">
-                <div class="scrollable-anuncio-area">
+                <div class="scrollable-area">
                     <p style="margin-bottom: 20px; color: var(--gray); text-align: center; font-weight: 500;">
                         Escolha o plano ideal para divulgar seu negócio:
                     </p>
@@ -1846,6 +2707,19 @@
                         <div class="form-group">
                             <label>Endereço</label>
                             <input type="text" class="form-control" id="lojaEndereco" placeholder="Rua, número - Bairro" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Categoria principal</label>
+                            <select class="form-control" id="lojaCategoria" required>
+                                <option value="">Selecione</option>
+                                <option value="surfwear">Surfwear</option>
+                                <option value="streetwear">Streetwear</option>
+                                <option value="feminina">Moda Feminina</option>
+                                <option value="masculina">Moda Masculina</option>
+                                <option value="infantil">Moda Infantil</option>
+                                <option value="calcados">Calçados</option>
+                                <option value="acessorios">Acessórios</option>
+                            </select>
                         </div>
                         <input type="hidden" id="planoSelecionado" value="profissional">
                         
@@ -1897,6 +2771,120 @@
         </div>
     </div>
 
+    <!-- MODAL POLÍTICA DE PRIVACIDADE -->
+    <div class="modal" id="modalPolitica">
+        <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-header">
+                <h2>Política de Privacidade</h2>
+                <span class="modal-close" onclick="fecharModal('modalPolitica')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="scrollable-area" style="max-height: 500px;">
+                    <div style="margin-bottom: 30px;">
+                        <h3 style="color: var(--primary); margin-bottom: 15px;">1. Coleta de Dados</h3>
+                        <p style="color: var(--gray); line-height: 1.8; margin-bottom: 15px;">
+                            O RIMSO coleta informações fornecidas voluntariamente por usuários e lojistas, incluindo: nome, email, telefone, CPF, endereço e dados de navegação. Para lojistas, coletamos também informações comerciais como nome da loja, categoria e produtos anunciados.
+                        </p>
+                    </div>
+                    
+                    <div style="margin-bottom: 30px;">
+                        <h3 style="color: var(--primary); margin-bottom: 15px;">2. Uso das Informações</h3>
+                        <p style="color: var(--gray); line-height: 1.8; margin-bottom: 15px;">
+                            Utilizamos seus dados para:
+                        </p>
+                        <ul style="color: var(--gray); line-height: 1.8; margin-left: 20px;">
+                            <li>✔ Criar e gerenciar sua conta</li>
+                            <li>✔ Facilitar a comunicação entre clientes e lojistas</li>
+                            <li>✔ Melhorar a experiência de navegação e recomendações</li>
+                            <li>✔ Enviar comunicações sobre novidades e promoções</li>
+                            <li>✔ Garantir a segurança da plataforma</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="margin-bottom: 30px;">
+                        <h3 style="color: var(--primary); margin-bottom: 15px;">3. Compartilhamento de Dados</h3>
+                        <p style="color: var(--gray); line-height: 1.8; margin-bottom: 15px;">
+                            Seus dados são compartilhados apenas:
+                        </p>
+                        <ul style="color: var(--gray); line-height: 1.8; margin-left: 20px;">
+                            <li>✔ Entre cliente e lojista para viabilizar negociações</li>
+                            <li>✔ Com autoridades judiciais quando exigido por lei</li>
+                            <li>✔ Com parceiros de tecnologia que auxiliam na operação da plataforma</li>
+                        </ul>
+                        <p style="color: var(--gray); line-height: 1.8; margin-top: 10px;">
+                            <strong>Não vendemos seus dados para terceiros!</strong>
+                        </p>
+                    </div>
+                    
+                    <div style="margin-bottom: 30px;">
+                        <h3 style="color: var(--primary); margin-bottom: 15px;">4. Proteção de Dados</h3>
+                        <p style="color: var(--gray); line-height: 1.8; margin-bottom: 15px;">
+                            Utilizamos criptografia SSL, firewalls e acesso restrito para proteger suas informações. Nossa plataforma segue as diretrizes da LGPD (Lei Geral de Proteção de Dados).
+                        </p>
+                    </div>
+                    
+                    <div style="margin-bottom: 30px;">
+                        <h3 style="color: var(--primary); margin-bottom: 15px;">5. Direitos do Usuário</h3>
+                        <p style="color: var(--gray); line-height: 1.8; margin-bottom: 15px;">
+                            Você pode:
+                        </p>
+                        <ul style="color: var(--gray); line-height: 1.8; margin-left: 20px;">
+                            <li>✔ Acessar seus dados pessoais</li>
+                            <li>✔ Corrigir informações desatualizadas</li>
+                            <li>✔ Solicitar a exclusão da sua conta</li>
+                            <li>✔ Revogar consentimento para uso de dados</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="margin-bottom: 30px;">
+                        <h3 style="color: var(--primary); margin-bottom: 15px;">6. Cookies</h3>
+                        <p style="color: var(--gray); line-height: 1.8; margin-bottom: 15px;">
+                            Utilizamos cookies para melhorar a experiência de navegação, lembrar preferências e analisar tráfego. Você pode desabilitar os cookies nas configurações do seu navegador.
+                        </p>
+                    </div>
+                    
+                    <div style="background: var(--light); padding: 20px; border-radius: 16px; margin-top: 20px;">
+                        <p style="color: var(--gray); font-size: 12px;">
+                            <i class="fas fa-shield-alt" style="color: var(--accent); margin-right: 5px;"></i> 
+                            Esta política foi atualizada em 25 de fevereiro de 2026. Em caso de dúvidas, entre em contato pelo email privacidade@rimso.com.br
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHATBOT - CENTRAL DE AJUDA -->
+    <div class="chatbot-container">
+        <div class="chatbot-button" onclick="toggleChatbot()">
+            <i class="fas fa-comment-dots"></i>
+        </div>
+        
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <h3><i class="fas fa-robot"></i> Assistente RIMSO</h3>
+                <span class="chatbot-close" onclick="toggleChatbot()">&times;</span>
+            </div>
+            <div class="chatbot-messages" id="chatbotMessages">
+                <div class="chatbot-message bot">
+                    Olá! Sou o assistente virtual do RIMSO. Como posso ajudar?
+                </div>
+                <div class="chatbot-message bot">
+                    Você pode perguntar sobre:
+                    • Como comprar
+                    • Planos para lojistas
+                    • Avaliações
+                    • Contato
+                    • Política de privacidade
+                </div>
+            </div>
+            <div class="chatbot-input">
+                <input type="text" id="chatbotInput" placeholder="Digite sua pergunta..." onkeypress="if(event.key === 'Enter') enviarMensagem()">
+                <button onclick="enviarMensagem()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
     <!-- TOAST -->
     <div class="toast" id="toast"></div>
 
@@ -1906,28 +2894,28 @@
             <div class="footer-col" data-aos="fade-up" data-aos-delay="100">
                 <h3>RIMSO</h3>
                 <ul>
-                    <li><a href="#" onclick="mostrarToast('Sobre nós - Em breve')">Sobre nós</a></li>
-                    <li><a href="#" onclick="mostrarToast('Como funciona - Em breve')">Como funciona</a></li>
-                    <li><a href="#" onclick="abrirModal('modalPlanos')">Planos para lojistas</a></li>
-                    <li><a href="#" onclick="mostrarToast('Trabalhe conosco - Em breve')">Trabalhe conosco</a></li>
+                    <li><a href="#" onclick="abrirPaginaInstitucional('sobreNos')"><i class="fas fa-heart"></i> Sobre nós</a></li>
+                    <li><a href="#" onclick="abrirPaginaInstitucional('comoFunciona')"><i class="fas fa-cogs"></i> Como funciona</a></li>
+                    <li><a href="#" onclick="abrirModal('modalPolitica')"><i class="fas fa-shield-alt"></i> Política de privacidade</a></li>
+                    <li><a href="#" onclick="abrirPaginaInstitucional('trabalheConosco')"><i class="fas fa-briefcase"></i> Trabalhe conosco</a></li>
                 </ul>
             </div>
             <div class="footer-col" data-aos="fade-up" data-aos-delay="200">
-                <h3>Para lojistas</h3>
+                <h3>Ajuda</h3>
                 <ul>
-                    <li><a href="#" onclick="abrirModal('modalPlanos')">Anuncie sua loja</a></li>
-                    <li><a href="#" onclick="mostrarDashboard()">Dashboard</a></li>
-                    <li><a href="#" onclick="abrirModal('modalPlanos')">Planos e preços</a></li>
-                    <li><a href="#" onclick="mostrarToast('Central de ajuda - Em breve')">Central de ajuda</a></li>
+                    <li><a href="#" onclick="abrirPaginaInstitucional('comoComprar')"><i class="fas fa-shopping-bag"></i> Como comprar</a></li>
+                    <li><a href="#" onclick="abrirPaginaInstitucional('faq')"><i class="fas fa-question-circle"></i> Dúvidas frequentes</a></li>
+                    <li><a href="#" onclick="toggleChatbot()"><i class="fas fa-robot"></i> Central de ajuda</a></li>
+                    <li><a href="#" onclick="mostrarToast('Fale conosco: contato@rimso.com.br')"><i class="fas fa-envelope"></i> Fale conosco</a></li>
                 </ul>
             </div>
             <div class="footer-col" data-aos="fade-up" data-aos-delay="300">
                 <h3>Para clientes</h3>
                 <ul>
-                    <li><a href="#" onclick="mostrarToast('Como comprar - Em breve')">Como comprar</a></li>
-                    <li><a href="#" onclick="mostrarToast('Segurança - Em breve')">Segurança</a></li>
-                    <li><a href="#" onclick="mostrarToast('Dúvidas frequentes - Em breve')">Dúvidas frequentes</a></li>
-                    <li><a href="#" onclick="mostrarToast('Fale conosco - Em breve')">Fale conosco</a></li>
+                    <li><a href="#" onclick="document.getElementById('lojasGrid').scrollIntoView({behavior: 'smooth'})"><i class="fas fa-store"></i> Buscar lojas</a></li>
+                    <li><a href="#" onclick="filtrarCategoria('todos')"><i class="fas fa-tags"></i> Categorias</a></li>
+                    <li><a href="#" onclick="mostrarToast('Em breve')"><i class="fas fa-gift"></i> Promoções</a></li>
+                    <li><a href="#" onclick="abrirModal('modalLogin')"><i class="fas fa-user"></i> Minha conta</a></li>
                 </ul>
             </div>
             <div class="footer-col" data-aos="fade-up" data-aos-delay="400">
@@ -1937,10 +2925,19 @@
                     <li><i class="fas fa-envelope"></i> <a href="mailto:contato@rimso.com.br">contato@rimso.com.br</a></li>
                     <li><i class="fas fa-map-marker-alt"></i> Piracicaba - SP</li>
                 </ul>
+                <div style="display: flex; gap: 15px; margin-top: 15px;">
+                    <a href="#" onclick="mostrarToast('Instagram: @rimso')" style="color: white; font-size: 20px;"><i class="fab fa-instagram"></i></a>
+                    <a href="#" onclick="mostrarToast('Facebook: /rimso')" style="color: white; font-size: 20px;"><i class="fab fa-facebook"></i></a>
+                    <a href="#" onclick="mostrarToast('WhatsApp: (19) 99999-9999')" style="color: white; font-size: 20px;"><i class="fab fa-whatsapp"></i></a>
+                </div>
             </div>
         </div>
         <div class="footer-bottom">
             <p>© 2026 RIMSO - Conectando sua loja ao seu bairro. Todos os direitos reservados.</p>
+            <p style="margin-top: 10px; font-size: 12px;">
+                <a href="#" onclick="abrirModal('modalPolitica')" style="color: var(--accent);">Política de Privacidade</a> | 
+                <a href="#" onclick="mostrarToast('Termos de uso - Em breve')" style="color: var(--accent);">Termos de Uso</a>
+            </p>
         </div>
     </footer>
 
@@ -2297,6 +3294,7 @@
             const nomeLoja = document.getElementById('lojaNome').value;
             const whatsapp = document.getElementById('lojaWhatsapp').value;
             const endereco = document.getElementById('lojaEndereco').value;
+            const categoria = document.getElementById('lojaCategoria').value;
             const plano = document.getElementById('planoSelecionado').value;
             
             const planos = {
@@ -2317,6 +3315,7 @@
                 loja: nomeLoja,
                 whatsapp,
                 endereco,
+                categoria,
                 plano,
                 data: new Date().toISOString()
             });
@@ -2536,12 +3535,51 @@
 
         function voltarHome() {
             const lojaPage = document.getElementById('lojaPage');
+            const sobreNosPage = document.getElementById('sobreNosPage');
+            const comoComprarPage = document.getElementById('comoComprarPage');
+            const faqPage = document.getElementById('faqPage');
+            const trabalheConoscoPage = document.getElementById('trabalheConoscoPage');
+            const comoFuncionaPage = document.getElementById('comoFuncionaPage');
             const siteContent = document.getElementById('siteContent');
             const sidebar = document.getElementById('sidebar');
             
             if (lojaPage) lojaPage.classList.add('hidden');
+            if (sobreNosPage) sobreNosPage.classList.add('hidden');
+            if (comoComprarPage) comoComprarPage.classList.add('hidden');
+            if (faqPage) faqPage.classList.add('hidden');
+            if (trabalheConoscoPage) trabalheConoscoPage.classList.add('hidden');
+            if (comoFuncionaPage) comoFuncionaPage.classList.add('hidden');
             if (siteContent) siteContent.classList.remove('hidden');
             if (sidebar) sidebar.classList.remove('active');
+        }
+
+        // ==================== PÁGINAS INSTITUCIONAIS ====================
+        function abrirPaginaInstitucional(pagina) {
+            const siteContent = document.getElementById('siteContent');
+            const lojaPage = document.getElementById('lojaPage');
+            const sobreNosPage = document.getElementById('sobreNosPage');
+            const comoComprarPage = document.getElementById('comoComprarPage');
+            const faqPage = document.getElementById('faqPage');
+            const trabalheConoscoPage = document.getElementById('trabalheConoscoPage');
+            const comoFuncionaPage = document.getElementById('comoFuncionaPage');
+            
+            siteContent.classList.add('hidden');
+            if (lojaPage) lojaPage.classList.add('hidden');
+            
+            if (pagina === 'sobreNos') {
+                sobreNosPage.classList.remove('hidden');
+            } else if (pagina === 'comoComprar') {
+                comoComprarPage.classList.remove('hidden');
+            } else if (pagina === 'faq') {
+                faqPage.classList.remove('hidden');
+            } else if (pagina === 'trabalheConosco') {
+                trabalheConoscoPage.classList.remove('hidden');
+            } else if (pagina === 'comoFunciona') {
+                comoFuncionaPage.classList.remove('hidden');
+            }
+            
+            // Scroll para o topo
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         // ==================== PRODUTOS ====================
@@ -2679,26 +3717,63 @@
             }
         }
 
-        // ==================== DASHBOARD ====================
-        function mostrarDashboard() {
-            if (!usuarioLogado) {
-                mostrarToast('Faça login para acessar o dashboard', 'error');
-                abrirModal('modalLogin');
-                return;
-            }
-            
-            if (usuarioLogado.tipo !== 'lojista') {
-                mostrarToast('Área exclusiva para lojistas', 'error');
-                return;
-            }
-            
-            alert('Dashboard do lojista - Em desenvolvimento');
-        }
-
         // ==================== CONTATO ====================
         function contatoWhatsapp(numero) {
             const numeroLimpo = numero.replace(/\D/g, '');
             window.open(`https://wa.me/55${numeroLimpo}`, '_blank');
+        }
+
+        // ==================== FAQ ====================
+        function toggleFAQ(element) {
+            const faqItem = element.closest('.faq-item');
+            faqItem.classList.toggle('active');
+        }
+
+        // ==================== CHATBOT ====================
+        function toggleChatbot() {
+            const chatbot = document.getElementById('chatbotWindow');
+            chatbot.classList.toggle('active');
+        }
+
+        function enviarMensagem() {
+            const input = document.getElementById('chatbotInput');
+            const mensagem = input.value.trim();
+            if (!mensagem) return;
+            
+            const messages = document.getElementById('chatbotMessages');
+            
+            // Mensagem do usuário
+            const userMsg = document.createElement('div');
+            userMsg.className = 'chatbot-message user';
+            userMsg.textContent = mensagem;
+            messages.appendChild(userMsg);
+            
+            input.value = '';
+            
+            // Resposta automática do bot
+            setTimeout(() => {
+                const botMsg = document.createElement('div');
+                botMsg.className = 'chatbot-message bot';
+                
+                if (mensagem.toLowerCase().includes('compra')) {
+                    botMsg.textContent = 'Para comprar, basta buscar uma loja, ver os produtos e clicar no botão do WhatsApp para falar diretamente com o lojista. É gratuito e seguro!';
+                } else if (mensagem.toLowerCase().includes('plano') || mensagem.toLowerCase().includes('anunciar')) {
+                    botMsg.textContent = 'Temos planos a partir de R$49/mês para lojistas. Clique em "Anunciar" no menu superior e escolha o plano ideal para sua loja!';
+                } else if (mensagem.toLowerCase().includes('avaliação') || mensagem.toLowerCase().includes('avaliar')) {
+                    botMsg.textContent = 'Você pode avaliar as lojas após visitá-las. Basta entrar na página da loja e clicar em "Avaliar esta loja".';
+                } else if (mensagem.toLowerCase().includes('contato')) {
+                    botMsg.textContent = 'Você pode nos contatar pelo email contato@rimso.com.br ou telefone (19) 3434-5678. Também temos chat disponível 24h!';
+                } else if (mensagem.toLowerCase().includes('privacidade')) {
+                    botMsg.textContent = 'Nossa política de privacidade segue a LGPD. Seus dados são protegidos e nunca vendidos. Clique no link do rodapé para ler na íntegra.';
+                } else {
+                    botMsg.textContent = 'Posso ajudar com informações sobre compras, planos para lojistas, avaliações, contato e política de privacidade. Como posso te ajudar?';
+                }
+                
+                messages.appendChild(botMsg);
+                messages.scrollTop = messages.scrollHeight;
+            }, 500);
+            
+            messages.scrollTop = messages.scrollHeight;
         }
 
         // ==================== MODAIS ====================
