@@ -1,78 +1,69 @@
 import streamlit as st
-import requests
 from streamlit.components.v1 import html
 import time
 
 st.set_page_config(
-    page_title="RIMSO Piracicaba",
+    page_title="RIMSO - Moda em Piracicaba",
     page_icon="👕",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
 
-URL = "https://raw.githubusercontent.com/pedrohenriquemarques720-stack/Rimso/refs/heads/main/index.html"
-
+# CSS para remover padding do Streamlit
 st.markdown("""
 <style>
-    .main .block-container { padding: 0 !important; max-width: 100% !important; }
-    iframe { width: 100%; border: none; min-height: 100vh; }
+    .main .block-container {
+        padding: 0 !important;
+        max-width: 100% !important;
+    }
+    
+    #MainMenu, footer, header {
+        display: none;
+    }
+    
+    iframe {
+        width: 100%;
+        border: none;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+    }
+    
+    .stApp {
+        padding: 0 !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
-with st.spinner("🔄 Carregando..."):
-    try:
-        r = requests.get(f"{URL}?t={int(time.time())}", timeout=10)
-        html_content = r.text if r.status_code == 200 else None
-        
-        if html_content:
-            # Remover tags que causam erro
-            import re
-            html_content = re.sub(r'<script\s+src="[^"]*\.js"[^>]*>.*?</script>', '', html_content, flags=re.DOTALL)
-            
-            # Adicionar script que CRIA os botões
-            script = """
-<script>
-// ===== CRIAR BOTÕES =====
-setTimeout(function() {
-    const cards = document.querySelectorAll('.loja-card');
-    console.log('📍 Encontradas ' + cards.length + ' lojas');
+# Sidebar simples
+with st.sidebar:
+    st.markdown("""
+    <div style="text-align: center; padding: 20px 0;">
+        <div style="font-size: 48px;">👕</div>
+        <div style="font-size: 24px; font-weight: 800;">RIM<span style="color: #FF6B35;">SO</span></div>
+        <div style="color: #6B7280; font-size: 12px;">Moda em Piracicaba</div>
+    </div>
+    """, unsafe_allow_html=True)
     
-    cards.forEach((card, i) => {
-        // Não duplicar
-        if (card.querySelector('.btn-novo')) return;
-        
-        // Container
-        const div = document.createElement('div');
-        div.className = 'btn-novo';
-        div.style.cssText = 'display:flex; gap:10px; margin-top:10px;';
-        
-        // Botão Avaliar
-        const btn1 = document.createElement('button');
-        btn1.innerHTML = '⭐ Avaliar';
-        btn1.style.cssText = 'background:#FFCE00; color:black; border:none; padding:8px; border-radius:20px; flex:1; cursor:pointer;';
-        btn1.onclick = () => alert('Avaliar loja');
-        
-        // Botão Compartilhar
-        const btn2 = document.createElement('button');
-        btn2.innerHTML = '📤';
-        btn2.style.cssText = 'background:#FFCE00; color:black; border:none; width:40px; border-radius:20px; cursor:pointer;';
-        btn2.onclick = () => {
-            navigator.clipboard.writeText(window.location.href);
-            alert('Link copiado!');
-        };
-        
-        div.appendChild(btn1);
-        div.appendChild(btn2);
-        card.appendChild(div);
-    });
-}, 1500);
-</script>
-"""
-            
-            html_content = html_content.replace('</body>', script + '</body>')
-            html(html_content, height=1000, scrolling=True)
-            st.sidebar.success("✅ Funcionando!")
-        else:
-            st.error("❌ Erro")
-    except Exception as e:
-        st.error(f"❌ {e}")
+    if st.button("🔄 Recarregar", use_container_width=True):
+        st.cache_data.clear()
+        st.rerun()
+    
+    st.divider()
+    st.caption("Versão 2.0 - Site Completo")
+
+# Carregar o HTML local
+try:
+    with open('index.html', 'r', encoding='utf-8') as f:
+        html_content = f.read()
+    
+    # Adicionar timestamp para evitar cache
+    html_content = html_content.replace('</head>', f'<meta http-equiv="refresh" content="0"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>')
+    
+    # Mostrar o HTML
+    html(html_content, height=1000, scrolling=True)
+    st.sidebar.success("✅ RIMSO funcionando!")
+    
+except FileNotFoundError:
+    st.error("❌ Arquivo index.html não encontrado!")
+    st.info("Certifique-se de que o arquivo 'index.html' está na mesma pasta que este script.")
