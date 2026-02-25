@@ -1,5 +1,5 @@
-// ==================== RIMSO - FASE 1 COMPLETA (TUDO ATIVADO) ====================
-console.log('🚀 RIMSO Fase 1 - Carregando...');
+// ==================== RIMSO - VERSÃO COM FEED FUNCIONANDO ====================
+console.log('🚀 RIMSO - Carregando...');
 
 // ==================== 1. DADOS ====================
 let usuarioLogado = null;
@@ -46,6 +46,7 @@ const lojas = [
     }
 ];
 
+// ==================== 2. FEED DE EXEMPLO ====================
 const feed = [
     {
         id: 1,
@@ -53,21 +54,21 @@ const feed = [
         usuario: 'Ana Silva',
         avatar: '👩',
         loja: 'Moda Center',
-        mensagem: 'Amei esse vestido! ❤️',
+        mensagem: 'Amei esse vestido! ❤️ Perfeito para o fim de semana!',
         imagem: '👗',
         curtidas: 45,
         comentarios: 12,
-        data: new Date(Date.now() - 3600000).toISOString()
+        data: new Date(Date.now() - 3600000).toISOString() // 1 hora atrás
     },
     {
         id: 2,
         tipo: 'promocao',
         loja: 'StreetWear Club',
-        mensagem: '🔥 30% OFF em jaquetas!',
+        mensagem: '🔥 PROMOÇÃO RELÂMPAGO: 30% OFF em todas as jaquetas! Corre que é por tempo limitado!',
         imagem: '🧥',
         curtidas: 89,
         comentarios: 23,
-        data: new Date().toISOString()
+        data: new Date().toISOString() // agora
     },
     {
         id: 3,
@@ -75,15 +76,27 @@ const feed = [
         usuario: 'João Pedro',
         avatar: '👨',
         loja: 'Kids Fashion',
-        mensagem: 'Roupas lindas para meu bebê! 🧸',
+        mensagem: 'Roupas lindas para meu bebê! Super recomendo 🧸',
         imagem: '👶',
         curtidas: 67,
         comentarios: 15,
-        data: new Date(Date.now() - 86400000).toISOString()
+        data: new Date(Date.now() - 86400000).toISOString() // 1 dia atrás
+    },
+    {
+        id: 4,
+        tipo: 'cliente',
+        usuario: 'Maria Oliveira',
+        avatar: '👩‍🦰',
+        loja: 'Moda Center',
+        mensagem: 'Comprei uma calça jeans maravilhosa! Atendimento excelente!',
+        imagem: '👖',
+        curtidas: 34,
+        comentarios: 8,
+        data: new Date(Date.now() - 172800000).toISOString() // 2 dias atrás
     }
 ];
 
-// ==================== 2. FUNÇÕES AUXILIARES ====================
+// ==================== 3. FUNÇÕES AUXILIARES ====================
 function getDoc() {
     return window.top?.document || document;
 }
@@ -133,13 +146,14 @@ function timeAgo(dataISO) {
     const diffHora = Math.floor(diffMin / 60);
     const diffDia = Math.floor(diffHora / 24);
     
-    if (diffMin < 1) return 'agora';
+    if (diffMin < 1) return 'agora mesmo';
     if (diffMin < 60) return `há ${diffMin} min`;
     if (diffHora < 24) return `há ${diffHora} h`;
+    if (diffDia === 1) return 'ontem';
     return `há ${diffDia} dias`;
 }
 
-// ==================== 3. TELA DE LOJAS (FUNCIONANDO) ====================
+// ==================== 4. TELA DE LOJAS ====================
 function mostrarLojas() {
     console.log('🏪 Mostrando lojas');
     
@@ -176,15 +190,12 @@ function mostrarLojas() {
     lojasHTML += '</div>';
     clienteContent.innerHTML = lojasHTML;
     
-    // Eventos
     adicionarEventosLojas();
 }
 
-// ==================== 4. EVENTOS DAS LOJAS ====================
 function adicionarEventosLojas() {
     const doc = getDoc();
     
-    // Clique no card (detalhes)
     doc.querySelectorAll('.loja-card').forEach(card => {
         card.addEventListener('click', (e) => {
             if (!e.target.classList.contains('btn-avaliar') && 
@@ -196,7 +207,6 @@ function adicionarEventosLojas() {
         });
     });
     
-    // Botão Avaliar
     doc.querySelectorAll('.btn-avaliar').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -205,7 +215,6 @@ function adicionarEventosLojas() {
         });
     });
     
-    // Botão Favorito
     doc.querySelectorAll('.btn-favorito').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -227,7 +236,6 @@ function adicionarEventosLojas() {
         });
     });
     
-    // Botão Compartilhar
     doc.querySelectorAll('.btn-compartilhar').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -344,7 +352,6 @@ function criarModalAvaliacao() {
     
     doc.body.appendChild(modal);
     
-    // Eventos das estrelas
     let notaSelecionada = 0;
     const estrelas = modal.querySelectorAll('#estrelas i');
     
@@ -412,40 +419,44 @@ function mostrarFeed() {
     
     const doc = getDoc();
     const clienteContent = doc.getElementById('clienteContent');
+    if (!clienteContent) return;
     
-    let feedHTML = '<h2 style="margin:20px;">Feed de Novidades</h2>';
+    let feedHTML = '<h2 style="margin:20px; color:#1A1A1A;">Feed de Novidades</h2>';
     feedHTML += '<div style="padding:20px;">';
     
-    feed.forEach(post => {
+    // Ordenar do mais novo para o mais velho
+    const feedOrdenado = [...feed].sort((a, b) => new Date(b.data) - new Date(a.data));
+    
+    feedOrdenado.forEach(post => {
         const curtido = curtidas.includes(post.id);
         
         feedHTML += `
-            <div style="background:white; border-radius:20px; border:2px solid #E5E7EB; margin-bottom:20px; padding:20px;">
+            <div style="background:white; border-radius:20px; border:2px solid #E5E7EB; margin-bottom:20px; padding:20px; transition:all 0.3s;">
                 <div style="display:flex; align-items:center; gap:10px; margin-bottom:15px;">
-                    <div style="width:40px; height:40px; border-radius:50%; background:linear-gradient(145deg, #DD0000, #FFCE00); display:flex; align-items:center; justify-content:center;">
+                    <div style="width:40px; height:40px; border-radius:50%; background:linear-gradient(145deg, #DD0000, #FFCE00); display:flex; align-items:center; justify-content:center; font-size:20px;">
                         ${post.avatar || '👤'}
                     </div>
-                    <div>
+                    <div style="flex:1;">
                         <strong>${post.tipo === 'cliente' ? post.usuario : post.loja}</strong>
                         <div style="font-size:12px; color:#6B7280;">${timeAgo(post.data)}</div>
                     </div>
-                    ${post.tipo === 'promocao' ? '<span style="background:#DD0000; color:white; padding:2px 8px; border-radius:20px; font-size:11px;">PROMO</span>' : ''}
+                    ${post.tipo === 'promocao' ? '<span style="background:#DD0000; color:white; padding:4px 12px; border-radius:20px; font-size:12px;">🔥 PROMO</span>' : ''}
                 </div>
                 
-                <p style="margin:10px 0;">${post.mensagem}</p>
+                <p style="margin:15px 0; line-height:1.5;">${post.mensagem}</p>
                 
-                <div style="font-size:48px; text-align:center; padding:20px; background:#F9FAFB; border-radius:16px;">
+                <div style="font-size:48px; text-align:center; padding:30px; background:#F9FAFB; border-radius:16px; margin:15px 0;">
                     ${post.imagem}
                 </div>
                 
-                <div style="display:flex; gap:20px; margin-top:15px;">
+                <div style="display:flex; gap:20px; margin-top:15px; padding-top:15px; border-top:2px solid #E5E7EB;">
                     <div style="display:flex; align-items:center; gap:5px; cursor:pointer;" class="curtir-post" data-id="${post.id}">
-                        <i class="fa${curtido ? 's' : 'r'} fa-heart" style="color:#DD0000;"></i>
-                        <span>${post.curtidas + (curtido ? 1 : 0)}</span>
+                        <i class="fa${curtido ? 's' : 'r'} fa-heart" style="color:#DD0000; font-size:18px;"></i>
+                        <span style="font-weight:600;">${post.curtidas + (curtido ? 1 : 0)}</span>
                     </div>
                     <div style="display:flex; align-items:center; gap:5px;">
-                        <i class="far fa-comment"></i>
-                        <span>${post.comentarios}</span>
+                        <i class="far fa-comment" style="color:#6B7280; font-size:18px;"></i>
+                        <span style="font-weight:600;">${post.comentarios}</span>
                     </div>
                 </div>
             </div>
@@ -455,25 +466,25 @@ function mostrarFeed() {
     feedHTML += '</div>';
     clienteContent.innerHTML = feedHTML;
     
-    // Eventos de curtir
+    // Adicionar eventos de curtir
     doc.querySelectorAll('.curtir-post').forEach(el => {
-        el.addEventListener('click', () => {
+        el.addEventListener('click', (e) => {
+            e.stopPropagation();
             const id = parseInt(el.dataset.id);
-            curtirPost(id);
+            
+            const index = curtidas.indexOf(id);
+            if (index === -1) {
+                curtidas.push(id);
+                mostrarToast('❤️ Curtiu!');
+            } else {
+                curtidas.splice(index, 1);
+            }
+            localStorage.setItem('rimso_curtidas', JSON.stringify(curtidas));
+            
+            // Recarregar o feed para mostrar a mudança
+            mostrarFeed();
         });
     });
-}
-
-function curtirPost(id) {
-    const index = curtidas.indexOf(id);
-    if (index === -1) {
-        curtidas.push(id);
-        mostrarToast('❤️ Curtiu!');
-    } else {
-        curtidas.splice(index, 1);
-    }
-    localStorage.setItem('rimso_curtidas', JSON.stringify(curtidas));
-    mostrarFeed(); // Recarrega o feed
 }
 
 // ==================== 8. MENU DO CLIENTE ====================
@@ -483,35 +494,40 @@ function configurarMenu() {
     if (!menu) return;
     
     // Verificar se já tem o item Feed
-    if (menu.querySelector('[data-feed]')) return;
+    if (menu.querySelector('[data-feed="true"]')) return;
     
-    console.log('📱 Configurando menu...');
+    console.log('📱 Adicionando item Feed ao menu...');
     
+    // Criar item do Feed
     const feedItem = doc.createElement('div');
     feedItem.className = 'menu-item';
     feedItem.setAttribute('data-feed', 'true');
     feedItem.innerHTML = '<i class="fas fa-rss"></i> Feed';
     feedItem.onclick = () => {
+        // Remover active de todos
         doc.querySelectorAll('#appCliente .menu-item').forEach(i => i.classList.remove('active'));
+        // Ativar este item
         feedItem.classList.add('active');
+        // Mostrar feed
         mostrarFeed();
     };
     
-    // Inserir antes do Voltar
+    // Encontrar onde inserir (antes do Voltar)
     const itens = Array.from(menu.children);
     const voltarItem = itens.find(el => el.textContent.includes('Voltar'));
+    
     if (voltarItem) {
         menu.insertBefore(feedItem, voltarItem);
     } else {
         menu.appendChild(feedItem);
     }
     
-    console.log('✅ Menu configurado');
+    console.log('✅ Item Feed adicionado ao menu');
 }
 
 // ==================== 9. INICIALIZAÇÃO ====================
 function iniciar() {
-    console.log('🚀 Inicializando RIMSO Fase 1...');
+    console.log('🚀 Inicializando RIMSO...');
     
     // Criar modal de avaliação
     criarModalAvaliacao();
@@ -522,25 +538,27 @@ function iniciar() {
         const appCliente = doc.getElementById('appCliente');
         
         if (appCliente && !appCliente.classList.contains('hidden')) {
-            // Configurar menu (só executa uma vez)
+            // Configurar menu (uma vez)
             configurarMenu();
             
-            // Verificar se precisa mostrar lojas
+            // Verificar conteúdo
             const content = doc.getElementById('clienteContent');
-            if (content && content.children.length === 1) {
-                const primeiroFilho = content.children[0];
-                // Se for a mensagem de boas-vindas, mostra as lojas
-                if (primeiroFilho.textContent.includes('Bem-vindo')) {
-                    mostrarLojas();
+            if (content) {
+                // Se estiver vazio ou com mensagem de boas-vindas, mostrar lojas
+                if (content.children.length === 1) {
+                    const primeiroFilho = content.children[0];
+                    if (primeiroFilho.textContent.includes('Bem-vindo')) {
+                        mostrarLojas();
+                    }
                 }
             }
         }
     }, 1000);
     
-    console.log('✅ RIMSO Fase 1 pronto!');
+    console.log('✅ RIMSO pronto!');
 }
 
-// Iniciar quando a página carregar
+// Iniciar
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', iniciar);
 } else {
