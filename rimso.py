@@ -3,6 +3,7 @@ import requests
 from streamlit.components.v1 import html
 import time
 from datetime import datetime
+import os
 
 # Configuração da página
 st.set_page_config(
@@ -43,7 +44,20 @@ def carregar_html_github():
         st.error(f"Erro inesperado: {e}")
         return None
 
-# CSS para remover padding do Streamlit
+# Função para ler arquivo local (fallback)
+def carregar_html_local():
+    try:
+        # Tentar ler o arquivo index.html local
+        if os.path.exists('index.html'):
+            with open('index.html', 'r', encoding='utf-8') as f:
+                return f.read()
+        else:
+            return None
+    except Exception as e:
+        st.error(f"Erro ao ler arquivo local: {e}")
+        return None
+
+# CSS para remover padding do Streamlit e configurar caminhos dos arquivos estáticos
 st.markdown("""
 <style>
     /* Remove padding do container principal */
@@ -110,6 +124,13 @@ with st.sidebar:
     
     st.divider()
     
+    # Opção de fonte do HTML
+    fonte = st.radio(
+        "📁 Fonte do HTML:",
+        ["GitHub", "Arquivo Local"],
+        index=0
+    )
+    
     st.subheader("📊 Status")
     status_placeholder = st.empty()
     
@@ -133,39 +154,81 @@ with st.sidebar:
     with st.expander("🔧 Debug Info"):
         st.write(f"**URL:** {GITHUB_HTML_URL}")
         st.write(f"**Timestamp:** {datetime.now().strftime('%H:%M:%S')}")
+        # Verificar se a pasta static existe
+        if os.path.exists('static'):
+            arquivos_js = [f for f in os.listdir('static') if f.endswith('.js')]
+            st.write(f"**Arquivos JS na pasta static:** {len(arquivos_js)}")
+            for js_file in arquivos_js[:5]:  # Mostrar apenas os 5 primeiros
+                st.write(f"  - {js_file}")
+        else:
+            st.write("**Pasta 'static' não encontrada**")
     
-    st.caption("⚠️ Para atualizar o HTML, edite o arquivo no GitHub e clique em 'Recarregar'")
+    st.caption("⚠️ Os arquivos .js devem estar na pasta 'static/'")
 
 # Área principal - Carregar o HTML
 status_placeholder.info("⏳ Carregando RIMSO...")
 
 with st.spinner("🔄 Carregando interface..."):
-    html_content = carregar_html_github()
+    html_content = None
+    
+    if fonte == "GitHub":
+        html_content = carregar_html_github()
+    else:
+        html_content = carregar_html_local()
     
     if html_content:
-        # Verificar se o HTML carregado é o correto (procurar por características do HTML antigo)
-        if 'RIMSO - Plataforma SaaS de Marketplace Regional' in html_content:
-            status_placeholder.success(f"✅ HTML correto carregado!")
+        # Modificar os caminhos dos scripts no HTML para apontar para a pasta static
+        # Isso é importante se o HTML estiver referenciando os scripts diretamente
+        modified_html = html_content.replace('src="avaliaçoes.js"', 'src="static/avaliaçoes.js"')
+        modified_html = modified_html.replace('src="feed.js"', 'src="static/feed.js"')
+        modified_html = modified_html.replace('src="favoritos.js"', 'src="static/favoritos.js"')
+        modified_html = modified_html.replace('src="rotas.js"', 'src="static/rotas.js"')
+        modified_html = modified_html.replace('src="filtrosavan.js"', 'src="static/filtrosavan.js"')
+        modified_html = modified_html.replace('src="notificaçoes.js"', 'src="static/notificaçoes.js"')
+        modified_html = modified_html.replace('src="estatisticas.js"', 'src="static/estatisticas.js"')
+        modified_html = modified_html.replace('src="promoçoes.js"', 'src="static/promoçoes.js"')
+        modified_html = modified_html.replace('src="compartilhar.js"', 'src="static/compartilhar.js"')
+        modified_html = modified_html.replace('src="adminadv.js"', 'src="static/adminadv.js"')
+        
+        # Também substituir versões com caminho js/ se existirem
+        modified_html = modified_html.replace('src="js/', 'src="static/')
+        
+        # Verificar se o HTML carregado é o correto
+        if 'RIMSO - Plataforma SaaS de Marketplace Regional' in modified_html or 'RIMSO Piracicaba' in modified_html:
+            status_placeholder.success(f"✅ HTML carregado com sucesso!")
             
-            # Injetar o HTML
-            html(html_content, height=1000, scrolling=True)
+            # Injetar o HTML modificado
+            html(modified_html, height=1000, scrolling=True)
             
             # Mostrar informações
             with st.sidebar:
-                st.success(f"✅ Versão: Marketplace Regional")
-                st.caption(f"Tamanho: {len(html_content):,} bytes")
+                st.success(f"✅ Versão atualizada")
+                st.caption(f"Tamanho: {len(modified_html):,} bytes")
+                
+                # Verificar se a pasta static existe e tem arquivos
+                if os.path.exists('static'):
+                    arquivos_js = [f for f in os.listdir('static') if f.endswith('.js')]
+                    st.info(f"📁 Pasta static: {len(arquivos_js)} arquivos .js encontrados")
+                else:
+                    st.error("❌ Pasta 'static' não encontrada! Crie a pasta e coloque os arquivos .js nela.")
         else:
-            status_placeholder.warning("⚠️ HTML carregado, mas pode ser a versão antiga")
-            html(html_content, height=1000, scrolling=True)
+            status_placeholder.warning("⚠️ HTML carregado")
+            html(modified_html, height=1000, scrolling=True)
     else:
         status_placeholder.error("❌ Falha ao carregar")
         st.markdown("""
         <div style="text-align: center; padding: 50px;">
             <h1 style="color: #DD0000;">😕 Erro ao carregar</h1>
-            <p style="color: #6B7280;">Não foi possível carregar o RIMSO do GitHub</p>
+            <p style="color: #6B7280;">Não foi possível carregar o RIMSO</p>
             <p style="margin-top: 20px;">
                 <strong>URL:</strong><br>
                 <code>https://raw.githubusercontent.com/pedrohenriquemarques720-stack/Rimso/refs/heads/main/index.html</code>
+            </p>
+            <p style="margin-top: 20px;">
+                <strong>Instruções:</strong><br>
+                1. Crie uma pasta chamada <code>static</code> no seu repositório<br>
+                2. Coloque todos os arquivos .js dentro da pasta <code>static</code><br>
+                3. Verifique se o arquivo index.html existe
             </p>
             <p style="margin-top: 20px;">
                 <button onclick="window.location.reload()" style="background: #DD0000; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
