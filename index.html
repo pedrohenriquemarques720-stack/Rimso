@@ -38,21 +38,6 @@
             min-height: 100vh;
         }
 
-        /* ==================== ANIMAÇÕES ==================== */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes slideIn {
-            from { transform: translateX(-20px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
         /* ==================== TOP BAR ==================== */
         .top-bar {
             background: var(--dark);
@@ -82,6 +67,7 @@
             color: rgba(255,255,255,0.8);
             text-decoration: none;
             transition: var(--transition);
+            cursor: pointer;
         }
 
         .top-bar-links a:hover {
@@ -404,6 +390,10 @@
             z-index: 9999;
         }
 
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         /* ==================== CONTEÚDO PRINCIPAL ==================== */
         .main-content {
             max-width: 1400px;
@@ -548,6 +538,11 @@
         .loja-card:nth-child(7) { animation-delay: 0.7s; }
         .loja-card:nth-child(8) { animation-delay: 0.8s; }
 
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .loja-card:hover {
             transform: translateY(-5px) scale(1.02);
             border-color: var(--accent);
@@ -582,7 +577,6 @@
             font-size: 12px;
             font-weight: 700;
             z-index: 2;
-            animation: fadeIn 0.3s ease;
         }
 
         .loja-favorite {
@@ -756,6 +750,11 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
 
         .featured-item:hover {
@@ -1157,6 +1156,7 @@
             color: rgba(255,255,255,0.7);
             text-decoration: none;
             transition: var(--transition);
+            cursor: pointer;
         }
 
         .footer-col a:hover {
@@ -1332,9 +1332,9 @@
     <div class="top-bar">
         <div class="top-bar-container">
             <div class="top-bar-links">
-                <a href="#"><i class="fas fa-phone"></i> (19) 3434-5678</a>
-                <a href="#"><i class="fas fa-envelope"></i> contato@rimso.com.br</a>
-                <a href="#"><i class="fab fa-instagram"></i> @rimso</a>
+                <a href="tel:1934345678"><i class="fas fa-phone"></i> (19) 3434-5678</a>
+                <a href="mailto:contato@rimso.com.br"><i class="fas fa-envelope"></i> contato@rimso.com.br</a>
+                <a href="#" onclick="mostrarToast('Instagram: @rimso')"><i class="fab fa-instagram"></i> @rimso</a>
             </div>
             <div class="top-bar-links">
                 <a href="#" onclick="abrirModal('modalLogin')"><i class="fas fa-user"></i> Entrar</a>
@@ -1356,8 +1356,8 @@
             </div>
 
             <div class="header-search">
-                <input type="text" placeholder="Buscar lojas, produtos, marcas..." id="searchInput" onkeyup="buscarLojasInstantaneo()">
-                <button onclick="buscarLojasInstantaneo()"><i class="fas fa-search"></i></button>
+                <input type="text" placeholder="Buscar lojas, produtos, marcas..." id="searchInput">
+                <button onclick="buscarLojas()"><i class="fas fa-search"></i></button>
             </div>
 
             <div class="header-actions">
@@ -1613,35 +1613,35 @@
             <div class="footer-col">
                 <h3>RIMSO</h3>
                 <ul>
-                    <li><a href="#" onclick="mostrarToast('Sobre nós')">Sobre nós</a></li>
-                    <li><a href="#" onclick="mostrarToast('Como funciona')">Como funciona</a></li>
-                    <li><a href="#" onclick="mostrarToast('Planos')">Planos para lojistas</a></li>
-                    <li><a href="#" onclick="mostrarToast('Trabalhe conosco')">Trabalhe conosco</a></li>
+                    <li><a href="#" onclick="mostrarToast('Sobre nós - Em breve')">Sobre nós</a></li>
+                    <li><a href="#" onclick="mostrarToast('Como funciona - Em breve')">Como funciona</a></li>
+                    <li><a href="#" onclick="mostrarToast('Planos para lojistas - Em breve')">Planos para lojistas</a></li>
+                    <li><a href="#" onclick="mostrarToast('Trabalhe conosco - Em breve')">Trabalhe conosco</a></li>
                 </ul>
             </div>
             <div class="footer-col">
                 <h3>Para lojistas</h3>
                 <ul>
-                    <li><a href="#" onclick="mostrarToast('Anuncie sua loja')">Anuncie sua loja</a></li>
+                    <li><a href="#" onclick="mostrarToast('Anuncie sua loja - Em breve')">Anuncie sua loja</a></li>
                     <li><a href="#" onclick="mostrarDashboard()">Dashboard</a></li>
-                    <li><a href="#" onclick="mostrarToast('Planos e preços')">Planos e preços</a></li>
-                    <li><a href="#" onclick="mostrarToast('Central de ajuda')">Central de ajuda</a></li>
+                    <li><a href="#" onclick="mostrarToast('Planos e preços - Em breve')">Planos e preços</a></li>
+                    <li><a href="#" onclick="mostrarToast('Central de ajuda - Em breve')">Central de ajuda</a></li>
                 </ul>
             </div>
             <div class="footer-col">
                 <h3>Para clientes</h3>
                 <ul>
-                    <li><a href="#" onclick="mostrarToast('Como comprar')">Como comprar</a></li>
-                    <li><a href="#" onclick="mostrarToast('Segurança')">Segurança</a></li>
-                    <li><a href="#" onclick="mostrarToast('Dúvidas frequentes')">Dúvidas frequentes</a></li>
-                    <li><a href="#" onclick="mostrarToast('Fale conosco')">Fale conosco</a></li>
+                    <li><a href="#" onclick="mostrarToast('Como comprar - Em breve')">Como comprar</a></li>
+                    <li><a href="#" onclick="mostrarToast('Segurança - Em breve')">Segurança</a></li>
+                    <li><a href="#" onclick="mostrarToast('Dúvidas frequentes - Em breve')">Dúvidas frequentes</a></li>
+                    <li><a href="#" onclick="mostrarToast('Fale conosco - Em breve')">Fale conosco</a></li>
                 </ul>
             </div>
             <div class="footer-col">
                 <h3>Contato</h3>
                 <ul>
-                    <li><i class="fas fa-phone"></i> (19) 3434-5678</li>
-                    <li><i class="fas fa-envelope"></i> contato@rimso.com.br</li>
+                    <li><i class="fas fa-phone"></i> <a href="tel:1934345678">(19) 3434-5678</a></li>
+                    <li><i class="fas fa-envelope"></i> <a href="mailto:contato@rimso.com.br">contato@rimso.com.br</a></li>
                     <li><i class="fas fa-map-marker-alt"></i> Piracicaba - SP</li>
                 </ul>
             </div>
@@ -1805,10 +1805,9 @@
         let usuarios = JSON.parse(localStorage.getItem('rimso_usuarios')) || [];
         let usuarioLogado = null;
         let lojaAtual = null;
-        let timeoutBusca;
         let map;
 
-        // ==================== FUNÇÕES DE INICIALIZAÇÃO ====================
+        // ==================== INICIALIZAÇÃO ====================
         document.addEventListener('DOMContentLoaded', function() {
             carregarLojas();
             carregarProdutosDestaque();
@@ -1820,7 +1819,10 @@
             // Busca em tempo real
             const searchInput = document.getElementById('searchInput');
             if (searchInput) {
-                searchInput.addEventListener('input', buscarLojasInstantaneo);
+                searchInput.addEventListener('input', function() {
+                    clearTimeout(window.searchTimeout);
+                    window.searchTimeout = setTimeout(buscarLojas, 500);
+                });
             }
             
             // Estrelas da avaliação
@@ -1842,22 +1844,16 @@
             });
         }
 
-        // ==================== LOJAS ====================
+        // ==================== CARREGAMENTO ====================
         function carregarLojas() {
-            mostrarLoading(true);
+            const grid = document.getElementById('lojasGrid');
+            const total = document.getElementById('totalLojas');
             
-            setTimeout(() => {
-                const grid = document.getElementById('lojasGrid');
-                const total = document.getElementById('totalLojas');
-                
-                if (total) total.textContent = `${lojas.length} lojas encontradas`;
-                
-                if (grid) {
-                    grid.innerHTML = lojas.map(loja => criarCardLoja(loja)).join('');
-                }
-                
-                mostrarLoading(false);
-            }, 500);
+            if (total) total.textContent = `${lojas.length} lojas encontradas`;
+            
+            if (grid) {
+                grid.innerHTML = lojas.map(loja => criarCardLoja(loja)).join('');
+            }
         }
 
         function criarCardLoja(loja) {
@@ -1895,6 +1891,102 @@
             `;
         }
 
+        function carregarProdutosDestaque() {
+            const destaques = lojas.flatMap(l => l.produtos).slice(0, 8);
+            const grid = document.getElementById('produtosDestaque');
+            
+            if (grid) {
+                grid.innerHTML = destaques.map(p => {
+                    const loja = lojas.find(l => l.produtos.some(prod => prod.id === p.id));
+                    return `
+                        <div class="featured-item" onclick="abrirProduto(${p.id})">
+                            <div class="featured-image">
+                                <img src="${p.imagem}" alt="${p.nome}" loading="lazy">
+                            </div>
+                            <div class="featured-info">
+                                <div class="featured-nome">${p.nome}</div>
+                                <div class="featured-preco">R$ ${p.preco.toFixed(2)}</div>
+                                <div class="featured-loja">${loja.nome}</div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+
+        // ==================== FILTROS ====================
+        function filtrarCategoria(categoria) {
+            // Atualizar classes active
+            document.querySelectorAll('.filter-chip, .categories-list a, .sidebar-menu a').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            if (event?.currentTarget) {
+                event.currentTarget.classList.add('active');
+            }
+            
+            const lojasFiltradas = categoria === 'todos' 
+                ? lojas 
+                : lojas.filter(l => l.categoria === categoria);
+            
+            atualizarGridLojas(lojasFiltradas, categoria === 'todos' ? 'Todas as lojas' : `Lojas de ${categoria}`);
+        }
+
+        function filtrarBairro(bairro) {
+            const lojasFiltradas = lojas.filter(l => l.bairro === bairro);
+            atualizarGridLojas(lojasFiltradas, `Lojas em ${bairro}`);
+        }
+
+        function buscarLojas() {
+            const termo = document.getElementById('searchInput').value.toLowerCase().trim();
+            
+            if (termo.length < 2 && termo.length > 0) return;
+            
+            const lojasFiltradas = termo ? lojas.filter(l => 
+                l.nome.toLowerCase().includes(termo) || 
+                l.descricao.toLowerCase().includes(termo) ||
+                l.produtos.some(p => p.nome.toLowerCase().includes(termo))
+            ) : lojas;
+            
+            atualizarGridLojas(lojasFiltradas, termo ? `Resultados para "${termo}"` : 'Todas as lojas');
+        }
+
+        function ordenarLojas(tipo) {
+            let lojasOrdenadas = [...lojas];
+            
+            switch(tipo) {
+                case 'avaliacao':
+                    lojasOrdenadas.sort((a, b) => b.avaliacao - a.avaliacao);
+                    break;
+                case 'nome':
+                    lojasOrdenadas.sort((a, b) => a.nome.localeCompare(b.nome));
+                    break;
+                default:
+                    lojasOrdenadas = lojas;
+            }
+            
+            atualizarGridLojas(lojasOrdenadas, document.getElementById('tituloLojas').textContent);
+        }
+
+        function atualizarGridLojas(lojasParaMostrar, titulo) {
+            const grid = document.getElementById('lojasGrid');
+            const tituloEl = document.getElementById('tituloLojas');
+            const totalEl = document.getElementById('totalLojas');
+            
+            if (tituloEl) tituloEl.textContent = titulo;
+            if (totalEl) totalEl.textContent = `${lojasParaMostrar.length} lojas encontradas`;
+            
+            if (lojasParaMostrar.length === 0) {
+                if (grid) grid.innerHTML = '<div style="text-align: center; padding: 50px; grid-column: 1/-1;">Nenhuma loja encontrada</div>';
+                return;
+            }
+            
+            if (grid) {
+                grid.innerHTML = lojasParaMostrar.map(loja => criarCardLoja(loja)).join('');
+            }
+        }
+
+        // ==================== LOJAS ====================
         function abrirLoja(id) {
             const loja = lojas.find(l => l.id === id);
             if (!loja) return;
@@ -1976,34 +2068,9 @@
             if (dashboard) dashboard.classList.add('hidden');
             if (siteContent) siteContent.classList.remove('hidden');
             if (sidebar) sidebar.classList.remove('active');
-            
-            carregarLojas();
         }
 
         // ==================== PRODUTOS ====================
-        function carregarProdutosDestaque() {
-            const destaques = lojas.flatMap(l => l.produtos).slice(0, 8);
-            const grid = document.getElementById('produtosDestaque');
-            
-            if (grid) {
-                grid.innerHTML = destaques.map(p => {
-                    const loja = lojas.find(l => l.produtos.some(prod => prod.id === p.id));
-                    return `
-                        <div class="featured-item" onclick="abrirProduto(${p.id})">
-                            <div class="featured-image">
-                                <img src="${p.imagem}" alt="${p.nome}" loading="lazy">
-                            </div>
-                            <div class="featured-info">
-                                <div class="featured-nome">${p.nome}</div>
-                                <div class="featured-preco">R$ ${p.preco.toFixed(2)}</div>
-                                <div class="featured-loja">${loja.nome}</div>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-            }
-        }
-
         function abrirProduto(id) {
             let produtoEncontrado = null;
             let lojaEncontrada = null;
@@ -2032,82 +2099,6 @@
             `;
             
             abrirModal('modalProduto');
-        }
-
-        // ==================== FILTROS ====================
-        function filtrarCategoria(categoria) {
-            // Atualizar classes active
-            document.querySelectorAll('.filter-chip, .categories-list a, .sidebar-menu a').forEach(el => {
-                el.classList.remove('active');
-            });
-            
-            if (event?.currentTarget) {
-                event.currentTarget.classList.add('active');
-            }
-            
-            const lojasFiltradas = categoria === 'todos' 
-                ? lojas 
-                : lojas.filter(l => l.categoria === categoria);
-            
-            atualizarGridLojas(lojasFiltradas, categoria === 'todos' ? 'Todas as lojas' : `Lojas de ${categoria}`);
-        }
-
-        function filtrarBairro(bairro) {
-            const lojasFiltradas = lojas.filter(l => l.bairro === bairro);
-            atualizarGridLojas(lojasFiltradas, `Lojas em ${bairro}`);
-        }
-
-        function buscarLojasInstantaneo() {
-            clearTimeout(timeoutBusca);
-            
-            const termo = document.getElementById('searchInput').value.toLowerCase();
-            
-            if (termo.length < 2 && termo.length > 0) return;
-            
-            timeoutBusca = setTimeout(() => {
-                const lojasFiltradas = lojas.filter(l => 
-                    l.nome.toLowerCase().includes(termo) || 
-                    l.descricao.toLowerCase().includes(termo) ||
-                    l.produtos.some(p => p.nome.toLowerCase().includes(termo))
-                );
-                
-                atualizarGridLojas(lojasFiltradas, termo ? `Resultados para "${termo}"` : 'Todas as lojas');
-            }, 300);
-        }
-
-        function ordenarLojas(tipo) {
-            let lojasOrdenadas = [...lojas];
-            
-            switch(tipo) {
-                case 'avaliacao':
-                    lojasOrdenadas.sort((a, b) => b.avaliacao - a.avaliacao);
-                    break;
-                case 'nome':
-                    lojasOrdenadas.sort((a, b) => a.nome.localeCompare(b.nome));
-                    break;
-                default:
-                    lojasOrdenadas = lojas;
-            }
-            
-            atualizarGridLojas(lojasOrdenadas, document.getElementById('tituloLojas').textContent);
-        }
-
-        function atualizarGridLojas(lojasParaMostrar, titulo) {
-            const grid = document.getElementById('lojasGrid');
-            const tituloEl = document.getElementById('tituloLojas');
-            const totalEl = document.getElementById('totalLojas');
-            
-            if (tituloEl) tituloEl.textContent = titulo;
-            if (totalEl) totalEl.textContent = `${lojasParaMostrar.length} lojas encontradas`;
-            
-            if (lojasParaMostrar.length === 0) {
-                if (grid) grid.innerHTML = '<div style="text-align: center; padding: 50px; grid-column: 1/-1;">Nenhuma loja encontrada</div>';
-                return;
-            }
-            
-            if (grid) {
-                grid.innerHTML = lojasParaMostrar.map(loja => criarCardLoja(loja)).join('');
-            }
         }
 
         // ==================== FAVORITOS ====================
@@ -2300,24 +2291,6 @@
             setTimeout(() => {
                 toast.classList.remove('show');
             }, 3000);
-        }
-
-        // ==================== LOADING ====================
-        function mostrarLoading(mostrar = true) {
-            let loading = document.getElementById('loading-spinner');
-            
-            if (mostrar) {
-                if (!loading) {
-                    loading = document.createElement('div');
-                    loading.id = 'loading-spinner';
-                    loading.className = 'loading-spinner';
-                    document.body.appendChild(loading);
-                }
-            } else {
-                if (loading) {
-                    loading.remove();
-                }
-            }
         }
 
         // ==================== MENU MOBILE ====================
