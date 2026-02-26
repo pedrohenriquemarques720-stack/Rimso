@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>RIMSO - Moda Piracicaba</title>
+    <title>RIMSO - Moda em Piracicaba</title>
     
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -222,71 +222,6 @@
             color: white;
         }
 
-        /* ==================== CATEGORIAS ==================== */
-        .categories-nav {
-            background: white;
-            border-bottom: 2px solid var(--border);
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .categories-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 30px;
-        }
-
-        .categories-list {
-            display: flex;
-            gap: 30px;
-            list-style: none;
-            padding: 15px 0;
-            min-width: min-content;
-        }
-
-        .categories-list a {
-            color: var(--gray);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            white-space: nowrap;
-            transition: var(--transition);
-            cursor: pointer;
-            position: relative;
-        }
-
-        .categories-list a::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: var(--accent);
-            transform: scaleX(0);
-            transition: transform 0.3s;
-        }
-
-        .categories-list a:hover::after {
-            transform: scaleX(1);
-        }
-
-        .categories-list a:hover {
-            color: var(--primary);
-        }
-
-        .categories-list a.active {
-            color: var(--primary);
-            font-weight: 700;
-        }
-
-        .categories-list a.active::after {
-            transform: scaleX(1);
-        }
-
         /* ==================== BANNER ==================== */
         .hero-banner {
             max-width: 1400px;
@@ -404,20 +339,7 @@
             grid-template-columns: 280px 1fr;
             gap: 30px;
         }
-         <!-- SIDEBAR -->
-            <aside class="sidebar" id="sidebar" data-aos="fade-right" data-aos-delay="800">
-                <div class="sidebar-title">Categorias</div>
-                <ul class="sidebar-menu">
-                    <li><a class="active" onclick="filtrarCategoria('todos')"><i class="fas fa-store"></i> Todas as lojas</a></li>
-                    <li><a onclick="filtrarCategoria('surfwear')"><i class="fas fa-water"></i> Surfwear</a></li>
-                    <li><a onclick="filtrarCategoria('streetwear')"><i class="fas fa-hat-cowboy"></i> Streetwear</a></li>
-                    <li><a onclick="filtrarCategoria('feminina')"><i class="fas fa-female"></i> Moda Feminina</a></li>
-                    <li><a onclick="filtrarCategoria('masculina')"><i class="fas fa-male"></i> Moda Masculina</a></li>
-                    <li><a onclick="filtrarCategoria('infantil')"><i class="fas fa-child"></i> Moda Infantil</a></li>
-                    <li><a onclick="filtrarCategoria('calcados')"><i class="fas fa-shoe-prints"></i> Calçados</a></li>
-                    <li><a onclick="filtrarCategoria('acessorios')"><i class="fas fa-gem"></i> Acessórios</a></li>
-            </ul>
-        
+
         /* Sidebar */
         .sidebar {
             background: white;
@@ -474,6 +396,106 @@
         .sidebar-menu i {
             width: 20px;
             color: var(--accent);
+        }
+
+        /* ==================== EXPANDER DOS BAIRROS ==================== */
+        .bairros-expander {
+            margin-top: 20px;
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .bairros-expander-header {
+            background: var(--light);
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .bairros-expander-header:hover {
+            background: #e9ecef;
+        }
+
+        .bairros-expander-header i {
+            transition: transform 0.3s ease;
+            color: var(--accent);
+        }
+
+        .bairros-expander.active .bairros-expander-header i {
+            transform: rotate(180deg);
+        }
+
+        .bairros-expander-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: white;
+        }
+
+        .bairros-expander.active .bairros-expander-content {
+            max-height: 300px;
+        }
+
+        .bairros-scroll {
+            max-height: 250px;
+            overflow-y: auto;
+            padding: 15px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent) var(--border);
+        }
+
+        .bairros-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .bairros-scroll::-webkit-scrollbar-track {
+            background: var(--border);
+            border-radius: 10px;
+        }
+
+        .bairros-scroll::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 10px;
+        }
+
+        .bairros-scroll::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+
+        .bairro-item {
+            padding: 10px 15px;
+            margin-bottom: 5px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--gray);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bairro-item:hover {
+            background: var(--light);
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .bairro-item i {
+            color: var(--accent);
+            font-size: 14px;
+        }
+
+        .bairro-item.active {
+            background: var(--light);
+            color: var(--primary);
+            font-weight: 600;
         }
 
         .sidebar-overlay {
@@ -1589,7 +1611,7 @@
             margin-top: 10px;
         }
 
-        /* ==================== CHATBOT ==================== */
+        /* ==================== CHATBOT MELHORADO ==================== */
         .chatbot-container {
             position: fixed;
             bottom: 20px;
@@ -1633,8 +1655,8 @@
             position: absolute;
             bottom: 80px;
             right: 0;
-            width: 350px;
-            height: 500px;
+            width: 380px;
+            height: 550px;
             background: white;
             border-radius: 20px;
             box-shadow: var(--shadow-lg);
@@ -1659,6 +1681,13 @@
 
         .chatbot-header h3 {
             font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chatbot-header h3 i {
+            font-size: 20px;
         }
 
         .chatbot-close {
@@ -1673,20 +1702,23 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
+            background: #f5f7fa;
         }
 
         .chatbot-message {
-            max-width: 80%;
-            padding: 10px 15px;
-            border-radius: 16px;
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 18px;
             font-size: 14px;
-            line-height: 1.4;
+            line-height: 1.5;
+            word-break: break-word;
         }
 
         .chatbot-message.bot {
-            background: var(--light);
+            background: white;
             align-self: flex-start;
             border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
         .chatbot-message.user {
@@ -1696,19 +1728,58 @@
             border-bottom-right-radius: 4px;
         }
 
+        .chatbot-typing {
+            display: flex;
+            gap: 5px;
+            padding: 12px 16px;
+            background: white;
+            border-radius: 18px;
+            align-self: flex-start;
+            margin-bottom: 5px;
+        }
+
+        .chatbot-typing span {
+            width: 8px;
+            height: 8px;
+            background: var(--gray);
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .chatbot-typing span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .chatbot-typing span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.5;
+            }
+            30% {
+                transform: translateY(-5px);
+                opacity: 1;
+            }
+        }
+
         .chatbot-input {
             padding: 15px;
             border-top: 2px solid var(--border);
             display: flex;
             gap: 10px;
+            background: white;
         }
 
         .chatbot-input input {
             flex: 1;
-            padding: 10px;
+            padding: 12px 15px;
             border: 2px solid var(--border);
             border-radius: 60px;
             font-size: 14px;
+            transition: var(--transition);
         }
 
         .chatbot-input input:focus {
@@ -1720,8 +1791,8 @@
             background: var(--accent);
             color: white;
             border: none;
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             cursor: pointer;
             transition: var(--transition);
@@ -1729,6 +1800,31 @@
 
         .chatbot-input button:hover {
             transform: scale(1.1);
+        }
+
+        .chatbot-suggestions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            padding: 10px 15px;
+            background: #f5f7fa;
+            border-top: 1px solid var(--border);
+        }
+
+        .chatbot-suggestion {
+            background: white;
+            border: 2px solid var(--border);
+            padding: 6px 12px;
+            border-radius: 60px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--gray);
+        }
+
+        .chatbot-suggestion:hover {
+            border-color: var(--accent);
+            color: var(--accent);
         }
 
         /* ==================== COMO FUNCIONA ==================== */
@@ -1901,10 +1997,6 @@
                 max-width: none;
             }
             
-            .categories-list {
-                gap: 15px;
-            }
-            
             .featured-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -1971,6 +2063,7 @@
             
             .chatbot-window {
                 width: 300px;
+                height: 500px;
                 right: -20px;
             }
         }
@@ -2045,7 +2138,7 @@
             
             <div class="logo-area">
                 <div class="logo" onclick="voltarHome()">RIM<span>SO</span></div>
-                <div class="logo-tagline">GPS da moda</div>
+                <div class="logo-tagline">Moda em Piracicaba</div>
             </div>
 
             <div class="header-search">
@@ -2060,32 +2153,16 @@
         </div>
     </header>
 
-    <!-- MENU CATEGORIAS -->
-    <nav class="categories-nav">
-        <div class="categories-container">
-            <ul class="categories-list" id="categoriasList">
-                <li><a class="active" onclick="filtrarCategoria('todos')"><i class="fas fa-tshirt"></i> Todos</a></li>
-                <li><a onclick="filtrarCategoria('surfwear')"><i class="fas fa-water"></i> Surfwear</a></li>
-                <li><a onclick="filtrarCategoria('streetwear')"><i class="fas fa-hat-cowboy"></i> Streetwear</a></li>
-                <li><a onclick="filtrarCategoria('feminina')"><i class="fas fa-female"></i> Feminino</a></li>
-                <li><a onclick="filtrarCategoria('masculina')"><i class="fas fa-male"></i> Masculino</a></li>
-                <li><a onclick="filtrarCategoria('infantil')"><i class="fas fa-child"></i> Infantil</a></li>
-                <li><a onclick="filtrarCategoria('calcados')"><i class="fas fa-shoe-prints"></i> Calçados</a></li>
-                <li><a onclick="filtrarCategoria('acessorios')"><i class="fas fa-gem"></i> Acessórios</a></li>
-            </ul>
-        </div>
-    </nav>
-
     <!-- BANNER -->
     <section class="hero-banner" data-aos="fade-up">
         <div class="banner-content">
-            <h1 data-aos="fade-right" data-aos-delay="200">GPS da moda</h1>
-            <p data-aos="fade-right" data-aos-delay="400">Descubra os melhores lugares de roupas da cidade, com surfwear, streetwear, moda feminina e muito mais!</p>
+            <h1 data-aos="fade-right" data-aos-delay="200">Moda em Piracicaba</h1>
+            <p data-aos="fade-right" data-aos-delay="400">Descubra as melhores lojas de roupas da cidade, com surfwear, streetwear, moda feminina e muito mais!</p>
             <button class="banner-btn" data-aos="fade-up" data-aos-delay="600" onclick="document.getElementById('lojasGrid').scrollIntoView({behavior: 'smooth'})">Explorar lojas</button>
         </div>
     </section>
 
-    <!-- FILTROS RÁPIDOS -->
+    <!-- FILTROS RÁPIDOS (APENAS CATEGORIAS) -->
     <div class="quick-filters" data-aos="fade-up" data-aos-delay="200">
         <span class="filter-chip active" onclick="filtrarCategoria('todos')">Todas</span>
         <span class="filter-chip" onclick="filtrarCategoria('surfwear')">Surfwear</span>
@@ -2108,16 +2185,79 @@
 
     <!-- CONTEÚDO PRINCIPAL (Lojas) -->
     <div id="siteContent" class="main-content">
-        
-            <div class="sidebar-title" style="margin-top: 30px;">Bairros</div>
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar" data-aos="fade-right" data-aos-delay="800">
+            <div class="sidebar-title">Categorias</div>
             <ul class="sidebar-menu">
-                <li><a onclick="filtrarBairro('centro')">Centro</a></li>
-                <li><a onclick="filtrarBairro('alto')">Alto</a></li>
-                <li><a onclick="filtrarBairro('pauliceia')">Pauliceia</a></li>
-                <li><a onclick="filtrarBairro('cidade-alta')">Cidade Alta</a></li>
-                <li><a onclick="filtrarBairro('jardim-alvorada')">Jardim Alvorada</a></li>
-                <li><a onclick="filtrarBairro('vila-hipica')">Vila Hípica</a></li>
+                <li><a class="active" onclick="filtrarCategoria('todos')"><i class="fas fa-store"></i> Todas as lojas</a></li>
+                <li><a onclick="filtrarCategoria('surfwear')"><i class="fas fa-water"></i> Surfwear</a></li>
+                <li><a onclick="filtrarCategoria('streetwear')"><i class="fas fa-hat-cowboy"></i> Streetwear</a></li>
+                <li><a onclick="filtrarCategoria('feminina')"><i class="fas fa-female"></i> Moda Feminina</a></li>
+                <li><a onclick="filtrarCategoria('masculina')"><i class="fas fa-male"></i> Moda Masculina</a></li>
+                <li><a onclick="filtrarCategoria('infantil')"><i class="fas fa-child"></i> Moda Infantil</a></li>
+                <li><a onclick="filtrarCategoria('calcados')"><i class="fas fa-shoe-prints"></i> Calçados</a></li>
+                <li><a onclick="filtrarCategoria('acessorios')"><i class="fas fa-gem"></i> Acessórios</a></li>
             </ul>
+
+            <!-- EXPANDER DOS BAIRROS -->
+            <div class="bairros-expander" id="bairrosExpander">
+                <div class="bairros-expander-header" onclick="toggleBairros()">
+                    <span><i class="fas fa-map-marker-alt"></i> Bairros</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="bairros-expander-content">
+                    <div class="bairros-scroll" id="bairrosList">
+                        <div class="bairro-item" onclick="filtrarBairro('centro')">
+                            <i class="fas fa-location-dot"></i> Centro
+                        </div>
+                        <div class="bairro-item" onclick="filtrarBairro('alto')">
+                            <i class="fas fa-location-dot"></i> Alto
+                        </div>
+                        <div class="bairro-item" onclick="filtrarBairro('pauliceia')">
+                            <i class="fas fa-location-dot"></i> Pauliceia
+                        </div>
+                        <div class="bairro-item" onclick="filtrarBairro('cidade-alta')">
+                            <i class="fas fa-location-dot"></i> Cidade Alta
+                        </div>
+                        <div class="bairro-item" onclick="filtrarBairro('jardim-alvorada')">
+                            <i class="fas fa-location-dot"></i> Jardim Alvorada
+                        </div>
+                        <div class="bairro-item" onclick="filtrarBairro('vila-hipica')">
+                            <i class="fas fa-location-dot"></i> Vila Hípica
+                        </div>
+                        <div class="bairro-item" onclick="filtrarBairro('sao-dimas')">
+                            <i class="fas fa-location-dot"></i> São Dimas
+                        </div>
+                        <div class="bairro-item" onclick="filtrarBairro('jardim-europa')">
+                            <i class="fas fa-location-dot"></i> Jardim Europa
+                        </div>
+                        <div class="bairro-item" onclick="filtrarBairro('vila-rezende')">
+                            <i class="fas fa-location-dot"></i> Vila Rezende
+                        </div>
+                        <div class="bairro-item" onclick="filtrarBairro('jardim-america')">
+                            <i class="fas fa-location-dot"></i> Jardim América
+                        </div>
+                        <div class="bairro-item" onclick="filtrarBairro('cidade-jardim')">
+                            <i class="fas fa-location-dot"></i> Cidade Jardim
+                        </div>
+                        <div class="bairro-item" onclick="filtrarBairro('jardim-ipi')">
+                            <i class="fas fa-location-dot"></i> Jardim Ipi
+                        </div>
+                        <div class="bairro-item" onclick="filtrarBairro('jardim-maringa')">
+                            <i class="fas fa-location-dot"></i> Jardim Maringá
+                        </div>
+                        <div class="bairro-item" onclick="filtrarBairro('jardim-mon-teiro')">
+                            <i class="fas fa-location-dot"></i> Jardim Monteiro
+                        </div>
+                        <div class="bairro-item" onclick="filtrarBairro('jardim-novo-horizonte')">
+                            <i class="fas fa-location-dot"></i> Jardim Novo Horizonte
+                        </div>
+                        <div class="bairro-item" onclick="filtrarBairro('jardim-paraizo')">
+                            <i class="fas fa-location-dot"></i> Jardim Paraíso
+                        </div>
+                    </div>
+                </div>
+            </div>
         </aside>
 
         <!-- LISTA DE LOJAS -->
@@ -2629,7 +2769,7 @@
         </div>
     </div>
 
-    <!-- MODAL CADASTRO COM ROLAGEM -->
+                <!-- MODAL CADASTRO COM ROLAGEM -->
     <div class="modal" id="modalCadastro">
         <div class="modal-content">
             <div class="modal-header">
@@ -2928,7 +3068,7 @@
         </div>
     </div>
 
-    <!-- CHATBOT - CENTRAL DE AJUDA -->
+    <!-- CHATBOT - CENTRAL DE AJUDA MELHORADA -->
     <div class="chatbot-container">
         <div class="chatbot-button" onclick="toggleChatbot()">
             <i class="fas fa-comment-dots"></i>
@@ -2936,25 +3076,33 @@
         
         <div class="chatbot-window" id="chatbotWindow">
             <div class="chatbot-header">
-                <h3><i class="fas fa-robot"></i> Assistente RIMSO</h3>
+                <h3><i class="fas fa-robot"></i> Assistente RIMSO - IA</h3>
                 <span class="chatbot-close" onclick="toggleChatbot()">&times;</span>
             </div>
             <div class="chatbot-messages" id="chatbotMessages">
                 <div class="chatbot-message bot">
-                    Olá! Sou o assistente virtual do RIMSO. Como posso ajudar?
+                    Olá! Sou o assistente virtual do RIMSO com IA. Posso responder qualquer pergunta sobre moda, lojas, compras e muito mais!
                 </div>
                 <div class="chatbot-message bot">
-                    Você pode perguntar sobre:
-                    • Como comprar
-                    • Planos para lojistas
-                    • Avaliações
-                    • Contato
-                    • Política de privacidade
+                    💡 <strong>Dica:</strong> Pergunte sobre:
+                    • "O que é surfwear?"
+                    • "Como faço pra comprar?"
+                    • "Planos pra lojistas"
+                    • "Onde fica a loja X?"
+                    • "Avaliações"
+                    • "Preços"
                 </div>
             </div>
             <div class="chatbot-input">
                 <input type="text" id="chatbotInput" placeholder="Digite sua pergunta..." onkeypress="if(event.key === 'Enter') enviarMensagem()">
                 <button onclick="enviarMensagem()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+            <div class="chatbot-suggestions">
+                <span class="chatbot-suggestion" onclick="usarSugestao('O que é surfwear?')">Surfwear</span>
+                <span class="chatbot-suggestion" onclick="usarSugestao('Como comprar?')">Como comprar</span>
+                <span class="chatbot-suggestion" onclick="usarSugestao('Planos para lojistas')">Planos</span>
+                <span class="chatbot-suggestion" onclick="usarSugestao('Onde fica a CS Surf Shop?')">Localização</span>
+                <span class="chatbot-suggestion" onclick="usarSugestao('Preço médio')">Preços</span>
             </div>
         </div>
     </div>
@@ -2980,7 +3128,7 @@
                 <ul>
                     <li><a href="#" onclick="abrirPaginaInstitucional('comoComprar', event)"><i class="fas fa-shopping-bag"></i> Como comprar</a></li>
                     <li><a href="#" onclick="abrirPaginaInstitucional('faq', event)"><i class="fas fa-question-circle"></i> Dúvidas frequentes</a></li>
-                    <li><a href="#" onclick="toggleChatbot()"><i class="fas fa-robot"></i> Central de ajuda</a></li>
+                    <li><a href="#" onclick="toggleChatbot()"><i class="fas fa-robot"></i> Central de ajuda (IA)</a></li>
                     <li><a href="#" onclick="mostrarToast('Fale conosco: contato@rimso.com.br')"><i class="fas fa-envelope"></i> Fale conosco</a></li>
                 </ul>
             </div>
@@ -3009,8 +3157,6 @@
         </div>
         <div class="footer-bottom">
             <p>© 2026 RIMSO - Conectando sua loja ao seu bairro. Todos os direitos reservados.</p>
-            <p></p>
-            <p>Criado por JOP</p>
             <p style="margin-top: 10px; font-size: 12px;">
                 <a href="#" onclick="abrirModal('modalPolitica')" style="color: var(--accent);">Política de Privacidade</a> | 
                 <a href="#" onclick="abrirPaginaInstitucional('termos', event)" style="color: var(--accent);">Termos de Uso</a>
@@ -3368,6 +3514,12 @@
             }
         }
 
+        // ==================== EXPANDER DOS BAIRROS ====================
+        function toggleBairros() {
+            const expander = document.getElementById('bairrosExpander');
+            expander.classList.toggle('active');
+        }
+
         // ==================== SISTEMA DE PLANOS ====================
         function selecionarPlano(plano) {
             planoSelecionado = plano;
@@ -3566,7 +3718,7 @@
 
         // ==================== FILTROS ====================
         function filtrarCategoria(categoria) {
-            document.querySelectorAll('.filter-chip, .categories-list a, .sidebar-menu a').forEach(el => {
+            document.querySelectorAll('.filter-chip, .sidebar-menu a').forEach(el => {
                 el.classList.remove('active');
             });
             
@@ -3582,6 +3734,16 @@
         }
 
         function filtrarBairro(bairro) {
+            // Remover active de todos os bairros
+            document.querySelectorAll('.bairro-item').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // Adicionar active no bairro clicado
+            if (event?.currentTarget) {
+                event.currentTarget.classList.add('active');
+            }
+            
             const lojasFiltradas = lojas.filter(l => l.bairro === bairro);
             atualizarGridLojas(lojasFiltradas, `Lojas em ${bairro}`);
         }
@@ -3739,6 +3901,17 @@
             
             if (siteContent) siteContent.classList.remove('hidden');
             if (sidebar) sidebar.classList.remove('active');
+            
+            // Resetar filtros
+            document.querySelectorAll('.filter-chip, .sidebar-menu a').forEach(el => {
+                el.classList.remove('active');
+            });
+            document.querySelector('.filter-chip[onclick="filtrarCategoria(\'todos\')"]')?.classList.add('active');
+            document.querySelector('.sidebar-menu a[onclick="filtrarCategoria(\'todos\')"]')?.classList.add('active');
+            
+            // Resetar título
+            document.getElementById('tituloLojas').textContent = 'Lojas em Piracicaba';
+            document.getElementById('totalLojas').textContent = `${lojas.length} lojas encontradas`;
         }
 
         // ==================== PÁGINAS INSTITUCIONAIS ====================
@@ -3926,15 +4099,20 @@
             faqItem.classList.toggle('active');
         }
 
-        // ==================== CHATBOT ====================
+        // ==================== CHATBOT MELHORADO ====================
         function toggleChatbot() {
             const chatbot = document.getElementById('chatbotWindow');
             chatbot.classList.toggle('active');
         }
 
+        function usarSugestao(sugestao) {
+            document.getElementById('chatbotInput').value = sugestao;
+            enviarMensagem();
+        }
+
         function enviarMensagem() {
             const input = document.getElementById('chatbotInput');
-            const mensagem = input.value.trim();
+            const mensagem = input.value.trim().toLowerCase();
             if (!mensagem) return;
             
             const messages = document.getElementById('chatbotMessages');
@@ -3947,30 +4125,82 @@
             
             input.value = '';
             
-            // Resposta automática do bot
+            // Mostrar indicador de digitação
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'chatbot-typing';
+            typingDiv.innerHTML = '<span></span><span></span><span></span>';
+            messages.appendChild(typingDiv);
+            messages.scrollTop = messages.scrollHeight;
+            
+            // Resposta automática do bot com IA simulada
             setTimeout(() => {
+                // Remover indicador de digitação
+                messages.removeChild(typingDiv);
+                
                 const botMsg = document.createElement('div');
                 botMsg.className = 'chatbot-message bot';
                 
-                if (mensagem.toLowerCase().includes('compra')) {
-                    botMsg.textContent = 'Para comprar, basta buscar uma loja, ver os produtos e clicar no botão do WhatsApp para falar diretamente com o lojista. É gratuito e seguro!';
-                } else if (mensagem.toLowerCase().includes('plano') || mensagem.toLowerCase().includes('anunciar')) {
-                    botMsg.textContent = 'Temos planos a partir de R$49/mês para lojistas. Clique em "Anunciar" no menu superior e escolha o plano ideal para sua loja!';
-                } else if (mensagem.toLowerCase().includes('avaliação') || mensagem.toLowerCase().includes('avaliar')) {
-                    botMsg.textContent = 'Você pode avaliar as lojas após visitá-las. Basta entrar na página da loja e clicar em "Avaliar esta loja".';
-                } else if (mensagem.toLowerCase().includes('contato')) {
-                    botMsg.textContent = 'Você pode nos contatar pelo email contato@rimso.com.br ou telefone (19) 3434-5678. Também temos chat disponível 24h!';
-                } else if (mensagem.toLowerCase().includes('privacidade')) {
-                    botMsg.textContent = 'Nossa política de privacidade segue a LGPD. Seus dados são protegidos e nunca vendidos. Clique no link do rodapé para ler na íntegra.';
-                } else if (mensagem.toLowerCase().includes('termos')) {
-                    botMsg.textContent = 'Nossos termos de uso estão disponíveis no rodapé. Eles explicam suas responsabilidades como usuário ou lojista da plataforma.';
-                } else {
-                    botMsg.textContent = 'Posso ajudar com informações sobre compras, planos para lojistas, avaliações, contato, política de privacidade e termos de uso. Como posso te ajudar?';
+                // Base de conhecimento expandida
+                if (mensagem.includes('surfwear') || mensagem.includes('surf')) {
+                    botMsg.textContent = '🏄 Surfwear é o estilo de roupa inspirado no surfe, com peças como camisetas estampadas, bermudas, chinelos e roupas leves. Em Piracicaba, temos várias lojas especializadas como CS Surf Shop, NRSurf e Teka Surf.';
+                }
+                else if (mensagem.includes('streetwear')) {
+                    botMsg.textContent = '🛹 Streetwear é um estilo urbano que mistura roupas confortáveis com influências do skate, hip-hop e cultura de rua. Inclui camisetas oversized, bonés, tênis e moletons. Confira nossas lojas NRSurf e Radical Vest.';
+                }
+                else if (mensagem.includes('feminina') || mensagem.includes('mulher')) {
+                    botMsg.textContent = '👗 Moda Feminina: Temos diversas opções em Piracicaba! Destaque para a Renata Modas, com peças casuais e plus size, e a LÖS, com moda autoral exclusiva.';
+                }
+                else if (mensagem.includes('masculina') || mensagem.includes('homem')) {
+                    botMsg.textContent = '👔 Moda Masculina: A Vila Hípica Modas é referência em moda masculina na cidade, com opções do social ao esporte. Também temos opções nas lojas de surfwear.';
+                }
+                else if (mensagem.includes('infantil') || mensagem.includes('criança')) {
+                    botMsg.textContent = '🧒 Moda Infantil: A Ki Kids Moda Infantil é a maior loja especializada em roupas para crianças em Piracicaba, com opções para todas as idades.';
+                }
+                else if (mensagem.includes('calcado') || mensagem.includes('sapato') || mensagem.includes('tênis')) {
+                    botMsg.textContent = '👟 Calçados: Nossas lojas oferecem diversas opções de calçados, desde chinelos Havaina até tênis casuais e sociais. Confira as seções de produtos de cada loja.';
+                }
+                else if (mensagem.includes('acessorio') || mensagem.includes('boné') || mensagem.includes('bolsa')) {
+                    botMsg.textContent = '🧢 Acessórios: Temos bonés, óculos, bolsas e muito mais! Destaque para os bonés snapback da NRSurf e os acessórios exclusivos da LÖS.';
+                }
+                else if (mensagem.includes('compra') || mensagem.includes('comprar')) {
+                    botMsg.textContent = '🛒 Para comprar: 1) Encontre uma loja pelos filtros 2) Explore os produtos 3) Clique no botão do WhatsApp 4) Fale diretamente com o lojista para negociar preço e entrega. Simples e seguro!';
+                }
+                else if (mensagem.includes('plano') || mensagem.includes('anunciar') || mensagem.includes('lojista')) {
+                    botMsg.textContent = '📢 Planos para lojistas: Básico (R$49/mês - 50 produtos), Profissional (R$89/mês - 200 produtos) e Premium (R$149/mês - ilimitado). Clique em "Anunciar" no menu superior para começar!';
+                }
+                else if (mensagem.includes('avalia') || mensagem.includes('nota')) {
+                    botMsg.textContent = '⭐ Avaliações: Você pode avaliar as lojas após visitá-las. Basta entrar na página da loja e clicar em "Avaliar esta loja". Sua opinião ajuda outros clientes!';
+                }
+                else if (mensagem.includes('local') || mensagem.includes('endereço') || mensagem.includes('onde fica')) {
+                    if (mensagem.includes('cs surf')) {
+                        botMsg.textContent = '📍 CS Surf Shop: Rua Moraes Barros, 806 - Centro. Telefone: (19) 3434-2454';
+                    } else if (mensagem.includes('nrsurf')) {
+                        botMsg.textContent = '📍 NRSurf: Av. Independência, 1200 - Alto. Telefone: (19) 3433-9012';
+                    } else if (mensagem.includes('renata')) {
+                        botMsg.textContent = '📍 Renata Modas: Rua Carlos Augusto Strazzer, 20 - Jardim Alvorada. Telefone: (19) 3411-1193';
+                    } else {
+                        botMsg.textContent = '📍 Você pode encontrar o endereço de todas as lojas na página de cada uma delas. Use a busca ou filtros para encontrar a loja desejada.';
+                    }
+                }
+                else if (mensagem.includes('preço') || mensagem.includes('preco') || mensagem.includes('valor')) {
+                    botMsg.textContent = '💰 Os preços variam por loja e produto. Em média: Chinelos R$39,90, Camisetas R$79,90 a R$89,90, Bermudas R$129,90. Consulte cada loja para valores exatos e promoções.';
+                }
+                else if (mensagem.includes('contato') || mensagem.includes('telefone') || mensagem.includes('email')) {
+                    botMsg.textContent = '📞 Contato: (19) 3434-5678 | Email: contato@rimso.com.br | Instagram: @rimso | WhatsApp: (19) 99999-9999';
+                }
+                else if (mensagem.includes('termo') || mensagem.includes('termos')) {
+                    botMsg.textContent = '📄 Termos de Uso: Nossos termos estão disponíveis no rodapé do site. Eles explicam suas responsabilidades como usuário ou lojista da plataforma.';
+                }
+                else if (mensagem.includes('privacidade') || mensagem.includes('dados')) {
+                    botMsg.textContent = '🔒 Política de Privacidade: Seus dados são protegidos pela LGPD. Não vendemos informações para terceiros. Leia a política completa no rodapé.';
+                }
+                else {
+                    botMsg.textContent = '🤖 Posso ajudar com informações sobre moda, lojas, compras, planos para lojistas, avaliações, contato, política de privacidade e termos de uso. Pergunte à vontade!';
                 }
                 
                 messages.appendChild(botMsg);
                 messages.scrollTop = messages.scrollHeight;
-            }, 500);
+            }, 1000);
             
             messages.scrollTop = messages.scrollHeight;
         }
@@ -4024,9 +4254,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
