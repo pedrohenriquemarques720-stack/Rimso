@@ -404,7 +404,20 @@
             grid-template-columns: 280px 1fr;
             gap: 30px;
         }
-
+         <!-- SIDEBAR -->
+            <aside class="sidebar" id="sidebar" data-aos="fade-right" data-aos-delay="800">
+                <div class="sidebar-title">Categorias</div>
+                <ul class="sidebar-menu">
+                    <li><a class="active" onclick="filtrarCategoria('todos')"><i class="fas fa-store"></i> Todas as lojas</a></li>
+                    <li><a onclick="filtrarCategoria('surfwear')"><i class="fas fa-water"></i> Surfwear</a></li>
+                    <li><a onclick="filtrarCategoria('streetwear')"><i class="fas fa-hat-cowboy"></i> Streetwear</a></li>
+                    <li><a onclick="filtrarCategoria('feminina')"><i class="fas fa-female"></i> Moda Feminina</a></li>
+                    <li><a onclick="filtrarCategoria('masculina')"><i class="fas fa-male"></i> Moda Masculina</a></li>
+                    <li><a onclick="filtrarCategoria('infantil')"><i class="fas fa-child"></i> Moda Infantil</a></li>
+                    <li><a onclick="filtrarCategoria('calcados')"><i class="fas fa-shoe-prints"></i> Calçados</a></li>
+                    <li><a onclick="filtrarCategoria('acessorios')"><i class="fas fa-gem"></i> Acessórios</a></li>
+            </ul>
+        
         /* Sidebar */
         .sidebar {
             background: white;
@@ -4011,6 +4024,7 @@
     </script>
 </body>
 </html>
+
 
 
 
