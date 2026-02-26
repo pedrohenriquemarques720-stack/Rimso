@@ -1319,23 +1319,36 @@
             border-color: var(--accent);
         }
 
-        .team-member img {
+        .team-member-avatar {
             width: 120px;
             height: 120px;
             border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 15px;
+            margin: 0 auto 15px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 48px;
             border: 4px solid var(--accent);
         }
 
         .team-member h3 {
             color: var(--primary);
             margin-bottom: 5px;
+            font-size: 20px;
         }
 
         .team-member p {
             color: var(--gray);
             font-size: 14px;
+        }
+
+        .team-member .frase {
+            margin-top: 10px;
+            font-size: 13px;
+            color: var(--accent);
+            font-style: italic;
         }
 
         /* ==================== COMO COMPRAR ==================== */
@@ -2118,22 +2131,28 @@
                 <h2 style="margin-top: 50px;">Nossa Equipe</h2>
                 <div class="team-grid">
                     <div class="team-member" data-aos="fade-up">
-                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Ana Silva">
-                        <h3>Ana Silva</h3>
-                        <p>CEO & Fundadora</p>
-                        <p style="margin-top: 10px; font-size: 13px;">"Moda local é minha paixão"</p>
+                        <div class="team-member-avatar">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <h3>Osmir Medina</h3>
+                        <p>CEO & Fundador</p>
+                        <p class="frase">"Moda local é minha paixão"</p>
                     </div>
                     <div class="team-member" data-aos="fade-up" data-aos-delay="200">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Carlos Santos">
-                        <h3>Carlos Santos</h3>
+                        <div class="team-member-avatar">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h3>Pedro Graciano</h3>
                         <p>CTO & Inovação</p>
-                        <p style="margin-top: 10px; font-size: 13px;">"Tecnologia a serviço do comércio"</p>
+                        <p class="frase">"Tecnologia a serviço do comércio"</p>
                     </div>
                     <div class="team-member" data-aos="fade-up" data-aos-delay="400">
-                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Marina Costa">
-                        <h3>Marina Costa</h3>
+                        <div class="team-member-avatar">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h3>Jean Silva</h3>
                         <p>Relações com Lojistas</p>
-                        <p style="margin-top: 10px; font-size: 13px;">"Conectando sonhos e negócios"</p>
+                        <p class="frase">"Conectando sonhos e negócios"</p>
                     </div>
                 </div>
             </div>
