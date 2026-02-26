@@ -2740,7 +2740,7 @@
         </div>
     </div>
 
-    <!-- MODAL LOGIN -->
+    <!-- MODAL LOGIN (CORRIGIDO) -->
     <div class="modal" id="modalLogin">
         <div class="modal-content">
             <div class="modal-header">
@@ -2769,7 +2769,7 @@
         </div>
     </div>
 
-                <!-- MODAL CADASTRO COM ROLAGEM -->
+    <!-- MODAL CADASTRO COM ROLAGEM -->
     <div class="modal" id="modalCadastro">
         <div class="modal-content">
             <div class="modal-header">
@@ -3038,11 +3038,11 @@
                 <form onsubmit="adicionarProduto(event)">
                     <div class="form-group">
                         <label>Nome do produto</label>
-                        <input type="text" class="form-control" id="produtoNome" required>
+                        <input type="text" class="form-control" id="produtoNome" placeholder="Ex: Camiseta Surf" required>
                     </div>
                     <div class="form-group">
-                        <label>Preço</label>
-                        <input type="number" class="form-control" id="produtoPreco" step="0.01" required>
+                        <label>Preço (R$)</label>
+                        <input type="number" class="form-control" id="produtoPreco" step="0.01" placeholder="89.90" required>
                     </div>
                     <div class="form-group">
                         <label>URL da imagem</label>
@@ -3068,6 +3068,70 @@
         </div>
     </div>
 
+    <!-- MODAL ADICIONAR LOJA (para testes) -->
+    <div class="modal" id="modalAddLoja">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Adicionar Nova Loja</h2>
+                <span class="modal-close" onclick="fecharModal('modalAddLoja')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form onsubmit="adicionarLoja(event)">
+                    <div class="form-group">
+                        <label>Nome da loja</label>
+                        <input type="text" class="form-control" id="lojaNomeAdd" placeholder="Ex: Nova Loja" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Categoria</label>
+                        <select class="form-control" id="lojaCategoriaAdd" required>
+                            <option value="surfwear">Surfwear</option>
+                            <option value="streetwear">Streetwear</option>
+                            <option value="feminina">Moda Feminina</option>
+                            <option value="masculina">Moda Masculina</option>
+                            <option value="infantil">Moda Infantil</option>
+                            <option value="calcados">Calçados</option>
+                            <option value="acessorios">Acessórios</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Bairro</label>
+                        <select class="form-control" id="lojaBairroAdd" required>
+                            <option value="centro">Centro</option>
+                            <option value="alto">Alto</option>
+                            <option value="pauliceia">Pauliceia</option>
+                            <option value="cidade-alta">Cidade Alta</option>
+                            <option value="jardim-alvorada">Jardim Alvorada</option>
+                            <option value="vila-hipica">Vila Hípica</option>
+                            <option value="sao-dimas">São Dimas</option>
+                            <option value="jardim-europa">Jardim Europa</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Endereço completo</label>
+                        <input type="text" class="form-control" id="lojaEnderecoAdd" placeholder="Rua, número - Bairro" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Telefone</label>
+                        <input type="text" class="form-control" id="lojaTelefoneAdd" placeholder="(19) 3434-5678" required>
+                    </div>
+                    <div class="form-group">
+                        <label>WhatsApp (somente números)</label>
+                        <input type="text" class="form-control" id="lojaWhatsappAdd" placeholder="19999999999" required>
+                    </div>
+                    <div class="form-group">
+                        <label>URL da imagem</label>
+                        <input type="url" class="form-control" id="lojaImagemAdd" placeholder="https://exemplo.com/loja.jpg" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Descrição</label>
+                        <textarea class="form-control" id="lojaDescricaoAdd" rows="3" placeholder="Descreva a loja..." required></textarea>
+                    </div>
+                    <button type="submit" class="banner-btn" style="width: 100%;">Adicionar Loja</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- CHATBOT - CENTRAL DE AJUDA MELHORADA -->
     <div class="chatbot-container">
         <div class="chatbot-button" onclick="toggleChatbot()">
@@ -3088,7 +3152,7 @@
                     • "O que é surfwear?"
                     • "Como faço pra comprar?"
                     • "Planos pra lojistas"
-                    • "Onde fica a loja X?"
+                    • "Onde fica a CS Surf Shop?"
                     • "Avaliações"
                     • "Preços"
                 </div>
@@ -3177,7 +3241,8 @@
         });
 
         // ==================== DADOS ====================
-        const lojas = [
+        // Carregar lojas do localStorage ou usar dados iniciais
+        let lojas = JSON.parse(localStorage.getItem('rimso_lojas')) || [
             {
                 id: 1,
                 nome: 'CS Surf Shop',
@@ -3324,6 +3389,9 @@
             }
         ];
 
+        // Salvar lojas no localStorage
+        localStorage.setItem('rimso_lojas', JSON.stringify(lojas));
+
         // ==================== USUÁRIOS ====================
         let usuarios = JSON.parse(localStorage.getItem('rimso_usuarios')) || [];
         
@@ -3358,7 +3426,8 @@
             carregarProdutosDestaque();
             configurarEventos();
             verificarUsuarioLogado();
-            console.log('🚀 RIMSO inicializado!');
+            console.log('🚀 RIMSO inicializado com sucesso!');
+            console.log('👑 Conta admin: admin@rimso.com.br / admin123');
             
             // Re-inicializar AOS após carregar conteúdo dinâmico
             setTimeout(() => {
@@ -3395,12 +3464,15 @@
             });
         }
 
-        // ==================== SISTEMA DE LOGIN ====================
+        // ==================== SISTEMA DE LOGIN (CORRIGIDO) ====================
         function fazerLogin(event) {
             event.preventDefault();
             
             const email = document.getElementById('loginEmail').value;
             const senha = document.getElementById('loginSenha').value;
+            
+            console.log('Tentando login com:', email, senha);
+            console.log('Usuários disponíveis:', usuarios);
             
             const usuario = usuarios.find(u => u.email === email && u.senha === senha);
             
@@ -3415,13 +3487,13 @@
                 if (usuario.tipo === 'admin') {
                     setTimeout(() => {
                         mostrarToast('👑 Modo administrador ativado', 'success');
-                        if (confirm('Deseja adicionar um produto de teste?')) {
-                            abrirModal('modalAddProduto');
-                        }
+                        // Adicionar botões admin no header
+                        adicionarBotoesAdmin();
                     }, 500);
                 }
             } else {
                 mostrarToast('❌ Email ou senha inválidos', 'error');
+                console.log('Falha no login. Usuários:', usuarios);
             }
         }
 
@@ -3473,6 +3545,10 @@
             localStorage.removeItem('rimso_usuario_logado');
             verificarUsuarioLogado();
             mostrarToast('👋 Até logo!');
+            
+            // Remover botões admin
+            const adminBtns = document.querySelectorAll('.admin-btn');
+            adminBtns.forEach(btn => btn.remove());
         }
 
         function verificarUsuarioLogado() {
@@ -3485,33 +3561,47 @@
                 userInfo.style.display = 'flex';
                 userName.textContent = usuarioLogado.nome.split(' ')[0];
                 
-                // Se for admin, mostrar opção extra no menu
+                // Se for admin, mostrar botões
                 if (usuarioLogado.tipo === 'admin') {
-                    // Adicionar botão admin no header se não existir
-                    if (!document.getElementById('adminBtn')) {
-                        const headerActions = document.querySelector('.header-actions');
-                        const adminBtn = document.createElement('a');
-                        adminBtn.id = 'adminBtn';
-                        adminBtn.href = '#';
-                        adminBtn.className = 'btn-post';
-                        adminBtn.style.background = 'var(--primary)';
-                        adminBtn.innerHTML = '<i class="fas fa-crown"></i> Admin';
-                        adminBtn.onclick = (e) => {
-                            e.preventDefault();
-                            mostrarToast('👑 Painel administrativo');
-                            abrirModal('modalAddProduto');
-                        };
-                        headerActions.appendChild(adminBtn);
-                    }
+                    adicionarBotoesAdmin();
                 }
             } else {
                 authLinks.style.display = 'flex';
                 userInfo.style.display = 'none';
-                
-                // Remover botão admin se existir
-                const adminBtn = document.getElementById('adminBtn');
-                if (adminBtn) adminBtn.remove();
             }
+        }
+
+        function adicionarBotoesAdmin() {
+            // Remover botões existentes
+            const existingBtns = document.querySelectorAll('.admin-btn');
+            existingBtns.forEach(btn => btn.remove());
+            
+            const headerActions = document.querySelector('.header-actions');
+            
+            // Botão Adicionar Produto
+            const addProdutoBtn = document.createElement('a');
+            addProdutoBtn.href = '#';
+            addProdutoBtn.className = 'btn-post admin-btn';
+            addProdutoBtn.style.background = 'var(--primary)';
+            addProdutoBtn.innerHTML = '<i class="fas fa-box"></i> Add Produto';
+            addProdutoBtn.onclick = (e) => {
+                e.preventDefault();
+                abrirModal('modalAddProduto');
+            };
+            
+            // Botão Adicionar Loja
+            const addLojaBtn = document.createElement('a');
+            addLojaBtn.href = '#';
+            addLojaBtn.className = 'btn-post admin-btn';
+            addLojaBtn.style.background = 'var(--accent)';
+            addLojaBtn.innerHTML = '<i class="fas fa-store"></i> Add Loja';
+            addLojaBtn.onclick = (e) => {
+                e.preventDefault();
+                abrirModal('modalAddLoja');
+            };
+            
+            headerActions.appendChild(addProdutoBtn);
+            headerActions.appendChild(addLojaBtn);
         }
 
         // ==================== EXPANDER DOS BAIRROS ====================
@@ -3634,8 +3724,16 @@
             };
             
             loja.produtos.push(novoProduto);
+            localStorage.setItem('rimso_lojas', JSON.stringify(lojas));
+            
             mostrarToast(`✅ Produto "${nome}" adicionado à loja ${loja.nome}!`, 'success');
             fecharModal('modalAddProduto');
+            
+            // Limpar formulário
+            document.getElementById('produtoNome').value = '';
+            document.getElementById('produtoPreco').value = '';
+            document.getElementById('produtoImagem').value = '';
+            document.getElementById('produtoLoja').value = '';
             
             // Atualizar página se estiver na loja
             if (lojaAtual && lojaAtual.id === lojaId) {
@@ -3644,6 +3742,53 @@
             
             // Atualizar produtos em destaque
             carregarProdutosDestaque();
+            carregarLojas();
+        }
+
+        // ==================== ADICIONAR LOJA (para testes) ====================
+        function adicionarLoja(event) {
+            event.preventDefault();
+            
+            const nome = document.getElementById('lojaNomeAdd').value;
+            const categoria = document.getElementById('lojaCategoriaAdd').value;
+            const bairro = document.getElementById('lojaBairroAdd').value;
+            const endereco = document.getElementById('lojaEnderecoAdd').value;
+            const telefone = document.getElementById('lojaTelefoneAdd').value;
+            const whatsapp = document.getElementById('lojaWhatsappAdd').value;
+            const imagem = document.getElementById('lojaImagemAdd').value;
+            const descricao = document.getElementById('lojaDescricaoAdd').value;
+            
+            const novaLoja = {
+                id: Date.now(),
+                nome,
+                categoria,
+                bairro,
+                endereco,
+                telefone,
+                whatsapp,
+                avaliacao: 0,
+                totalAvaliacoes: 0,
+                descricao,
+                imagem,
+                produtos: []
+            };
+            
+            lojas.push(novaLoja);
+            localStorage.setItem('rimso_lojas', JSON.stringify(lojas));
+            
+            mostrarToast(`✅ Loja "${nome}" adicionada com sucesso!`, 'success');
+            fecharModal('modalAddLoja');
+            
+            // Limpar formulário
+            document.getElementById('lojaNomeAdd').value = '';
+            document.getElementById('lojaEnderecoAdd').value = '';
+            document.getElementById('lojaTelefoneAdd').value = '';
+            document.getElementById('lojaWhatsappAdd').value = '';
+            document.getElementById('lojaImagemAdd').value = '';
+            document.getElementById('lojaDescricaoAdd').value = '';
+            
+            // Atualizar grid
+            carregarLojas();
         }
 
         // ==================== CARREGAMENTO ====================
