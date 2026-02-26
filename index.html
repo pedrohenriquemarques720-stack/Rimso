@@ -2727,17 +2727,17 @@
             <div class="footer-col" data-aos="fade-up" data-aos-delay="100">
                 <h3>RIMSO</h3>
                 <ul>
-                    <li><a href="#" onclick="abrirPaginaInstitucional('sobreNos')"><i class="fas fa-heart"></i> Sobre nós</a></li>
-                    <li><a href="#" onclick="abrirPaginaInstitucional('comoFunciona')"><i class="fas fa-cogs"></i> Como funciona</a></li>
+                    <li><a href="#" onclick="abrirPaginaInstitucional('sobreNos', event)"><i class="fas fa-heart"></i> Sobre nós</a></li>
+                    <li><a href="#" onclick="abrirPaginaInstitucional('comoFunciona', event)"><i class="fas fa-cogs"></i> Como funciona</a></li>
                     <li><a href="#" onclick="abrirModal('modalPolitica')"><i class="fas fa-shield-alt"></i> Política de privacidade</a></li>
-                    <li><a href="#" onclick="abrirPaginaInstitucional('trabalheConosco')"><i class="fas fa-briefcase"></i> Trabalhe conosco</a></li>
+                    <li><a href="#" onclick="abrirPaginaInstitucional('trabalheConosco', event)"><i class="fas fa-briefcase"></i> Trabalhe conosco</a></li>
                 </ul>
             </div>
             <div class="footer-col" data-aos="fade-up" data-aos-delay="200">
                 <h3>Ajuda</h3>
                 <ul>
-                    <li><a href="#" onclick="abrirPaginaInstitucional('comoComprar')"><i class="fas fa-shopping-bag"></i> Como comprar</a></li>
-                    <li><a href="#" onclick="abrirPaginaInstitucional('faq')"><i class="fas fa-question-circle"></i> Dúvidas frequentes</a></li>
+                    <li><a href="#" onclick="abrirPaginaInstitucional('comoComprar', event)"><i class="fas fa-shopping-bag"></i> Como comprar</a></li>
+                    <li><a href="#" onclick="abrirPaginaInstitucional('faq', event)"><i class="fas fa-question-circle"></i> Dúvidas frequentes</a></li>
                     <li><a href="#" onclick="toggleChatbot()"><i class="fas fa-robot"></i> Central de ajuda</a></li>
                     <li><a href="#" onclick="mostrarToast('Fale conosco: contato@rimso.com.br')"><i class="fas fa-envelope"></i> Fale conosco</a></li>
                 </ul>
@@ -3399,13 +3399,14 @@
             
             if (siteContent) siteContent.classList.remove('hidden');
             if (sidebar) sidebar.classList.remove('active');
-            
-            // Scroll para o topo
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         // ==================== PÁGINAS INSTITUCIONAIS ====================
-        function abrirPaginaInstitucional(pagina) {
+        function abrirPaginaInstitucional(pagina, event) {
+            if (event) {
+                event.preventDefault();
+            }
+            
             esconderTodasPaginas();
             
             if (pagina === 'sobreNos') {
@@ -3420,8 +3421,8 @@
                 document.getElementById('comoFuncionaPage').classList.remove('hidden');
             }
             
-            // Scroll para o topo
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // Manter a posição atual da página sem scroll para o topo
+            // O usuário continua onde está
         }
 
         // ==================== PRODUTOS ====================
