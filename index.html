@@ -1183,6 +1183,7 @@
             margin: 40px auto;
             padding: 0 30px;
             min-height: 60vh;
+            scroll-margin-top: 100px;
         }
 
         .institutional-container {
@@ -1239,6 +1240,69 @@
             background: var(--primary);
             color: white;
             transform: translateX(-5px);
+        }
+
+        /* ==================== TERMOS DE USO ==================== */
+        .termos-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .termos-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: var(--light);
+            border-radius: 16px;
+            border-left: 4px solid var(--accent);
+        }
+
+        .termos-section h2 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .termos-section h2 i {
+            color: var(--accent);
+        }
+
+        .termos-section p {
+            color: var(--gray);
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        .termos-section ul {
+            color: var(--gray);
+            line-height: 1.8;
+            margin-left: 30px;
+            margin-top: 10px;
+        }
+
+        .termos-section li {
+            margin-bottom: 8px;
+        }
+
+        .termos-highlight {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .termos-highlight h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .termos-highlight p {
+            font-size: 16px;
+            opacity: 0.9;
         }
 
         /* ==================== SOBRE NÓS ==================== */
@@ -1952,7 +2016,7 @@
                 <a href="#" onclick="abrirModal('modalLogin')"><i class="fas fa-user"></i> Entrar</a>
                 <a href="#" onclick="abrirModal('modalCadastro')"><i class="fas fa-user-plus"></i> Cadastrar</a>
             </div>
-            <div class="top-bar-links hidden" id="userInfo">
+            <div class="top-bar-links" id="userInfo" style="display: none;">
                 <span class="user-greeting">Olá, <span id="userName"></span></span>
                 <button class="btn-logout" onclick="fazerLogout()">Sair</button>
             </div>
@@ -2423,6 +2487,119 @@
         </div>
     </div>
 
+    <!-- PÁGINA TERMOS DE USO -->
+    <div id="termosPage" class="institutional-page hidden">
+        <button class="btn-voltar" onclick="voltarHome()"><i class="fas fa-arrow-left"></i> Voltar para lojas</button>
+        <div class="institutional-container">
+            <div class="institutional-header">
+                <span class="institutional-badge"><i class="fas fa-file-contract"></i> Termos de Uso</span>
+                <h1>Termos e Condições</h1>
+                <p>Última atualização: 26 de fevereiro de 2026</p>
+            </div>
+            
+            <div class="termos-container">
+                <div class="termos-section">
+                    <h2><i class="fas fa-handshake"></i> 1. Aceitação dos Termos</h2>
+                    <p>Ao acessar ou usar a plataforma RIMSO, você concorda em cumprir e ficar vinculado a estes Termos de Uso. Se você não concordar com qualquer parte destes termos, não poderá acessar ou usar nossos serviços.</p>
+                </div>
+
+                <div class="termos-section">
+                    <h2><i class="fas fa-store"></i> 2. Cadastro de Lojistas</h2>
+                    <p>Para anunciar sua loja no RIMSO, você deve:</p>
+                    <ul>
+                        <li>Fornecer informações verdadeiras, precisas e completas</li>
+                        <li>Manter seus dados sempre atualizados</li>
+                        <li>Não criar contas falsas ou em nome de terceiros sem autorização</li>
+                        <li>Ser responsável por todas as atividades em sua conta</li>
+                    </ul>
+                </div>
+
+                <div class="termos-section">
+                    <h2><i class="fas fa-shopping-bag"></i> 3. Responsabilidades do Lojista</h2>
+                    <p>Ao anunciar no RIMSO, o lojista se compromete a:</p>
+                    <ul>
+                        <li>Manter seu catálogo de produtos atualizado</li>
+                        <li>Responder prontamente às mensagens dos clientes via WhatsApp</li>
+                        <li>Honrar preços e condições anunciados</li>
+                        <li>Cumprir prazos de entrega combinados</li>
+                        <li>Não divulgar conteúdo impróprio ou ilegal</li>
+                    </ul>
+                </div>
+
+                <div class="termos-section">
+                    <h2><i class="fas fa-users"></i> 4. Responsabilidades do Cliente</h2>
+                    <p>Ao utilizar o RIMSO como cliente, você concorda em:</p>
+                    <ul>
+                        <li>Fornecer informações verdadeiras no cadastro</li>
+                        <li>Não utilizar a plataforma para fins ilegais</li>
+                        <li>Respeitar os lojistas e demais usuários</li>
+                        <li>Não realizar cadastros falsos ou duplicados</li>
+                    </ul>
+                </div>
+
+                <div class="termos-section">
+                    <h2><i class="fas fa-star"></i> 5. Avaliações e Comentários</h2>
+                    <p>As avaliações devem ser:</p>
+                    <ul>
+                        <li>Baseadas em experiências reais</li>
+                        <li>Respeitosas e construtivas</li>
+                        <li>Livres de linguagem ofensiva ou discriminatória</li>
+                    </ul>
+                    <p>O RIMSO se reserva o direito de remover avaliações que violem estas diretrizes.</p>
+                </div>
+
+                <div class="termos-section">
+                    <h2><i class="fas fa-credit-card"></i> 6. Planos e Pagamentos</h2>
+                    <p>Os planos de anúncio são:</p>
+                    <ul>
+                        <li>Básico: R$49/mês - até 50 produtos</li>
+                        <li>Profissional: R$89/mês - até 200 produtos</li>
+                        <li>Premium: R$149/mês - produtos ilimitados</li>
+                    </ul>
+                    <p>Os pagamentos são processados de forma segura. O cancelamento pode ser solicitado a qualquer momento, sem reembolso de valores já pagos.</p>
+                </div>
+
+                <div class="termos-section">
+                    <h2><i class="fas fa-shield-alt"></i> 7. Propriedade Intelectual</h2>
+                    <p>Todo o conteúdo da plataforma (logos, design, textos) é propriedade do RIMSO. Os lojistas mantêm os direitos sobre suas fotos e descrições de produtos, concedendo ao RIMSO uma licença para exibi-los na plataforma.</p>
+                </div>
+
+                <div class="termos-section">
+                    <h2><i class="fas fa-exclamation-triangle"></i> 8. Limitação de Responsabilidade</h2>
+                    <p>O RIMSO atua como intermediário entre clientes e lojistas. Não nos responsabilizamos por:</p>
+                    <ul>
+                        <li>Transações financeiras realizadas fora da plataforma</li>
+                        <li>Qualidade dos produtos ou serviços entregues</li>
+                        <li>Atrasos na entrega</li>
+                        <li>Conteúdo publicado pelos lojistas</li>
+                    </ul>
+                </div>
+
+                <div class="termos-section">
+                    <h2><i class="fas fa-ban"></i> 9. Suspensão e Cancelamento</h2>
+                    <p>O RIMSO pode suspender ou cancelar contas que:</p>
+                    <ul>
+                        <li>Violem estes termos de uso</li>
+                        <li>Realizem práticas fraudulentas</li>
+                        <li>Recebam múltiplas reclamações</li>
+                        <li>Utilizem a plataforma para fins ilícitos</li>
+                    </ul>
+                </div>
+
+                <div class="termos-section">
+                    <h2><i class="fas fa-gavel"></i> 10. Alterações nos Termos</h2>
+                    <p>Estes termos podem ser atualizados periodicamente. Notificaremos sobre mudanças significativas através da plataforma ou por email. O uso contínuo do serviço após alterações constitui aceitação dos novos termos.</p>
+                </div>
+
+                <div class="termos-highlight">
+                    <h3><i class="fas fa-balance-scale"></i> Contato Legal</h3>
+                    <p>Para questões legais ou notificações, entre em contato pelo email: legal@rimso.com.br</p>
+                    <p style="margin-top: 10px;">RIMSO Tecnologia Ltda. - CNPJ: 12.345.678/0001-90</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- MODAL LOGIN -->
     <div class="modal" id="modalLogin">
         <div class="modal-content">
@@ -2434,16 +2611,19 @@
                 <form onsubmit="fazerLogin(event)">
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="email" class="form-control" id="loginEmail" required>
+                        <input type="email" class="form-control" id="loginEmail" value="admin@rimso.com.br" required>
                     </div>
                     <div class="form-group">
                         <label>Senha</label>
-                        <input type="password" class="form-control" id="loginSenha" required>
+                        <input type="password" class="form-control" id="loginSenha" value="admin123" required>
                     </div>
                     <button type="submit" class="banner-btn" style="width: 100%;">Entrar</button>
                 </form>
                 <div style="text-align: center; margin-top: 15px;">
                     <a href="#" onclick="fecharModal('modalLogin'); abrirModal('modalCadastro')">Não tem conta? Cadastre-se</a>
+                </div>
+                <div style="text-align: center; margin-top: 10px; font-size: 12px; color: var(--gray);">
+                    <i class="fas fa-info-circle"></i> Conta de teste: admin@rimso.com.br / admin123
                 </div>
             </div>
         </div>
@@ -2477,6 +2657,7 @@
                                 <select class="form-control" id="cadastroTipo" required>
                                     <option value="cliente">Cliente</option>
                                     <option value="lojista">Lojista</option>
+                                    <option value="admin">Administrador</option>
                                 </select>
                             </div>
                         </div>
@@ -2706,6 +2887,47 @@
         </div>
     </div>
 
+    <!-- MODAL ADICIONAR PRODUTO (para testes) -->
+    <div class="modal" id="modalAddProduto">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Adicionar Produto</h2>
+                <span class="modal-close" onclick="fecharModal('modalAddProduto')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form onsubmit="adicionarProduto(event)">
+                    <div class="form-group">
+                        <label>Nome do produto</label>
+                        <input type="text" class="form-control" id="produtoNome" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Preço</label>
+                        <input type="number" class="form-control" id="produtoPreco" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label>URL da imagem</label>
+                        <input type="url" class="form-control" id="produtoImagem" placeholder="https://exemplo.com/imagem.jpg" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Loja</label>
+                        <select class="form-control" id="produtoLoja" required>
+                            <option value="">Selecione a loja</option>
+                            <option value="1">CS Surf Shop</option>
+                            <option value="2">NRSurf</option>
+                            <option value="3">Renata Modas</option>
+                            <option value="4">Teka Surf</option>
+                            <option value="5">Radical Vest Surf Shop</option>
+                            <option value="6">LÖS</option>
+                            <option value="7">Vila Hípica Modas</option>
+                            <option value="8">Ki Kids Moda Infantil</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="banner-btn" style="width: 100%;">Adicionar Produto</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- CHATBOT - CENTRAL DE AJUDA -->
     <div class="chatbot-container">
         <div class="chatbot-button" onclick="toggleChatbot()">
@@ -2749,6 +2971,7 @@
                     <li><a href="#" onclick="abrirPaginaInstitucional('sobreNos', event)"><i class="fas fa-heart"></i> Sobre nós</a></li>
                     <li><a href="#" onclick="abrirPaginaInstitucional('comoFunciona', event)"><i class="fas fa-cogs"></i> Como funciona</a></li>
                     <li><a href="#" onclick="abrirModal('modalPolitica')"><i class="fas fa-shield-alt"></i> Política de privacidade</a></li>
+                    <li><a href="#" onclick="abrirPaginaInstitucional('termos', event)"><i class="fas fa-file-contract"></i> Termos de uso</a></li>
                     <li><a href="#" onclick="abrirPaginaInstitucional('trabalheConosco', event)"><i class="fas fa-briefcase"></i> Trabalhe conosco</a></li>
                 </ul>
             </div>
@@ -2788,7 +3011,7 @@
             <p>© 2026 RIMSO - Conectando sua loja ao seu bairro. Todos os direitos reservados.</p>
             <p style="margin-top: 10px; font-size: 12px;">
                 <a href="#" onclick="abrirModal('modalPolitica')" style="color: var(--accent);">Política de Privacidade</a> | 
-                <a href="#" onclick="mostrarToast('Termos de uso - Em breve')" style="color: var(--accent);">Termos de Uso</a>
+                <a href="#" onclick="abrirPaginaInstitucional('termos', event)" style="color: var(--accent);">Termos de Uso</a>
             </p>
         </div>
     </footer>
@@ -2953,10 +3176,31 @@
             }
         ];
 
+        // ==================== USUÁRIOS ====================
         let usuarios = JSON.parse(localStorage.getItem('rimso_usuarios')) || [];
+        
+        // Criar usuário admin se não existir
+        const adminExists = usuarios.some(u => u.email === 'admin@rimso.com.br');
+        if (!adminExists) {
+            usuarios.push({
+                id: 999,
+                nome: 'Administrador',
+                email: 'admin@rimso.com.br',
+                telefone: '(19) 99999-9999',
+                tipo: 'admin',
+                data: '1990-01-01',
+                cpf: '000.000.000-00',
+                endereco: 'Rua Admin, 123 - Centro',
+                senha: 'admin123',
+                dataCadastro: new Date().toISOString()
+            });
+            localStorage.setItem('rimso_usuarios', JSON.stringify(usuarios));
+        }
+
         let usuarioLogado = JSON.parse(localStorage.getItem('rimso_usuario_logado')) || null;
         let favoritos = JSON.parse(localStorage.getItem('rimso_favoritos')) || [];
         let avaliacoes = JSON.parse(localStorage.getItem('rimso_avaliacoes')) || [];
+        let contratacoes = JSON.parse(localStorage.getItem('rimso_contratacoes')) || [];
         let lojaAtual = null;
         let planoSelecionado = 'profissional';
 
@@ -3018,6 +3262,16 @@
                 mostrarToast(`✅ Bem-vindo(a), ${usuario.nome}!`);
                 fecharModal('modalLogin');
                 verificarUsuarioLogado();
+                
+                // Se for admin, mostrar opções extras
+                if (usuario.tipo === 'admin') {
+                    setTimeout(() => {
+                        mostrarToast('👑 Modo administrador ativado', 'success');
+                        if (confirm('Deseja adicionar um produto de teste?')) {
+                            abrirModal('modalAddProduto');
+                        }
+                    }, 500);
+                }
             } else {
                 mostrarToast('❌ Email ou senha inválidos', 'error');
             }
@@ -3079,12 +3333,36 @@
             const userName = document.getElementById('userName');
             
             if (usuarioLogado) {
-                authLinks.classList.add('hidden');
-                userInfo.classList.remove('hidden');
+                authLinks.style.display = 'none';
+                userInfo.style.display = 'flex';
                 userName.textContent = usuarioLogado.nome.split(' ')[0];
+                
+                // Se for admin, mostrar opção extra no menu
+                if (usuarioLogado.tipo === 'admin') {
+                    // Adicionar botão admin no header se não existir
+                    if (!document.getElementById('adminBtn')) {
+                        const headerActions = document.querySelector('.header-actions');
+                        const adminBtn = document.createElement('a');
+                        adminBtn.id = 'adminBtn';
+                        adminBtn.href = '#';
+                        adminBtn.className = 'btn-post';
+                        adminBtn.style.background = 'var(--primary)';
+                        adminBtn.innerHTML = '<i class="fas fa-crown"></i> Admin';
+                        adminBtn.onclick = (e) => {
+                            e.preventDefault();
+                            mostrarToast('👑 Painel administrativo');
+                            abrirModal('modalAddProduto');
+                        };
+                        headerActions.appendChild(adminBtn);
+                    }
+                }
             } else {
-                authLinks.classList.remove('hidden');
-                userInfo.classList.add('hidden');
+                authLinks.style.display = 'flex';
+                userInfo.style.display = 'none';
+                
+                // Remover botão admin se existir
+                const adminBtn = document.getElementById('adminBtn');
+                if (adminBtn) adminBtn.remove();
             }
         }
 
@@ -3164,8 +3442,7 @@
             mostrarToast(`✅ Plano ${planos[plano].nome} contratado! Entraremos em contato em breve.`, 'success');
             fecharModal('modalPlanos');
             
-            // Aqui você pode adicionar lógica para salvar a contratação no localStorage
-            const contratacoes = JSON.parse(localStorage.getItem('rimso_contratacoes')) || [];
+            // Salvar contratação
             contratacoes.push({
                 id: Date.now(),
                 usuarioId: usuarioLogado.id,
@@ -3178,6 +3455,41 @@
                 data: new Date().toISOString()
             });
             localStorage.setItem('rimso_contratacoes', JSON.stringify(contratacoes));
+        }
+
+        // ==================== ADICIONAR PRODUTO (para testes) ====================
+        function adicionarProduto(event) {
+            event.preventDefault();
+            
+            const nome = document.getElementById('produtoNome').value;
+            const preco = parseFloat(document.getElementById('produtoPreco').value);
+            const imagem = document.getElementById('produtoImagem').value;
+            const lojaId = parseInt(document.getElementById('produtoLoja').value);
+            
+            const loja = lojas.find(l => l.id === lojaId);
+            if (!loja) {
+                mostrarToast('❌ Loja não encontrada', 'error');
+                return;
+            }
+            
+            const novoProduto = {
+                id: Date.now(),
+                nome,
+                preco,
+                imagem
+            };
+            
+            loja.produtos.push(novoProduto);
+            mostrarToast(`✅ Produto "${nome}" adicionado à loja ${loja.nome}!`, 'success');
+            fecharModal('modalAddProduto');
+            
+            // Atualizar página se estiver na loja
+            if (lojaAtual && lojaAtual.id === lojaId) {
+                abrirLoja(lojaId);
+            }
+            
+            // Atualizar produtos em destaque
+            carregarProdutosDestaque();
         }
 
         // ==================== CARREGAMENTO ====================
@@ -3365,6 +3677,11 @@
                                 <button class="banner-btn" style="margin-top: 15px;" onclick="abrirModalAvaliacao(${loja.id})">
                                     <i class="fas fa-star"></i> Avaliar esta loja
                                 </button>
+                                ${usuarioLogado?.tipo === 'admin' ? `
+                                    <button class="banner-btn" style="margin-top: 15px; background: var(--primary);" onclick="abrirModal('modalAddProduto')">
+                                        <i class="fas fa-plus"></i> Adicionar Produto (Admin)
+                                    </button>
+                                ` : ''}
                             </div>
                         </div>
                         
@@ -3400,6 +3717,7 @@
             const faqPage = document.getElementById('faqPage');
             const trabalheConoscoPage = document.getElementById('trabalheConoscoPage');
             const comoFuncionaPage = document.getElementById('comoFuncionaPage');
+            const termosPage = document.getElementById('termosPage');
             
             if (siteContent) siteContent.classList.add('hidden');
             if (lojaPage) lojaPage.classList.add('hidden');
@@ -3408,6 +3726,7 @@
             if (faqPage) faqPage.classList.add('hidden');
             if (trabalheConoscoPage) trabalheConoscoPage.classList.add('hidden');
             if (comoFuncionaPage) comoFuncionaPage.classList.add('hidden');
+            if (termosPage) termosPage.classList.add('hidden');
         }
 
         function voltarHome() {
@@ -3428,20 +3747,29 @@
             
             esconderTodasPaginas();
             
+            let pageElement = null;
+            
             if (pagina === 'sobreNos') {
-                document.getElementById('sobreNosPage').classList.remove('hidden');
+                pageElement = document.getElementById('sobreNosPage');
             } else if (pagina === 'comoComprar') {
-                document.getElementById('comoComprarPage').classList.remove('hidden');
+                pageElement = document.getElementById('comoComprarPage');
             } else if (pagina === 'faq') {
-                document.getElementById('faqPage').classList.remove('hidden');
+                pageElement = document.getElementById('faqPage');
             } else if (pagina === 'trabalheConosco') {
-                document.getElementById('trabalheConoscoPage').classList.remove('hidden');
+                pageElement = document.getElementById('trabalheConoscoPage');
             } else if (pagina === 'comoFunciona') {
-                document.getElementById('comoFuncionaPage').classList.remove('hidden');
+                pageElement = document.getElementById('comoFuncionaPage');
+            } else if (pagina === 'termos') {
+                pageElement = document.getElementById('termosPage');
             }
             
-            // Manter a posição atual da página sem scroll para o topo
-            // O usuário continua onde está
+            if (pageElement) {
+                pageElement.classList.remove('hidden');
+                // Scroll suave para o topo da página institucional
+                setTimeout(() => {
+                    pageElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
+            }
         }
 
         // ==================== PRODUTOS ====================
@@ -3469,6 +3797,11 @@
                     <button class="banner-btn" style="width: 100%;" onclick="contatoWhatsapp('${lojaEncontrada.whatsapp}')">
                         <i class="fab fa-whatsapp"></i> Comprar via WhatsApp
                     </button>
+                    ${usuarioLogado?.tipo === 'admin' ? `
+                        <button class="banner-btn" style="margin-top: 10px; background: var(--primary);" onclick="mostrarToast('Função de edição disponível apenas para admin')">
+                            <i class="fas fa-edit"></i> Editar (Admin)
+                        </button>
+                    ` : ''}
                 </div>
             `;
             
@@ -3627,8 +3960,10 @@
                     botMsg.textContent = 'Você pode nos contatar pelo email contato@rimso.com.br ou telefone (19) 3434-5678. Também temos chat disponível 24h!';
                 } else if (mensagem.toLowerCase().includes('privacidade')) {
                     botMsg.textContent = 'Nossa política de privacidade segue a LGPD. Seus dados são protegidos e nunca vendidos. Clique no link do rodapé para ler na íntegra.';
+                } else if (mensagem.toLowerCase().includes('termos')) {
+                    botMsg.textContent = 'Nossos termos de uso estão disponíveis no rodapé. Eles explicam suas responsabilidades como usuário ou lojista da plataforma.';
                 } else {
-                    botMsg.textContent = 'Posso ajudar com informações sobre compras, planos para lojistas, avaliações, contato e política de privacidade. Como posso te ajudar?';
+                    botMsg.textContent = 'Posso ajudar com informações sobre compras, planos para lojistas, avaliações, contato, política de privacidade e termos de uso. Como posso te ajudar?';
                 }
                 
                 messages.appendChild(botMsg);
@@ -3641,7 +3976,13 @@
         // ==================== MODAIS ====================
         function abrirModal(modalId) {
             const modal = document.getElementById(modalId);
-            if (modal) modal.classList.add('active');
+            if (modal) {
+                modal.classList.add('active');
+                // Centralizar o modal na tela com scroll suave
+                setTimeout(() => {
+                    modal.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
         }
 
         function fecharModal(modalId) {
