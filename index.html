@@ -222,141 +222,6 @@
             color: white;
         }
 
-        /* ==================== PLANOS ==================== */
-        .plans-section {
-            max-width: 1400px;
-            margin: 40px auto;
-            padding: 0 30px;
-        }
-
-        .plans-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .plans-header h2 {
-            font-size: 32px;
-            color: var(--primary);
-            margin-bottom: 10px;
-        }
-
-        .plans-header p {
-            color: var(--gray);
-            font-size: 16px;
-        }
-
-        .plans-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-        }
-
-        .plan-card {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            border: 2px solid var(--border);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .plan-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .plan-card.popular {
-            border: 3px solid var(--accent);
-            transform: scale(1.05);
-            z-index: 2;
-        }
-
-        .plan-card.popular:hover {
-            transform: scale(1.05) translateY(-5px);
-        }
-
-        .plan-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: var(--accent);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 60px;
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        .plan-name {
-            font-size: 24px;
-            font-weight: 800;
-            margin-bottom: 15px;
-            color: var(--dark);
-        }
-
-        .plan-price {
-            font-size: 48px;
-            font-weight: 800;
-            color: var(--primary);
-            margin-bottom: 20px;
-        }
-
-        .plan-price span {
-            font-size: 16px;
-            color: var(--gray);
-            font-weight: 400;
-        }
-
-        .plan-features {
-            list-style: none;
-            margin-bottom: 30px;
-        }
-
-        .plan-features li {
-            padding: 10px 0;
-            color: var(--gray);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .plan-features i.fa-check {
-            color: #10b981;
-        }
-
-        .plan-features i.fa-times {
-            color: #ef4444;
-        }
-
-        .plan-btn {
-            width: 100%;
-            padding: 14px;
-            border-radius: 60px;
-            border: 2px solid var(--primary);
-            background: transparent;
-            color: var(--primary);
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .plan-btn:hover {
-            background: var(--primary);
-            color: white;
-        }
-
-        .plan-card.popular .plan-btn {
-            background: var(--primary);
-            color: white;
-        }
-
-        .plan-card.popular .plan-btn:hover {
-            background: var(--accent);
-            border-color: var(--accent);
-        }
-
         /* ==================== CATEGORIAS ==================== */
         .categories-nav {
             background: white;
@@ -1317,6 +1182,7 @@
             max-width: 1400px;
             margin: 40px auto;
             padding: 0 30px;
+            min-height: 60vh;
         }
 
         .institutional-container {
@@ -1352,6 +1218,27 @@
             font-weight: 600;
             font-size: 14px;
             margin-bottom: 20px;
+        }
+
+        .btn-voltar {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 10px 20px;
+            border-radius: 60px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 30px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-voltar:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateX(-5px);
         }
 
         /* ==================== SOBRE NÓS ==================== */
@@ -1612,7 +1499,7 @@
             margin-top: 10px;
         }
 
-        /* ==================== CENTRAL DE AJUDA - CHATBOT ==================== */
+        /* ==================== CHATBOT ==================== */
         .chatbot-container {
             position: fixed;
             bottom: 20px;
@@ -1928,18 +1815,6 @@
                 gap: 15px;
             }
             
-            .plans-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .plan-card.popular {
-                transform: scale(1);
-            }
-            
-            .plan-card.popular:hover {
-                transform: scale(1.02);
-            }
-            
             .featured-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -2132,53 +2007,6 @@
         <span class="filter-chip" onclick="filtrarCategoria('acessorios')">Acessórios</span>
     </div>
 
-    <!-- PLANOS EM DESTAQUE -->
-    <section class="plans-section" data-aos="fade-up" data-aos-delay="300">
-        <div class="plans-header">
-            <h2>Anuncie sua loja no RIMSO</h2>
-            <p>Escolha o plano ideal para divulgar seu negócio e alcançar mais clientes em Piracicaba</p>
-        </div>
-        <div class="plans-grid" id="plansGrid">
-            <div class="plan-card" data-aos="fade-right" data-aos-delay="400">
-                <div class="plan-name">Básico</div>
-                <div class="plan-price">R$49 <span>/mês</span></div>
-                <ul class="plan-features">
-                    <li><i class="fas fa-check"></i> Até 50 produtos</li>
-                    <li><i class="fas fa-check"></i> 5 fotos por produto</li>
-                    <li><i class="fas fa-check"></i> Destaque por 7 dias</li>
-                    <li><i class="fas fa-times"></i> Relatórios de visualização</li>
-                    <li><i class="fas fa-times"></i> Suporte prioritário</li>
-                </ul>
-                <button class="plan-btn" onclick="contratarPlano('basico')">Contratar</button>
-            </div>
-            <div class="plan-card popular" data-aos="fade-up" data-aos-delay="500">
-                <div class="plan-badge">Mais vendido</div>
-                <div class="plan-name">Profissional</div>
-                <div class="plan-price">R$89 <span>/mês</span></div>
-                <ul class="plan-features">
-                    <li><i class="fas fa-check"></i> Até 200 produtos</li>
-                    <li><i class="fas fa-check"></i> 10 fotos por produto</li>
-                    <li><i class="fas fa-check"></i> Destaque por 15 dias</li>
-                    <li><i class="fas fa-check"></i> Relatórios básicos</li>
-                    <li><i class="fas fa-check"></i> Suporte por email</li>
-                </ul>
-                <button class="plan-btn" onclick="contratarPlano('profissional')">Contratar</button>
-            </div>
-            <div class="plan-card" data-aos="fade-left" data-aos-delay="600">
-                <div class="plan-name">Premium</div>
-                <div class="plan-price">R$149 <span>/mês</span></div>
-                <ul class="plan-features">
-                    <li><i class="fas fa-check"></i> Produtos ilimitados</li>
-                    <li><i class="fas fa-check"></i> Fotos ilimitadas</li>
-                    <li><i class="fas fa-check"></i> Destaque permanente</li>
-                    <li><i class="fas fa-check"></i> Relatórios avançados</li>
-                    <li><i class="fas fa-check"></i> Suporte 24/7</li>
-                </ul>
-                <button class="plan-btn" onclick="contratarPlano('premium')">Contratar</button>
-            </div>
-        </div>
-    </section>
-
     <!-- PRODUTOS EM DESTAQUE -->
     <section class="featured-section" data-aos="fade-up" data-aos-delay="700">
         <div class="featured-header" data-aos="fade-right">
@@ -2188,7 +2016,7 @@
         <div class="featured-grid" id="produtosDestaque"></div>
     </section>
 
-    <!-- CONTEÚDO PRINCIPAL -->
+    <!-- CONTEÚDO PRINCIPAL (Lojas) -->
     <div id="siteContent" class="main-content">
         <!-- SIDEBAR -->
         <aside class="sidebar" id="sidebar" data-aos="fade-right" data-aos-delay="800">
@@ -2245,6 +2073,7 @@
 
     <!-- PÁGINA SOBRE NÓS -->
     <div id="sobreNosPage" class="institutional-page hidden">
+        <button class="btn-voltar" onclick="voltarHome()"><i class="fas fa-arrow-left"></i> Voltar para lojas</button>
         <div class="institutional-container">
             <div class="institutional-header">
                 <span class="institutional-badge"><i class="fas fa-heart"></i> Quem somos</span>
@@ -2313,6 +2142,7 @@
 
     <!-- PÁGINA COMO COMPRAR -->
     <div id="comoComprarPage" class="institutional-page hidden">
+        <button class="btn-voltar" onclick="voltarHome()"><i class="fas fa-arrow-left"></i> Voltar para lojas</button>
         <div class="institutional-container">
             <div class="institutional-header">
                 <span class="institutional-badge"><i class="fas fa-shopping-bag"></i> Guia rápido</span>
@@ -2363,6 +2193,7 @@
 
     <!-- PÁGINA DÚVIDAS FREQUENTES -->
     <div id="faqPage" class="institutional-page hidden">
+        <button class="btn-voltar" onclick="voltarHome()"><i class="fas fa-arrow-left"></i> Voltar para lojas</button>
         <div class="institutional-container">
             <div class="institutional-header">
                 <span class="institutional-badge"><i class="fas fa-question-circle"></i> FAQ</span>
@@ -2436,6 +2267,7 @@
 
     <!-- PÁGINA TRABALHE CONOSCO -->
     <div id="trabalheConoscoPage" class="institutional-page hidden">
+        <button class="btn-voltar" onclick="voltarHome()"><i class="fas fa-arrow-left"></i> Voltar para lojas</button>
         <div class="institutional-container">
             <div class="institutional-header">
                 <span class="institutional-badge"><i class="fas fa-briefcase"></i> Seja parceiro</span>
@@ -2521,6 +2353,7 @@
 
     <!-- PÁGINA COMO FUNCIONA -->
     <div id="comoFuncionaPage" class="institutional-page hidden">
+        <button class="btn-voltar" onclick="voltarHome()"><i class="fas fa-arrow-left"></i> Voltar para lojas</button>
         <div class="institutional-container">
             <div class="institutional-header">
                 <span class="institutional-badge"><i class="fas fa-cogs"></i> Plataforma</span>
@@ -2651,7 +2484,7 @@
                         
                         <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
                             <input type="checkbox" id="termos" required>
-                            <label style="margin: 0; font-size: 13px;">Li e aceito os <a href="#" onclick="mostrarToast('Política de privacidade - Em breve')">termos de uso</a> e <a href="#" onclick="mostrarToast('Política de privacidade - Em breve')">política de privacidade</a></label>
+                            <label style="margin: 0; font-size: 13px;">Li e aceito os <a href="#" onclick="abrirModal('modalPolitica')">termos de uso</a> e <a href="#" onclick="abrirModal('modalPolitica')">política de privacidade</a></label>
                         </div>
                         
                         <button type="submit" class="banner-btn" style="width: 100%;">Cadastrar</button>
@@ -2661,7 +2494,7 @@
         </div>
     </div>
 
-    <!-- MODAL PLANOS COM ROLAGEM -->
+    <!-- MODAL PLANOS COM ROLAGEM (ANUNCIAR) -->
     <div class="modal" id="modalPlanos">
         <div class="modal-content">
             <div class="modal-header">
@@ -2729,7 +2562,7 @@
                     </form>
                     
                     <p style="font-size: 11px; color: var(--gray); text-align: center; margin-top: 15px;">
-                        Ao contratar, você concorda com nossos termos de uso e política de privacidade.
+                        Ao contratar, você concorda com nossos <a href="#" onclick="abrirModal('modalPolitica')">termos de uso</a> e <a href="#" onclick="abrirModal('modalPolitica')">política de privacidade</a>.
                     </p>
                 </div>
             </div>
@@ -2912,8 +2745,8 @@
             <div class="footer-col" data-aos="fade-up" data-aos-delay="300">
                 <h3>Para clientes</h3>
                 <ul>
-                    <li><a href="#" onclick="document.getElementById('lojasGrid').scrollIntoView({behavior: 'smooth'})"><i class="fas fa-store"></i> Buscar lojas</a></li>
-                    <li><a href="#" onclick="filtrarCategoria('todos')"><i class="fas fa-tags"></i> Categorias</a></li>
+                    <li><a href="#" onclick="voltarHome()"><i class="fas fa-store"></i> Buscar lojas</a></li>
+                    <li><a href="#" onclick="voltarHome()"><i class="fas fa-tags"></i> Categorias</a></li>
                     <li><a href="#" onclick="mostrarToast('Em breve')"><i class="fas fa-gift"></i> Promoções</a></li>
                     <li><a href="#" onclick="abrirModal('modalLogin')"><i class="fas fa-user"></i> Minha conta</a></li>
                 </ul>
@@ -3178,6 +3011,9 @@
             const email = document.getElementById('cadastroEmail').value;
             const telefone = document.getElementById('cadastroTelefone').value;
             const tipo = document.getElementById('cadastroTipo').value;
+            const data = document.getElementById('cadastroData').value;
+            const cpf = document.getElementById('cadastroCpf').value;
+            const endereco = document.getElementById('cadastroEndereco').value;
             const senha = document.getElementById('cadastroSenha').value;
             const confirmarSenha = document.getElementById('cadastroConfirmarSenha').value;
             
@@ -3197,6 +3033,9 @@
                 email,
                 telefone,
                 tipo,
+                data,
+                cpf,
+                endereco,
                 senha,
                 dataCadastro: new Date().toISOString()
             };
@@ -3474,8 +3313,10 @@
             
             lojaAtual = loja;
             
+            // Esconder todas as páginas institucionais e mostrar apenas a página da loja
+            esconderTodasPaginas();
+            
             const content = document.getElementById('lojaPageContent');
-            const siteContent = document.getElementById('siteContent');
             const lojaPage = document.getElementById('lojaPage');
             
             if (content) {
@@ -3529,53 +3370,54 @@
                 `;
             }
             
-            if (siteContent) siteContent.classList.add('hidden');
             if (lojaPage) lojaPage.classList.remove('hidden');
         }
 
-        function voltarHome() {
+        function esconderTodasPaginas() {
+            const siteContent = document.getElementById('siteContent');
             const lojaPage = document.getElementById('lojaPage');
             const sobreNosPage = document.getElementById('sobreNosPage');
             const comoComprarPage = document.getElementById('comoComprarPage');
             const faqPage = document.getElementById('faqPage');
             const trabalheConoscoPage = document.getElementById('trabalheConoscoPage');
             const comoFuncionaPage = document.getElementById('comoFuncionaPage');
-            const siteContent = document.getElementById('siteContent');
-            const sidebar = document.getElementById('sidebar');
             
+            if (siteContent) siteContent.classList.add('hidden');
             if (lojaPage) lojaPage.classList.add('hidden');
             if (sobreNosPage) sobreNosPage.classList.add('hidden');
             if (comoComprarPage) comoComprarPage.classList.add('hidden');
             if (faqPage) faqPage.classList.add('hidden');
             if (trabalheConoscoPage) trabalheConoscoPage.classList.add('hidden');
             if (comoFuncionaPage) comoFuncionaPage.classList.add('hidden');
+        }
+
+        function voltarHome() {
+            esconderTodasPaginas();
+            
+            const siteContent = document.getElementById('siteContent');
+            const sidebar = document.getElementById('sidebar');
+            
             if (siteContent) siteContent.classList.remove('hidden');
             if (sidebar) sidebar.classList.remove('active');
+            
+            // Scroll para o topo
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         // ==================== PÁGINAS INSTITUCIONAIS ====================
         function abrirPaginaInstitucional(pagina) {
-            const siteContent = document.getElementById('siteContent');
-            const lojaPage = document.getElementById('lojaPage');
-            const sobreNosPage = document.getElementById('sobreNosPage');
-            const comoComprarPage = document.getElementById('comoComprarPage');
-            const faqPage = document.getElementById('faqPage');
-            const trabalheConoscoPage = document.getElementById('trabalheConoscoPage');
-            const comoFuncionaPage = document.getElementById('comoFuncionaPage');
-            
-            siteContent.classList.add('hidden');
-            if (lojaPage) lojaPage.classList.add('hidden');
+            esconderTodasPaginas();
             
             if (pagina === 'sobreNos') {
-                sobreNosPage.classList.remove('hidden');
+                document.getElementById('sobreNosPage').classList.remove('hidden');
             } else if (pagina === 'comoComprar') {
-                comoComprarPage.classList.remove('hidden');
+                document.getElementById('comoComprarPage').classList.remove('hidden');
             } else if (pagina === 'faq') {
-                faqPage.classList.remove('hidden');
+                document.getElementById('faqPage').classList.remove('hidden');
             } else if (pagina === 'trabalheConosco') {
-                trabalheConoscoPage.classList.remove('hidden');
+                document.getElementById('trabalheConoscoPage').classList.remove('hidden');
             } else if (pagina === 'comoFunciona') {
-                comoFuncionaPage.classList.remove('hidden');
+                document.getElementById('comoFuncionaPage').classList.remove('hidden');
             }
             
             // Scroll para o topo
