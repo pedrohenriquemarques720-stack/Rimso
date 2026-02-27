@@ -11,6 +11,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- AOS - Animate On Scroll -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Mercado Pago SDK -->
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
     
     <style>
         * {
@@ -1886,6 +1888,102 @@
             line-height: 1.6;
         }
 
+        /* ==================== BOTÕES ADMIN ==================== */
+        .admin-panel {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 0 auto 30px;
+            max-width: 1400px;
+            border: 3px solid var(--accent);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .admin-panel h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .admin-panel h3 i {
+            color: var(--accent);
+        }
+
+        .admin-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .admin-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 60px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .admin-btn:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .admin-btn.secondary {
+            background: var(--accent);
+        }
+
+        .admin-btn.secondary:hover {
+            background: var(--primary);
+        }
+
+        /* ==================== PAGAMENTO ==================== */
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .payment-method {
+            text-align: center;
+            padding: 20px;
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .payment-method:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .payment-method.selected {
+            border-color: var(--accent);
+            background: var(--light);
+        }
+
+        .payment-method i {
+            font-size: 32px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .payment-method span {
+            display: block;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
         /* ==================== RODAPÉ ==================== */
         .footer {
             background: var(--dark);
@@ -1941,62 +2039,6 @@
 
         .hidden {
             display: none !important;
-        }
-
-        /* ==================== BOTÕES ADMIN ==================== */
-        .admin-panel {
-            background: white;
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 30px;
-            border: 3px solid var(--accent);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .admin-panel h3 {
-            color: var(--primary);
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .admin-panel h3 i {
-            color: var(--accent);
-        }
-
-        .admin-buttons {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .admin-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 60px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .admin-btn:hover {
-            background: var(--accent);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }
-
-        .admin-btn.secondary {
-            background: var(--accent);
-        }
-
-        .admin-btn.secondary:hover {
-            background: var(--primary);
         }
 
         /* ==================== RESPONSIVIDADE ==================== */
@@ -2126,6 +2168,10 @@
             .admin-buttons {
                 flex-direction: column;
             }
+            
+            .payment-methods {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 480px) {
@@ -2222,7 +2268,7 @@
         </div>
     </section>
 
-    <!-- FILTROS RÁPIDOS (APENAS CATEGORIAS) -->
+    <!-- FILTROS RÁPIDOS -->
     <div class="quick-filters" data-aos="fade-up" data-aos-delay="200">
         <span class="filter-chip active" onclick="filtrarCategoria('todos')">Todas</span>
         <span class="filter-chip" onclick="filtrarCategoria('surfwear')">Surfwear</span>
@@ -2244,23 +2290,21 @@
     </section>
 
     <!-- PAINEL ADMIN (visível apenas para admin) -->
-    <div id="adminPanel" class="admin-panel" style="display: none; max-width: 1400px; margin: 0 auto 30px; padding: 0 30px;">
-        <div class="admin-panel">
-            <h3><i class="fas fa-crown"></i> Painel do Administrador - Acesso Total</h3>
-            <div class="admin-buttons">
-                <button class="admin-btn" onclick="abrirModal('modalAddLoja')">
-                    <i class="fas fa-store"></i> Adicionar Nova Loja
-                </button>
-                <button class="admin-btn secondary" onclick="abrirModal('modalAddProduto')">
-                    <i class="fas fa-box"></i> Adicionar Produto
-                </button>
-                <button class="admin-btn" onclick="mostrarRelatorios()">
-                    <i class="fas fa-chart-bar"></i> Ver Relatórios
-                </button>
-                <button class="admin-btn secondary" onclick="resetarDados()">
-                    <i class="fas fa-database"></i> Resetar Dados de Teste
-                </button>
-            </div>
+    <div id="adminPanel" class="admin-panel" style="display: none;">
+        <h3><i class="fas fa-crown"></i> Painel do Administrador - Acesso Total</h3>
+        <div class="admin-buttons">
+            <button class="admin-btn" onclick="abrirModal('modalAddLoja')">
+                <i class="fas fa-store"></i> Adicionar Nova Loja
+            </button>
+            <button class="admin-btn secondary" onclick="abrirModal('modalAddProduto')">
+                <i class="fas fa-box"></i> Adicionar Produto
+            </button>
+            <button class="admin-btn" onclick="mostrarRelatorios()">
+                <i class="fas fa-chart-bar"></i> Ver Relatórios
+            </button>
+            <button class="admin-btn secondary" onclick="resetarDados()">
+                <i class="fas fa-database"></i> Resetar Dados de Teste
+            </button>
         </div>
     </div>
 
@@ -2821,7 +2865,7 @@
         </div>
     </div>
 
-    <!-- MODAL LOGIN -->
+    <!-- MODAL LOGIN (CORRIGIDO) -->
     <div class="modal" id="modalLogin">
         <div class="modal-content">
             <div class="modal-header">
@@ -2843,14 +2887,17 @@
                 <div style="text-align: center; margin-top: 15px;">
                     <a href="#" onclick="fecharModal('modalLogin'); abrirModal('modalCadastro')">Não tem conta? Cadastre-se</a>
                 </div>
-                <div style="text-align: center; margin-top: 10px; font-size: 12px; color: var(--gray);">
-                    <i class="fas fa-info-circle"></i> Conta de teste: admin@rimso.com.br / admin123
+                <div style="text-align: center; margin-top: 10px; padding: 10px; background: var(--light); border-radius: 8px;">
+                    <p style="color: var(--primary); font-weight: 600;">🔑 Contas para teste:</p>
+                    <p style="font-size: 12px; color: var(--gray);">Admin: admin@rimso.com.br / admin123</p>
+                    <p style="font-size: 12px; color: var(--gray);">Lojista: lojista@rimso.com.br / lojista123</p>
+                    <p style="font-size: 12px; color: var(--gray);">Cliente: cliente@rimso.com.br / cliente123</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- MODAL CADASTRO COM ROLAGEM -->
+    <!-- MODAL CADASTRO -->
     <div class="modal" id="modalCadastro">
         <div class="modal-content">
             <div class="modal-header">
@@ -2915,7 +2962,7 @@
         </div>
     </div>
 
-    <!-- MODAL PLANOS COM ROLAGEM (ANUNCIAR) -->
+    <!-- MODAL PLANOS COM PAGAMENTO -->
     <div class="modal" id="modalPlanos">
         <div class="modal-content">
             <div class="modal-header">
@@ -2928,7 +2975,7 @@
                         Escolha o plano ideal para divulgar seu negócio:
                     </p>
                     
-                    <!-- Cards de planos em miniatura -->
+                    <!-- Cards de planos -->
                     <div class="planos-mini-grid">
                         <div class="plano-mini-card" onclick="selecionarPlano('basico')" id="planoBasico">
                             <h3>Básico</h3>
@@ -2945,6 +2992,28 @@
                             <h3>Premium</h3>
                             <div class="preco">R$149</div>
                             <div class="periodo">/mês</div>
+                        </div>
+                    </div>
+
+                    <!-- Formas de pagamento -->
+                    <div style="margin: 20px 0;">
+                        <label style="font-weight: 600; color: var(--primary);">Forma de pagamento:</label>
+                        <div class="payment-methods">
+                            <div class="payment-method" onclick="selecionarPagamento('pix')" id="pagamentoPix">
+                                <i class="fas fa-qrcode"></i>
+                                <span>PIX</span>
+                                <small style="color: var(--gray);">(Mais rápido)</small>
+                            </div>
+                            <div class="payment-method" onclick="selecionarPagamento('cartao')" id="pagamentoCartao">
+                                <i class="fas fa-credit-card"></i>
+                                <span>Cartão</span>
+                                <small style="color: var(--gray);">(Até 12x)</small>
+                            </div>
+                            <div class="payment-method" onclick="selecionarPagamento('boleto')" id="pagamentoBoleto">
+                                <i class="fas fa-barcode"></i>
+                                <span>Boleto</span>
+                                <small style="color: var(--gray);">(Vence em 3 dias)</small>
+                            </div>
                         </div>
                     </div>
 
@@ -2976,14 +3045,16 @@
                             </select>
                         </div>
                         <input type="hidden" id="planoSelecionado" value="profissional">
+                        <input type="hidden" id="pagamentoSelecionado" value="pix">
                         
                         <button type="submit" class="banner-btn" style="width: 100%; margin-top: 10px;">
-                            <i class="fas fa-check-circle"></i> Contratar plano e anunciar
+                            <i class="fas fa-check-circle"></i> Finalizar contratação
                         </button>
                     </form>
                     
                     <p style="font-size: 11px; color: var(--gray); text-align: center; margin-top: 15px;">
-                        Ao contratar, você concorda com nossos <a href="#" onclick="abrirModal('modalPolitica')">termos de uso</a> e <a href="#" onclick="abrirModal('modalPolitica')">política de privacidade</a>.
+                        Pagamento processado com segurança via Mercado Pago. 
+                        <a href="#" onclick="mostrarToast('Pagamento 100% seguro')">Saiba mais</a>
                     </p>
                 </div>
             </div>
@@ -3134,7 +3205,6 @@
                         <label>Loja *</label>
                         <select class="form-control" id="produtoLoja" required>
                             <option value="">Selecione a loja</option>
-                            ${lojas ? lojas.map(l => `<option value="${l.id}">${l.nome}</option>`).join('') : ''}
                         </select>
                     </div>
                     <button type="submit" class="banner-btn" style="width: 100%;">Adicionar Produto</button>
@@ -3242,7 +3312,82 @@
         </div>
     </div>
 
-    <!-- CHATBOT - CENTRAL DE AJUDA -->
+    <!-- MODAL PAGAMENTO (Mercado Pago) -->
+    <div class="modal" id="modalPagamento">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Finalizar Pagamento</h2>
+                <span class="modal-close" onclick="fecharModal('modalPagamento')">&times;</span>
+            </div>
+            <div class="modal-body" id="pagamentoContent">
+                <div style="text-align: center;" id="pagamentoLoading">
+                    <i class="fas fa-spinner fa-spin fa-3x" style="color: var(--accent); margin: 30px 0;"></i>
+                    <p>Processando pagamento...</p>
+                </div>
+                <div id="pagamentoQRCode" style="display: none; text-align: center;">
+                                            <img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=00020126580014BR.GOV.BCB.PIX0136a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6" alt="QR Code PIX" style="max-width: 100%; border-radius: 16px;">
+                        <p style="margin: 15px 0; font-weight: 600;">PIX Copia e Cola</p>
+                        <div style="background: var(--light); padding: 10px; border-radius: 8px; font-size: 12px; word-break: break-all;">
+                            00020126580014BR.GOV.BCB.PIX0136a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6
+                        </div>
+                        <button class="banner-btn" style="margin-top: 15px;" onclick="copiarPix()">
+                            <i class="fas fa-copy"></i> Copiar código PIX
+                        </button>
+                    </div>
+                    <div id="pagamentoCartao" style="display: none;">
+                        <form id="mercadoPagoForm">
+                            <div class="form-group">
+                                <label>Número do cartão</label>
+                                <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Validade</label>
+                                    <input type="text" class="form-control" id="cardExpiry" placeholder="MM/AA">
+                                </div>
+                                <div class="form-group">
+                                    <label>CVV</label>
+                                    <input type="text" class="form-control" id="cardCvv" placeholder="123" maxlength="4">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Nome no cartão</label>
+                                <input type="text" class="form-control" id="cardName" placeholder="Como impresso no cartão">
+                            </div>
+                            <div class="form-group">
+                                <label>CPF do titular</label>
+                                <input type="text" class="form-control" id="cardCpf" placeholder="000.000.000-00">
+                            </div>
+                            <div class="form-group">
+                                <label>Parcelas</label>
+                                <select class="form-control" id="cardInstallments">
+                                    <option value="1">1x de R$ 49,00 (sem juros)</option>
+                                    <option value="2">2x de R$ 24,50 (sem juros)</option>
+                                    <option value="3">3x de R$ 16,33 (sem juros)</option>
+                                    <option value="4">4x de R$ 12,25 (sem juros)</option>
+                                    <option value="5">5x de R$ 9,80 (sem juros)</option>
+                                    <option value="6">6x de R$ 8,17 (sem juros)</option>
+                                </select>
+                            </div>
+                            <button type="button" class="banner-btn" style="width: 100%;" onclick="processarPagamentoCartao()">
+                                Pagar com cartão
+                            </button>
+                        </form>
+                    </div>
+                    <div id="pagamentoBoleto" style="display: none; text-align: center;">
+                        <i class="fas fa-barcode fa-4x" style="color: var(--primary); margin: 20px 0;"></i>
+                        <p>Boleto gerado com sucesso!</p>
+                        <p style="font-size: 14px; color: var(--gray);">Vencimento: 3 dias úteis</p>
+                        <button class="banner-btn" style="margin-top: 15px;" onclick="baixarBoleto()">
+                            <i class="fas fa-download"></i> Baixar boleto
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHATBOT -->
     <div class="chatbot-container">
         <div class="chatbot-button" onclick="toggleChatbot()">
             <i class="fas fa-comment-dots"></i>
@@ -3349,241 +3494,172 @@
         });
 
         // ==================== DADOS INICIAIS ====================
-        // Carregar lojas do localStorage ou usar dados iniciais
-        let lojas = JSON.parse(localStorage.getItem('rimso_lojas')) || [
-            {
-                id: 1,
-                nome: 'CS Surf Shop',
-                categoria: 'surfwear',
-                bairro: 'centro',
-                endereco: 'Rua Moraes Barros, 806 - Centro',
-                telefone: '(19) 3434-2454',
-                whatsapp: '1999991234',
-                avaliacao: 5.0,
-                totalAvaliacoes: 127,
-                descricao: 'A mais completa loja de surfwear de Piracicaba, com as melhores marcas do mercado.',
-                imagem: 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=300',
-                produtos: [
-                    { id: 1, nome: 'Chinelo Havaina', preco: 39.90, imagem: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=200' },
-                    { id: 2, nome: 'Camiseta Surf', preco: 89.90, imagem: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=200' },
-                    { id: 3, nome: 'Bermuda Surf', preco: 129.90, imagem: 'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=200' }
-                ]
-            },
-            {
-                id: 2,
-                nome: 'NRSurf',
-                categoria: 'surfwear',
-                bairro: 'alto',
-                endereco: 'Av. Independência, 1200 - Alto',
-                telefone: '(19) 3433-9012',
-                whatsapp: '1998885678',
-                avaliacao: 4.5,
-                totalAvaliacoes: 89,
-                descricao: 'Moda surfwear e streetwear para quem busca estilo e qualidade.',
-                imagem: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=300',
-                produtos: [
-                    { id: 4, nome: 'Camiseta Oversized', preco: 89.90, imagem: 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=200' },
-                    { id: 5, nome: 'Boné Snapback', preco: 59.90, imagem: 'https://images.unsplash.com/photo-1576871337632-b9aef4c17ab9?w=200' },
-                    { id: 6, nome: 'Moletom', preco: 149.90, imagem: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=200' }
-                ]
-            },
-            {
-                id: 3,
-                nome: 'Renata Modas',
-                categoria: 'feminina',
-                bairro: 'jardim-alvorada',
-                endereco: 'Rua Carlos Augusto Strazzer, 20 - Jardim Alvorada',
-                telefone: '(19) 3411-1193',
-                whatsapp: '1997779012',
-                avaliacao: 4.5,
-                totalAvaliacoes: 156,
-                descricao: 'Moda feminina para todas as ocasiões, com peças casuais e plus size.',
-                imagem: 'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=300',
-                produtos: [
-                    { id: 7, nome: 'Vestido Floral', preco: 129.90, imagem: 'https://images.unsplash.com/photo-1612336307429-8a898d10e223?w=200' },
-                    { id: 8, nome: 'Blusa de Tricô', preco: 79.90, imagem: 'https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=200' },
-                    { id: 9, nome: 'Calça Legging', preco: 69.90, imagem: 'https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=200' }
-                ]
-            },
-            {
-                id: 4,
-                nome: 'Teka Surf',
-                categoria: 'surfwear',
-                bairro: 'centro',
-                endereco: 'Rua do Rosário, 450 - Centro',
-                telefone: '(19) 3432-7890',
-                whatsapp: '1996663456',
-                avaliacao: 5.0,
-                totalAvaliacoes: 234,
-                descricao: 'Referência em surfwear em Piracicaba, com as principais marcas nacionais e internacionais.',
-                imagem: 'https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?w=300',
-                produtos: [
-                    { id: 10, nome: 'Prancha de Surf', preco: 1899.90, imagem: 'https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=200' },
-                    { id: 11, nome: 'Rash Guard', preco: 149.90, imagem: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=200' },
-                    { id: 12, nome: 'Cera para prancha', preco: 19.90, imagem: 'https://images.unsplash.com/photo-1517686469429-8bdb88b9f907?w=200' }
-                ]
-            },
-            {
-                id: 5,
-                nome: 'Radical Vest Surf Shop',
-                categoria: 'surfwear',
-                bairro: 'centro',
-                endereco: 'Rua Moraes Barros, 806 - Centro',
-                telefone: '(19) 3434-2454',
-                whatsapp: '1995556789',
-                avaliacao: 4.0,
-                totalAvaliacoes: 67,
-                descricao: 'Tudo para o surfista, desde roupas até acessórios e equipamentos.',
-                imagem: 'https://images.unsplash.com/photo-1547949003-9792a18a2601?w=300',
-                produtos: [
-                    { id: 13, nome: 'Jaqueta Jeans', preco: 199.90, imagem: 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=200' },
-                    { id: 14, nome: 'Camiseta Estampada', preco: 79.90, imagem: 'https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=200' },
-                    { id: 15, nome: 'Boné Trucker', preco: 49.90, imagem: 'https://images.unsplash.com/photo-1521369909029-2afc882c4ec7?w=200' }
-                ]
-            },
-            {
-                id: 6,
-                nome: 'LÖS',
-                categoria: 'autoral',
-                bairro: 'centro',
-                endereco: 'Rua do Porto, 300 - Centro',
-                telefone: '(19) 3434-5678',
-                whatsapp: '1994445678',
-                avaliacao: 5.0,
-                totalAvaliacoes: 98,
-                descricao: 'Moda autoral da estilista Renata Kalil, com peças exclusivas e design único.',
-                imagem: 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=300',
-                produtos: [
-                    { id: 16, nome: 'Vestido Autoral', preco: 299.90, imagem: 'https://images.unsplash.com/photo-1583846783214-7229c91fdaeb?w=200' },
-                    { id: 17, nome: 'Camisa Social', preco: 189.90, imagem: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3cc7?w=200' },
-                    { id: 18, nome: 'Lenço de Seda', preco: 89.90, imagem: 'https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=200' }
-                ]
-            },
-            {
-                id: 7,
-                nome: 'Vila Hípica Modas',
-                categoria: 'masculina',
-                bairro: 'vila-hipica',
-                endereco: 'Av. Carlos Kuntz Busch, 600 - Vila Hípica',
-                telefone: '(19) 3435-1234',
-                whatsapp: '1993335678',
-                avaliacao: 4.5,
-                totalAvaliacoes: 145,
-                descricao: 'Moda masculina para todas as ocasiões, do social ao esporte.',
-                imagem: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=300',
-                produtos: [
-                    { id: 19, nome: 'Camisa Social', preco: 129.90, imagem: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=200' },
-                    { id: 20, nome: 'Calça Jeans', preco: 149.90, imagem: 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=200' },
-                    { id: 21, nome: 'Tênis Casual', preco: 189.90, imagem: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=200' }
-                ]
-            },
-            {
-                id: 8,
-                nome: 'Ki Kids Moda Infantil',
-                categoria: 'infantil',
-                bairro: 'centro',
-                endereco: 'Rua do Rosário, 800 - Centro',
-                telefone: '(19) 3432-3456',
-                whatsapp: '1992225678',
-                avaliacao: 5.0,
-                totalAvaliacoes: 234,
-                descricao: 'A maior loja de moda infantil de Piracicaba, com roupas para crianças de todas as idades.',
-                imagem: 'https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?w=300',
-                produtos: [
-                    { id: 22, nome: 'Conjunto Infantil', preco: 89.90, imagem: 'https://images.unsplash.com/photo-1519278409-1f56dfe3f2b1?w=200' },
-                    { id: 23, nome: 'Vestido Infantil', preco: 69.90, imagem: 'https://images.unsplash.com/photo-1503919545889-a8c2cd2a8f1f?w=200' },
-                    { id: 24, nome: 'Macacão Bebê', preco: 59.90, imagem: 'https://images.unsplash.com/photo-1522771930-78848d9293e8?w=200' }
-                ]
-            }
-        ];
-
-        // Salvar lojas no localStorage
-        localStorage.setItem('rimso_lojas', JSON.stringify(lojas));
-
-        // ==================== USUÁRIOS ====================
-        let usuarios = JSON.parse(localStorage.getItem('rimso_usuarios')) || [];
-        
-        // Criar usuário admin se não existir
-        const adminExists = usuarios.some(u => u.email === 'admin@rimso.com.br');
-        if (!adminExists) {
-            usuarios.push({
-                id: 999,
-                nome: 'Administrador',
-                email: 'admin@rimso.com.br',
-                telefone: '(19) 99999-9999',
-                tipo: 'admin',
-                data: '1990-01-01',
-                cpf: '000.000.000-00',
-                endereco: 'Rua Admin, 123 - Centro',
-                senha: 'admin123',
-                dataCadastro: new Date().toISOString()
-            });
-            localStorage.setItem('rimso_usuarios', JSON.stringify(usuarios));
+        // Inicializar localStorage se vazio
+        if (!localStorage.getItem('rimso_usuarios')) {
+            // Usuários padrão
+            const usuariosPadrao = [
+                {
+                    id: 999,
+                    nome: 'Administrador',
+                    email: 'admin@rimso.com.br',
+                    telefone: '(19) 99999-9999',
+                    tipo: 'admin',
+                    data: '1990-01-01',
+                    cpf: '000.000.000-00',
+                    endereco: 'Rua Admin, 123 - Centro',
+                    senha: 'admin123',
+                    dataCadastro: new Date().toISOString()
+                },
+                {
+                    id: 998,
+                    nome: 'Lojista Teste',
+                    email: 'lojista@rimso.com.br',
+                    telefone: '(19) 98888-7777',
+                    tipo: 'lojista',
+                    data: '1985-05-15',
+                    cpf: '111.222.333-44',
+                    endereco: 'Rua Teste, 123 - Centro',
+                    senha: 'lojista123',
+                    dataCadastro: new Date().toISOString()
+                },
+                {
+                    id: 997,
+                    nome: 'Cliente Teste',
+                    email: 'cliente@rimso.com.br',
+                    telefone: '(19) 97777-6666',
+                    tipo: 'cliente',
+                    data: '1995-10-20',
+                    cpf: '555.666.777-88',
+                    endereco: 'Av Teste, 456 - Alto',
+                    senha: 'cliente123',
+                    dataCadastro: new Date().toISOString()
+                }
+            ];
+            localStorage.setItem('rimso_usuarios', JSON.stringify(usuariosPadrao));
         }
 
-        // Criar usuário lojista de teste
-        const lojistaExists = usuarios.some(u => u.email === 'lojista@rimso.com.br');
-        if (!lojistaExists) {
-            usuarios.push({
-                id: 998,
-                nome: 'Lojista Teste',
-                email: 'lojista@rimso.com.br',
-                telefone: '(19) 98888-7777',
-                tipo: 'lojista',
-                data: '1985-05-15',
-                cpf: '111.222.333-44',
-                endereco: 'Rua Teste, 123 - Centro',
-                senha: 'lojista123',
-                dataCadastro: new Date().toISOString()
-            });
-            localStorage.setItem('rimso_usuarios', JSON.stringify(usuarios));
+        if (!localStorage.getItem('rimso_lojas')) {
+            // Lojas padrão
+            const lojasPadrao = [
+                {
+                    id: 1,
+                    nome: 'CS Surf Shop',
+                    categoria: 'surfwear',
+                    bairro: 'centro',
+                    endereco: 'Rua Moraes Barros, 806 - Centro',
+                    telefone: '(19) 3434-2454',
+                    whatsapp: '1999991234',
+                    avaliacao: 5.0,
+                    totalAvaliacoes: 127,
+                    descricao: 'A mais completa loja de surfwear de Piracicaba, com as melhores marcas do mercado.',
+                    imagem: 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=300',
+                    produtos: [
+                        { id: 1, nome: 'Chinelo Havaina', preco: 39.90, imagem: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=200' },
+                        { id: 2, nome: 'Camiseta Surf', preco: 89.90, imagem: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=200' },
+                        { id: 3, nome: 'Bermuda Surf', preco: 129.90, imagem: 'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=200' }
+                    ]
+                },
+                {
+                    id: 2,
+                    nome: 'NRSurf',
+                    categoria: 'surfwear',
+                    bairro: 'alto',
+                    endereco: 'Av. Independência, 1200 - Alto',
+                    telefone: '(19) 3433-9012',
+                    whatsapp: '1998885678',
+                    avaliacao: 4.5,
+                    totalAvaliacoes: 89,
+                    descricao: 'Moda surfwear e streetwear para quem busca estilo e qualidade.',
+                    imagem: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=300',
+                    produtos: [
+                        { id: 4, nome: 'Camiseta Oversized', preco: 89.90, imagem: 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=200' },
+                        { id: 5, nome: 'Boné Snapback', preco: 59.90, imagem: 'https://images.unsplash.com/photo-1576871337632-b9aef4c17ab9?w=200' },
+                        { id: 6, nome: 'Moletom', preco: 149.90, imagem: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=200' }
+                    ]
+                },
+                {
+                    id: 3,
+                    nome: 'Renata Modas',
+                    categoria: 'feminina',
+                    bairro: 'jardim-alvorada',
+                    endereco: 'Rua Carlos Augusto Strazzer, 20 - Jardim Alvorada',
+                    telefone: '(19) 3411-1193',
+                    whatsapp: '1997779012',
+                    avaliacao: 4.5,
+                    totalAvaliacoes: 156,
+                    descricao: 'Moda feminina para todas as ocasiões, com peças casuais e plus size.',
+                    imagem: 'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=300',
+                    produtos: [
+                        { id: 7, nome: 'Vestido Floral', preco: 129.90, imagem: 'https://images.unsplash.com/photo-1612336307429-8a898d10e223?w=200' },
+                        { id: 8, nome: 'Blusa de Tricô', preco: 79.90, imagem: 'https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=200' },
+                        { id: 9, nome: 'Calça Legging', preco: 69.90, imagem: 'https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=200' }
+                    ]
+                },
+                {
+                    id: 4,
+                    nome: 'Teka Surf',
+                    categoria: 'surfwear',
+                    bairro: 'centro',
+                    endereco: 'Rua do Rosário, 450 - Centro',
+                    telefone: '(19) 3432-7890',
+                    whatsapp: '1996663456',
+                    avaliacao: 5.0,
+                    totalAvaliacoes: 234,
+                    descricao: 'Referência em surfwear em Piracicaba, com as principais marcas nacionais e internacionais.',
+                    imagem: 'https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?w=300',
+                    produtos: [
+                        { id: 10, nome: 'Prancha de Surf', preco: 1899.90, imagem: 'https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=200' },
+                        { id: 11, nome: 'Rash Guard', preco: 149.90, imagem: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=200' },
+                        { id: 12, nome: 'Cera para prancha', preco: 19.90, imagem: 'https://images.unsplash.com/photo-1517686469429-8bdb88b9f907?w=200' }
+                    ]
+                }
+            ];
+            localStorage.setItem('rimso_lojas', JSON.stringify(lojasPadrao));
         }
 
-        // Criar usuário cliente de teste
-        const clienteExists = usuarios.some(u => u.email === 'cliente@rimso.com.br');
-        if (!clienteExists) {
-            usuarios.push({
-                id: 997,
-                nome: 'Cliente Teste',
-                email: 'cliente@rimso.com.br',
-                telefone: '(19) 97777-6666',
-                tipo: 'cliente',
-                data: '1995-10-20',
-                cpf: '555.666.777-88',
-                endereco: 'Av Teste, 456 - Alto',
-                senha: 'cliente123',
-                dataCadastro: new Date().toISOString()
-            });
-            localStorage.setItem('rimso_usuarios', JSON.stringify(usuarios));
+        if (!localStorage.getItem('rimso_favoritos')) {
+            localStorage.setItem('rimso_favoritos', '[]');
+        }
+
+        if (!localStorage.getItem('rimso_avaliacoes')) {
+            localStorage.setItem('rimso_avaliacoes', '[]');
+        }
+
+        if (!localStorage.getItem('rimso_contratacoes')) {
+            localStorage.setItem('rimso_contratacoes', '[]');
         }
 
         // ==================== VARIÁVEIS GLOBAIS ====================
+        let lojas = JSON.parse(localStorage.getItem('rimso_lojas'));
+        let usuarios = JSON.parse(localStorage.getItem('rimso_usuarios'));
         let usuarioLogado = JSON.parse(localStorage.getItem('rimso_usuario_logado')) || null;
-        let favoritos = JSON.parse(localStorage.getItem('rimso_favoritos')) || [];
-        let avaliacoes = JSON.parse(localStorage.getItem('rimso_avaliacoes')) || [];
-        let contratacoes = JSON.parse(localStorage.getItem('rimso_contratacoes')) || [];
+        let favoritos = JSON.parse(localStorage.getItem('rimso_favoritos'));
+        let avaliacoes = JSON.parse(localStorage.getItem('rimso_avaliacoes'));
+        let contratacoes = JSON.parse(localStorage.getItem('rimso_contratacoes'));
         let lojaAtual = null;
         let planoSelecionado = 'profissional';
+        let pagamentoSelecionado = 'pix';
 
         // ==================== INICIALIZAÇÃO ====================
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 RIMSO inicializado!');
+            console.log('👑 Contas para teste:', {
+                admin: 'admin@rimso.com.br / admin123',
+                lojista: 'lojista@rimso.com.br / lojista123',
+                cliente: 'cliente@rimso.com.br / cliente123'
+            });
+            
             carregarLojas();
             carregarProdutosDestaque();
             configurarEventos();
             verificarUsuarioLogado();
-            console.log('🚀 RIMSO inicializado com sucesso!');
-            console.log('👑 Conta admin: admin@rimso.com.br / admin123');
-            console.log('🏪 Conta lojista: lojista@rimso.com.br / lojista123');
-            console.log('👤 Conta cliente: cliente@rimso.com.br / cliente123');
             
-            // Re-inicializar AOS após carregar conteúdo dinâmico
             setTimeout(() => {
                 AOS.refresh();
             }, 1000);
         });
 
         function configurarEventos() {
-            // Busca em tempo real
             const searchInput = document.getElementById('searchInput');
             if (searchInput) {
                 searchInput.addEventListener('input', function() {
@@ -3592,7 +3668,6 @@
                 });
             }
             
-            // Estrelas da avaliação
             const ratingStars = document.querySelectorAll('#ratingStars i');
             ratingStars.forEach(star => {
                 star.addEventListener('click', function() {
@@ -3603,7 +3678,6 @@
                 });
             });
             
-            // Fechar modais clicando fora
             window.addEventListener('click', function(event) {
                 if (event.target.classList.contains('modal')) {
                     event.target.classList.remove('active');
@@ -3618,9 +3692,6 @@
             const email = document.getElementById('loginEmail').value;
             const senha = document.getElementById('loginSenha').value;
             
-            console.log('Tentando login com:', email, senha);
-            console.log('Usuários disponíveis:', usuarios);
-            
             const usuario = usuarios.find(u => u.email === email && u.senha === senha);
             
             if (usuario) {
@@ -3629,19 +3700,8 @@
                 mostrarToast(`✅ Bem-vindo(a), ${usuario.nome}!`);
                 fecharModal('modalLogin');
                 verificarUsuarioLogado();
-                
-                // Se for admin, mostrar painel
-                if (usuario.tipo === 'admin') {
-                    setTimeout(() => {
-                        mostrarToast('👑 Modo administrador ativado - Acesso total!', 'success');
-                        document.getElementById('adminPanel').style.display = 'block';
-                    }, 500);
-                } else {
-                    document.getElementById('adminPanel').style.display = 'none';
-                }
             } else {
                 mostrarToast('❌ Email ou senha inválidos', 'error');
-                console.log('Falha no login. Usuários:', usuarios);
             }
         }
 
@@ -3705,6 +3765,12 @@
                 authLinks.style.display = 'none';
                 userInfo.style.display = 'flex';
                 userName.textContent = usuarioLogado.nome.split(' ')[0];
+                
+                if (usuarioLogado.tipo === 'admin') {
+                    document.getElementById('adminPanel').style.display = 'block';
+                } else {
+                    document.getElementById('adminPanel').style.display = 'none';
+                }
             } else {
                 authLinks.style.display = 'flex';
                 userInfo.style.display = 'none';
@@ -3714,11 +3780,6 @@
 
         // ==================== FUNÇÕES ADMIN ====================
         function mostrarRelatorios() {
-            atualizarRelatorios();
-            abrirModal('modalRelatorios');
-        }
-
-        function atualizarRelatorios() {
             const totalLojas = lojas.length;
             const totalProdutos = lojas.reduce((acc, loja) => acc + loja.produtos.length, 0);
             const totalUsuarios = usuarios.length;
@@ -3737,10 +3798,12 @@
             document.getElementById('relPlanosBasico').textContent = planosBasico;
             document.getElementById('relPlanosProfissional').textContent = planosProfissional;
             document.getElementById('relPlanosPremium').textContent = planosPremium;
+            
+            abrirModal('modalRelatorios');
         }
 
         function resetarDados() {
-            if (confirm('Tem certeza que deseja resetar todos os dados de teste? Isso não afetará as lojas originais.')) {
+            if (confirm('Tem certeza que deseja resetar todos os dados? Isso apagará todas as lojas e produtos adicionados.')) {
                 localStorage.removeItem('rimso_lojas');
                 localStorage.removeItem('rimso_favoritos');
                 localStorage.removeItem('rimso_avaliacoes');
@@ -3780,38 +3843,35 @@
             document.getElementById('planoSelecionado').value = plano;
         }
 
-        function contratarPlano(plano) {
-            if (!usuarioLogado) {
-                mostrarToast('Faça login para contratar um plano', 'error');
-                abrirModal('modalLogin');
-                return;
+        function selecionarPagamento(tipo) {
+            pagamentoSelecionado = tipo;
+            
+            document.getElementById('pagamentoPix').style.borderColor = 'var(--border)';
+            document.getElementById('pagamentoCartao').style.borderColor = 'var(--border)';
+            document.getElementById('pagamentoBoleto').style.borderColor = 'var(--border)';
+            document.getElementById('pagamentoPix').style.background = 'white';
+            document.getElementById('pagamentoCartao').style.background = 'white';
+            document.getElementById('pagamentoBoleto').style.background = 'white';
+            
+            if (tipo === 'pix') {
+                document.getElementById('pagamentoPix').style.borderColor = 'var(--accent)';
+                document.getElementById('pagamentoPix').style.background = 'var(--light)';
+            } else if (tipo === 'cartao') {
+                document.getElementById('pagamentoCartao').style.borderColor = 'var(--accent)';
+                document.getElementById('pagamentoCartao').style.background = 'var(--light)';
+            } else {
+                document.getElementById('pagamentoBoleto').style.borderColor = 'var(--accent)';
+                document.getElementById('pagamentoBoleto').style.background = 'var(--light)';
             }
             
-            planoSelecionado = plano;
-            abrirModal('modalPlanos');
-            
-            // Destacar o plano selecionado
-            setTimeout(() => {
-                if (plano === 'basico') {
-                    document.getElementById('planoBasico').style.borderColor = 'var(--primary)';
-                    document.getElementById('planoBasico').style.background = 'var(--light)';
-                } else if (plano === 'profissional') {
-                    document.getElementById('planoProfissional').style.borderColor = 'var(--accent)';
-                    document.getElementById('planoProfissional').style.background = 'var(--light)';
-                } else {
-                    document.getElementById('planoPremium').style.borderColor = 'var(--primary)';
-                    document.getElementById('planoPremium').style.background = 'var(--light)';
-                }
-                document.getElementById('planoSelecionado').value = plano;
-            }, 100);
+            document.getElementById('pagamentoSelecionado').value = tipo;
         }
 
         function contratarPlanoFinal(event) {
             event.preventDefault();
             
             if (!usuarioLogado) {
-                mostrarToast('Faça login para contratar', 'error');
-                fecharModal('modalPlanos');
+                mostrarToast('Faça login para contratar um plano', 'error');
                 abrirModal('modalLogin');
                 return;
             }
@@ -3821,15 +3881,13 @@
             const endereco = document.getElementById('lojaEndereco').value;
             const categoria = document.getElementById('lojaCategoria').value;
             const plano = document.getElementById('planoSelecionado').value;
+            const pagamento = document.getElementById('pagamentoSelecionado').value;
             
             const planos = {
                 basico: { nome: 'Básico', preco: 49 },
                 profissional: { nome: 'Profissional', preco: 89 },
                 premium: { nome: 'Premium', preco: 149 }
             };
-            
-            mostrarToast(`✅ Plano ${planos[plano].nome} contratado! Entraremos em contato em breve.`, 'success');
-            fecharModal('modalPlanos');
             
             // Salvar contratação
             contratacoes.push({
@@ -3841,9 +3899,66 @@
                 endereco,
                 categoria,
                 plano,
+                pagamento,
+                valor: planos[plano].preco,
+                status: 'aguardando_pagamento',
                 data: new Date().toISOString()
             });
             localStorage.setItem('rimso_contratacoes', JSON.stringify(contratacoes));
+            
+            // Fechar modal de planos e abrir modal de pagamento
+            fecharModal('modalPlanos');
+            abrirModalPagamento(plano, pagamento);
+        }
+
+        function abrirModalPagamento(plano, pagamento) {
+            const planos = {
+                basico: { nome: 'Básico', preco: 49 },
+                profissional: { nome: 'Profissional', preco: 89 },
+                premium: { nome: 'Premium', preco: 149 }
+            };
+            
+            document.getElementById('pagamentoLoading').style.display = 'block';
+            document.getElementById('pagamentoQRCode').style.display = 'none';
+            document.getElementById('pagamentoCartao').style.display = 'none';
+            document.getElementById('pagamentoBoleto').style.display = 'none';
+            
+            abrirModal('modalPagamento');
+            
+            // Simular processamento
+            setTimeout(() => {
+                document.getElementById('pagamentoLoading').style.display = 'none';
+                
+                if (pagamento === 'pix') {
+                    document.getElementById('pagamentoQRCode').style.display = 'block';
+                } else if (pagamento === 'cartao') {
+                    document.getElementById('pagamentoCartao').style.display = 'block';
+                    // Atualizar parcelas baseado no plano
+                    const select = document.getElementById('cardInstallments');
+                    select.innerHTML = '';
+                    for (let i = 1; i <= 12; i++) {
+                        const valorParcela = (planos[plano].preco / i).toFixed(2);
+                        const juros = i <= 6 ? 'sem juros' : 'com juros';
+                        select.innerHTML += `<option value="${i}">${i}x de R$ ${valorParcela} (${juros})</option>`;
+                    }
+                } else {
+                    document.getElementById('pagamentoBoleto').style.display = 'block';
+                }
+            }, 2000);
+        }
+
+        function copiarPix() {
+            navigator.clipboard.writeText('00020126580014BR.GOV.BCB.PIX0136a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6');
+            mostrarToast('✅ Código PIX copiado!');
+        }
+
+        function processarPagamentoCartao() {
+            mostrarToast('✅ Pagamento processado com sucesso!');
+            fecharModal('modalPagamento');
+        }
+
+        function baixarBoleto() {
+            mostrarToast('📄 Boleto gerado! Em breve você receberá por email.');
         }
 
         // ==================== ADICIONAR PRODUTO ====================
@@ -3874,18 +3989,15 @@
             mostrarToast(`✅ Produto "${nome}" adicionado à loja ${loja.nome}!`, 'success');
             fecharModal('modalAddProduto');
             
-            // Limpar formulário
             document.getElementById('produtoNome').value = '';
             document.getElementById('produtoPreco').value = '';
             document.getElementById('produtoImagem').value = '';
             document.getElementById('produtoLoja').value = '';
             
-            // Atualizar página se estiver na loja
             if (lojaAtual && lojaAtual.id === lojaId) {
                 abrirLoja(lojaId);
             }
             
-            // Atualizar produtos em destaque
             carregarProdutosDestaque();
             carregarLojas();
         }
@@ -3924,7 +4036,6 @@
             mostrarToast(`✅ Loja "${nome}" adicionada com sucesso!`, 'success');
             fecharModal('modalAddLoja');
             
-            // Limpar formulário
             document.getElementById('lojaNomeAdd').value = '';
             document.getElementById('lojaEnderecoAdd').value = '';
             document.getElementById('lojaTelefoneAdd').value = '';
@@ -3932,7 +4043,6 @@
             document.getElementById('lojaImagemAdd').value = '';
             document.getElementById('lojaDescricaoAdd').value = '';
             
-            // Atualizar grid
             carregarLojas();
         }
 
@@ -3947,7 +4057,6 @@
                 grid.innerHTML = lojas.map(loja => criarCardLoja(loja)).join('');
             }
             
-            // Atualizar select do modal de produto
             const selectLoja = document.getElementById('produtoLoja');
             if (selectLoja) {
                 selectLoja.innerHTML = '<option value="">Selecione a loja</option>' + 
@@ -4191,14 +4300,12 @@
             if (siteContent) siteContent.classList.remove('hidden');
             if (sidebar) sidebar.classList.remove('active');
             
-            // Resetar filtros
             document.querySelectorAll('.filter-chip, .sidebar-menu a').forEach(el => {
                 el.classList.remove('active');
             });
             document.querySelector('.filter-chip[onclick="filtrarCategoria(\'todos\')"]')?.classList.add('active');
             document.querySelector('.sidebar-menu a[onclick="filtrarCategoria(\'todos\')"]')?.classList.add('active');
             
-            // Resetar título
             document.getElementById('tituloLojas').textContent = 'Lojas em Piracicaba';
             document.getElementById('totalLojas').textContent = `${lojas.length} lojas encontradas`;
         }
@@ -4423,7 +4530,7 @@
                     botMsg.textContent = '🛒 Para comprar: 1) Encontre uma loja 2) Explore produtos 3) Clique no WhatsApp 4) Fale com o lojista. Simples e seguro!';
                 }
                 else if (mensagem.includes('plano') || mensagem.includes('anunciar')) {
-                    botMsg.textContent = '📢 Planos: Básico R$49 (50 produtos), Profissional R$89 (200 produtos), Premium R$149 (ilimitado). Clique em "Anunciar" para começar!';
+                    botMsg.textContent = '📢 Planos: Básico R$49 (50 produtos), Profissional R$89 (200 produtos), Premium R$149 (ilimitado). Clique em "Anunciar" para começar! Aceitamos PIX, cartão e boleto.';
                 }
                 else if (mensagem.includes('local') || mensagem.includes('endereço')) {
                     botMsg.textContent = '📍 Você encontra o endereço de todas as lojas na página de cada uma. Use os filtros para encontrar a loja desejada.';
@@ -4434,8 +4541,11 @@
                 else if (mensagem.includes('contato')) {
                     botMsg.textContent = '📞 Contato: (19) 3434-5678 | Email: contato@rimso.com.br | Instagram: @rimso';
                 }
+                else if (mensagem.includes('pagamento') || mensagem.includes('pix') || mensagem.includes('cartão') || mensagem.includes('boleto')) {
+                    botMsg.textContent = '💰 Formas de pagamento: PIX (mais rápido), Cartão de crédito (até 12x) e Boleto bancário. Tudo processado com segurança pelo Mercado Pago!';
+                }
                 else {
-                    botMsg.textContent = '🤖 Posso ajudar com informações sobre compras, planos, localização, preços e contato. Pergunte à vontade!';
+                    botMsg.textContent = '🤖 Posso ajudar com informações sobre compras, planos, localização, preços, pagamentos e contato. Pergunte à vontade!';
                 }
                 
                 messages.appendChild(botMsg);
