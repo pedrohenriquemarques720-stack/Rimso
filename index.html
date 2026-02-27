@@ -11,8 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- AOS - Animate On Scroll -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <!-- Mercado Pago SDK -->
-    <script src="https://sdk.mercadopago.com/js/v2"></script>
     
     <style>
         * {
@@ -1616,7 +1614,7 @@
             margin-top: 10px;
         }
 
-        /* ==================== CHATBOT MELHORADO ==================== */
+        /* ==================== CHATBOT ==================== */
         .chatbot-container {
             position: fixed;
             bottom: 20px;
@@ -1948,43 +1946,160 @@
             background: var(--primary);
         }
 
-        /* ==================== PAGAMENTO ==================== */
-        .payment-methods {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin: 20px 0;
+        /* ==================== DASHBOARD DO LOJISTA ==================== */
+        .dashboard-page {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 30px;
         }
 
-        .payment-method {
-            text-align: center;
-            padding: 20px;
-            border: 2px solid var(--border);
+        .dashboard-container {
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            border: 3px solid var(--accent);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .dashboard-header h1 {
+            font-size: 32px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .dashboard-header h1 i {
+            color: var(--accent);
+        }
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: var(--light);
             border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent);
+        }
+
+        .stat-card i {
+            font-size: 32px;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .stat-card h3 {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 5px;
+        }
+
+        .stat-card .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .dashboard-actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .dashboard-actions .btn-action {
+            background: var(--light);
+            border: 2px solid var(--border);
+            padding: 12px 25px;
+            border-radius: 60px;
+            font-weight: 600;
+            color: var(--primary);
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dashboard-actions .btn-action:hover {
+            border-color: var(--accent);
+            background: var(--light);
+            transform: translateY(-2px);
+        }
+
+        .dashboard-actions .btn-action i {
+            color: var(--accent);
+        }
+
+        .dashboard-section-title {
+            font-size: 20px;
+            color: var(--primary);
+            margin: 30px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .produto-card.dashboard-produto {
+            position: relative;
+        }
+
+        .produto-actions {
+            display: flex;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .produto-actions button {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
         }
 
-        .payment-method:hover {
-            border-color: var(--accent);
-            transform: translateY(-3px);
+        .btn-edit {
+            background: var(--primary);
+            color: white;
         }
 
-        .payment-method.selected {
-            border-color: var(--accent);
-            background: var(--light);
+        .btn-edit:hover {
+            background: var(--accent);
         }
 
-        .payment-method i {
-            font-size: 32px;
-            color: var(--primary);
-            margin-bottom: 10px;
+        .btn-delete {
+            background: #dc3545;
+            color: white;
         }
 
-        .payment-method span {
-            display: block;
-            font-weight: 600;
-            color: var(--dark);
+        .btn-delete:hover {
+            background: #c82333;
         }
 
         /* ==================== RODAPÉ ==================== */
@@ -2064,6 +2179,15 @@
         .user-greeting i {
             color: var(--accent);
             margin-right: 5px;
+        }
+
+        .dashboard-link {
+            color: var(--primary) !important;
+            font-weight: 600;
+        }
+
+        .dashboard-link i {
+            color: var(--accent);
         }
 
         /* ==================== RESPONSIVIDADE ==================== */
@@ -2194,12 +2318,17 @@
                 flex-direction: column;
             }
             
-            .payment-methods {
-                grid-template-columns: 1fr;
-            }
-            
             .user-info-container {
                 flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .dashboard-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .dashboard-actions {
                 justify-content: center;
             }
         }
@@ -2261,6 +2390,7 @@
             <div class="top-bar-links" id="userInfo" style="display: none;">
                 <div class="user-info-container">
                     <span class="user-greeting"><i class="fas fa-user-circle"></i> Olá, <span id="userName"></span></span>
+                    <a href="#" class="dashboard-link" onclick="abrirDashboardLojista()"><i class="fas fa-chart-line"></i> Dashboard</a>
                     <button class="btn-logout" onclick="fazerLogout()">Sair</button>
                 </div>
             </div>
@@ -2432,6 +2562,72 @@
             </div>
 
             <div class="lojas-grid" id="lojasGrid"></div>
+        </div>
+    </div>
+
+    <!-- DASHBOARD DO LOJISTA -->
+    <div id="dashboardPage" class="dashboard-page hidden">
+        <div class="dashboard-container">
+            <div class="dashboard-header">
+                <h1><i class="fas fa-store"></i> Minha Loja</h1>
+                <button class="btn-logout" onclick="voltarHome()" style="background: var(--primary); color: white; border: none;">
+                    <i class="fas fa-arrow-left"></i> Voltar para o site
+                </button>
+            </div>
+
+            <!-- Estatísticas -->
+            <div class="dashboard-stats" id="dashboardStats">
+                <div class="stat-card">
+                    <i class="fas fa-box"></i>
+                    <h3>Total de Produtos</h3>
+                    <div class="stat-number" id="statProdutos">0</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-star"></i>
+                    <h3>Avaliação Média</h3>
+                    <div class="stat-number" id="statAvaliacao">0.0</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-heart"></i>
+                    <h3>Favoritos</h3>
+                    <div class="stat-number" id="statFavoritos">0</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-eye"></i>
+                    <h3>Visualizações</h3>
+                    <div class="stat-number" id="statViews">127</div>
+                </div>
+            </div>
+
+            <!-- Ações Rápidas -->
+            <div class="dashboard-actions">
+                <button class="btn-action" onclick="abrirModal('modalAddProduto')">
+                    <i class="fas fa-plus-circle"></i> Adicionar Produto
+                </button>
+                <button class="btn-action" onclick="editarPerfilLoja()">
+                    <i class="fas fa-edit"></i> Editar Perfil da Loja
+                </button>
+                <button class="btn-action" onclick="verEstatisticas()">
+                    <i class="fas fa-chart-bar"></i> Estatísticas Detalhadas
+                </button>
+            </div>
+
+            <!-- Meus Produtos -->
+            <div class="dashboard-section-title">
+                <span><i class="fas fa-boxes"></i> Meus Produtos</span>
+                <span style="font-size: 14px; color: var(--gray);" id="totalProdutosInfo">0 produtos</span>
+            </div>
+            <div class="produtos-grid" id="meusProdutos"></div>
+
+            <!-- Sem produtos -->
+            <div id="semProdutos" style="text-align: center; padding: 50px; background: var(--light); border-radius: 16px; margin-top: 20px; display: none;">
+                <i class="fas fa-box-open" style="font-size: 48px; color: var(--gray); margin-bottom: 15px;"></i>
+                <h3 style="color: var(--primary); margin-bottom: 10px;">Nenhum produto cadastrado</h3>
+                <p style="color: var(--gray); margin-bottom: 20px;">Comece adicionando seu primeiro produto!</p>
+                <button class="banner-btn" onclick="abrirModal('modalAddProduto')">
+                    <i class="fas fa-plus"></i> Adicionar Produto
+                </button>
+            </div>
         </div>
     </div>
 
@@ -3027,28 +3223,6 @@
                         </div>
                     </div>
 
-                    <!-- Formas de pagamento -->
-                    <div style="margin: 20px 0;">
-                        <label style="font-weight: 600; color: var(--primary);">Forma de pagamento:</label>
-                        <div class="payment-methods">
-                            <div class="payment-method" onclick="selecionarPagamento('pix')" id="pagamentoPix">
-                                <i class="fas fa-qrcode"></i>
-                                <span>PIX</span>
-                                <small style="color: var(--gray);">(Mais rápido)</small>
-                            </div>
-                            <div class="payment-method" onclick="selecionarPagamento('cartao')" id="pagamentoCartao">
-                                <i class="fas fa-credit-card"></i>
-                                <span>Cartão</span>
-                                <small style="color: var(--gray);">(Até 12x)</small>
-                            </div>
-                            <div class="payment-method" onclick="selecionarPagamento('boleto')" id="pagamentoBoleto">
-                                <i class="fas fa-barcode"></i>
-                                <span>Boleto</span>
-                                <small style="color: var(--gray);">(Vence em 3 dias)</small>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- Formulário de anúncio -->
                     <form onsubmit="contratarPlanoFinal(event)">
                         <div class="form-group">
@@ -3077,17 +3251,11 @@
                             </select>
                         </div>
                         <input type="hidden" id="planoSelecionado" value="profissional">
-                        <input type="hidden" id="pagamentoSelecionado" value="pix">
                         
                         <button type="submit" class="banner-btn" style="width: 100%; margin-top: 10px;">
                             <i class="fas fa-check-circle"></i> Finalizar contratação
                         </button>
                     </form>
-                    
-                    <p style="font-size: 11px; color: var(--gray); text-align: center; margin-top: 15px;">
-                        Pagamento processado com segurança via Mercado Pago. 
-                        <a href="#" onclick="mostrarToast('Pagamento 100% seguro')">Saiba mais</a>
-                    </p>
                 </div>
             </div>
         </div>
@@ -3233,13 +3401,43 @@
                         <input type="url" class="form-control" id="produtoImagem" placeholder="https://exemplo.com/imagem.jpg" required>
                         <small style="color: var(--gray);">Use imagens do Unsplash: https://images.unsplash.com/...</small>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" id="produtoLojaGroup">
                         <label>Loja *</label>
                         <select class="form-control" id="produtoLoja" required>
                             <option value="">Selecione a loja</option>
                         </select>
                     </div>
-                    <button type="submit" class="banner-btn" style="width: 100%;">Adicionar Produto</button>
+                    <input type="hidden" id="produtoEditId" value="">
+                    <button type="submit" class="banner-btn" style="width: 100%;" id="btnAddProduto">Adicionar Produto</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL EDITAR PRODUTO -->
+    <div class="modal" id="modalEditarProduto">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Editar Produto</h2>
+                <span class="modal-close" onclick="fecharModal('modalEditarProduto')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form onsubmit="salvarEdicaoProduto(event)">
+                    <div class="form-group">
+                        <label>Nome do produto *</label>
+                        <input type="text" class="form-control" id="editProdutoNome" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Preço (R$) *</label>
+                        <input type="number" class="form-control" id="editProdutoPreco" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label>URL da imagem *</label>
+                        <input type="url" class="form-control" id="editProdutoImagem" required>
+                    </div>
+                    <input type="hidden" id="editProdutoId">
+                    <input type="hidden" id="editProdutoLojaId">
+                    <button type="submit" class="banner-btn" style="width: 100%;">Salvar Alterações</button>
                 </form>
             </div>
         </div>
@@ -3340,80 +3538,6 @@
                 </div>
                 
                 <button class="banner-btn" style="width: 100%;" onclick="atualizarRelatorios()">Atualizar Dados</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL PAGAMENTO (Mercado Pago) -->
-    <div class="modal" id="modalPagamento">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Finalizar Pagamento</h2>
-                <span class="modal-close" onclick="fecharModal('modalPagamento')">&times;</span>
-            </div>
-            <div class="modal-body" id="pagamentoContent">
-                <div style="text-align: center;" id="pagamentoLoading">
-                    <i class="fas fa-spinner fa-spin fa-3x" style="color: var(--accent); margin: 30px 0;"></i>
-                    <p>Processando pagamento...</p>
-                </div>
-                <div id="pagamentoQRCode" style="display: none; text-align: center;">
-                    <img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=00020126580014BR.GOV.BCB.PIX0136a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6" alt="QR Code PIX" style="max-width: 100%; border-radius: 16px;">
-                    <p style="margin: 15px 0; font-weight: 600;">PIX Copia e Cola</p>
-                    <div style="background: var(--light); padding: 10px; border-radius: 8px; font-size: 12px; word-break: break-all;">
-                        00020126580014BR.GOV.BCB.PIX0136a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6
-                    </div>
-                    <button class="banner-btn" style="margin-top: 15px;" onclick="copiarPix()">
-                        <i class="fas fa-copy"></i> Copiar código PIX
-                    </button>
-                </div>
-                <div id="pagamentoCartao" style="display: none;">
-                    <form id="mercadoPagoForm">
-                        <div class="form-group">
-                            <label>Número do cartão</label>
-                            <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Validade</label>
-                                <input type="text" class="form-control" id="cardExpiry" placeholder="MM/AA">
-                            </div>
-                            <div class="form-group">
-                                <label>CVV</label>
-                                <input type="text" class="form-control" id="cardCvv" placeholder="123" maxlength="4">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Nome no cartão</label>
-                            <input type="text" class="form-control" id="cardName" placeholder="Como impresso no cartão">
-                        </div>
-                        <div class="form-group">
-                            <label>CPF do titular</label>
-                            <input type="text" class="form-control" id="cardCpf" placeholder="000.000.000-00">
-                        </div>
-                        <div class="form-group">
-                            <label>Parcelas</label>
-                            <select class="form-control" id="cardInstallments">
-                                <option value="1">1x de R$ 49,00 (sem juros)</option>
-                                <option value="2">2x de R$ 24,50 (sem juros)</option>
-                                <option value="3">3x de R$ 16,33 (sem juros)</option>
-                                <option value="4">4x de R$ 12,25 (sem juros)</option>
-                                <option value="5">5x de R$ 9,80 (sem juros)</option>
-                                <option value="6">6x de R$ 8,17 (sem juros)</option>
-                            </select>
-                        </div>
-                        <button type="button" class="banner-btn" style="width: 100%;" onclick="processarPagamentoCartao()">
-                            Pagar com cartão
-                        </button>
-                    </form>
-                </div>
-                <div id="pagamentoBoleto" style="display: none; text-align: center;">
-                    <i class="fas fa-barcode fa-4x" style="color: var(--primary); margin: 20px 0;"></i>
-                    <p>Boleto gerado com sucesso!</p>
-                    <p style="font-size: 14px; color: var(--gray);">Vencimento: 3 dias úteis</p>
-                    <button class="banner-btn" style="margin-top: 15px;" onclick="baixarBoleto()">
-                        <i class="fas fa-download"></i> Baixar boleto
-                    </button>
-                </div>
             </div>
         </div>
     </div>
@@ -3584,6 +3708,7 @@
                     totalAvaliacoes: 127,
                     descricao: 'A mais completa loja de surfwear de Piracicaba, com as melhores marcas do mercado.',
                     imagem: 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=300',
+                    proprietarioId: 998, // ID do lojista
                     produtos: [
                         { id: 1, nome: 'Chinelo Havaina', preco: 39.90, imagem: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=200' },
                         { id: 2, nome: 'Camiseta Surf', preco: 89.90, imagem: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=200' },
@@ -3602,6 +3727,7 @@
                     totalAvaliacoes: 89,
                     descricao: 'Moda surfwear e streetwear para quem busca estilo e qualidade.',
                     imagem: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=300',
+                    proprietarioId: null,
                     produtos: [
                         { id: 4, nome: 'Camiseta Oversized', preco: 89.90, imagem: 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=200' },
                         { id: 5, nome: 'Boné Snapback', preco: 59.90, imagem: 'https://images.unsplash.com/photo-1576871337632-b9aef4c17ab9?w=200' },
@@ -3620,6 +3746,7 @@
                     totalAvaliacoes: 156,
                     descricao: 'Moda feminina para todas as ocasiões, com peças casuais e plus size.',
                     imagem: 'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=300',
+                    proprietarioId: null,
                     produtos: [
                         { id: 7, nome: 'Vestido Floral', preco: 129.90, imagem: 'https://images.unsplash.com/photo-1612336307429-8a898d10e223?w=200' },
                         { id: 8, nome: 'Blusa de Tricô', preco: 79.90, imagem: 'https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=200' },
@@ -3638,6 +3765,7 @@
                     totalAvaliacoes: 234,
                     descricao: 'Referência em surfwear em Piracicaba, com as principais marcas nacionais e internacionais.',
                     imagem: 'https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?w=300',
+                    proprietarioId: null,
                     produtos: [
                         { id: 10, nome: 'Prancha de Surf', preco: 1899.90, imagem: 'https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=200' },
                         { id: 11, nome: 'Rash Guard', preco: 149.90, imagem: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=200' },
@@ -3669,7 +3797,7 @@
         let contratacoes = JSON.parse(localStorage.getItem('rimso_contratacoes'));
         let lojaAtual = null;
         let planoSelecionado = 'profissional';
-        let pagamentoSelecionado = 'pix';
+        let produtoEditando = null;
 
         // ==================== INICIALIZAÇÃO ====================
         document.addEventListener('DOMContentLoaded', function() {
@@ -3785,6 +3913,7 @@
             verificarUsuarioLogado();
             mostrarToast('👋 Até logo!');
             document.getElementById('adminPanel').style.display = 'none';
+            voltarHome();
         }
 
         function verificarUsuarioLogado() {
@@ -3802,11 +3931,202 @@
                 } else {
                     document.getElementById('adminPanel').style.display = 'none';
                 }
+                
+                // Configurar select de lojas para admin ver todas, lojista ver apenas a sua
+                const selectLoja = document.getElementById('produtoLoja');
+                if (selectLoja) {
+                    if (usuarioLogado.tipo === 'admin') {
+                        selectLoja.innerHTML = '<option value="">Selecione a loja</option>' + 
+                            lojas.map(l => `<option value="${l.id}">${l.nome}</option>`).join('');
+                        document.getElementById('produtoLojaGroup').style.display = 'block';
+                    } else if (usuarioLogado.tipo === 'lojista') {
+                        // Encontrar loja do lojista
+                        const minhaLoja = lojas.find(l => l.proprietarioId === usuarioLogado.id);
+                        if (minhaLoja) {
+                            selectLoja.innerHTML = `<option value="${minhaLoja.id}">${minhaLoja.nome}</option>`;
+                            document.getElementById('produtoLojaGroup').style.display = 'none';
+                        }
+                    }
+                }
             } else {
                 authLinks.style.display = 'flex';
                 userInfo.style.display = 'none';
                 document.getElementById('adminPanel').style.display = 'none';
             }
+        }
+
+        // ==================== DASHBOARD DO LOJISTA ====================
+        function abrirDashboardLojista() {
+            if (!usuarioLogado) {
+                mostrarToast('Faça login para acessar o dashboard', 'error');
+                abrirModal('modalLogin');
+                return;
+            }
+            
+            if (usuarioLogado.tipo !== 'lojista' && usuarioLogado.tipo !== 'admin') {
+                mostrarToast('Área exclusiva para lojistas', 'error');
+                return;
+            }
+            
+            esconderTodasPaginas();
+            document.getElementById('dashboardPage').classList.remove('hidden');
+            carregarDashboardLojista();
+        }
+
+        function carregarDashboardLojista() {
+            // Encontrar a loja do lojista logado
+            let minhaLoja = null;
+            
+            if (usuarioLogado.tipo === 'admin') {
+                // Admin vê a primeira loja como exemplo
+                minhaLoja = lojas[0];
+            } else {
+                minhaLoja = lojas.find(l => l.proprietarioId === usuarioLogado.id);
+            }
+            
+            if (!minhaLoja) {
+                document.getElementById('semProdutos').style.display = 'block';
+                document.getElementById('meusProdutos').innerHTML = '';
+                document.getElementById('statProdutos').textContent = '0';
+                document.getElementById('statAvaliacao').textContent = '0.0';
+                document.getElementById('statFavoritos').textContent = '0';
+                document.getElementById('totalProdutosInfo').textContent = '0 produtos';
+                return;
+            }
+            
+            // Atualizar estatísticas
+            document.getElementById('statProdutos').textContent = minhaLoja.produtos.length;
+            document.getElementById('statAvaliacao').textContent = minhaLoja.avaliacao.toFixed(1);
+            
+            // Calcular favoritos (simulado)
+            const favoritosLoja = favoritos.filter(f => f === minhaLoja.id).length;
+            document.getElementById('statFavoritos').textContent = favoritosLoja;
+            
+            document.getElementById('totalProdutosInfo').textContent = minhaLoja.produtos.length + ' produtos';
+            
+            // Mostrar produtos
+            if (minhaLoja.produtos.length === 0) {
+                document.getElementById('semProdutos').style.display = 'block';
+                document.getElementById('meusProdutos').innerHTML = '';
+            } else {
+                document.getElementById('semProdutos').style.display = 'none';
+                document.getElementById('meusProdutos').innerHTML = minhaLoja.produtos.map(p => `
+                    <div class="produto-card dashboard-produto">
+                        <div class="produto-image">
+                            <img src="${p.imagem}" alt="${p.nome}" loading="lazy">
+                        </div>
+                        <div class="produto-nome">${p.nome}</div>
+                        <div class="produto-preco">R$ ${p.preco.toFixed(2)}</div>
+                        <div class="produto-actions">
+                            <button class="btn-edit" onclick="editarProduto(${p.id})">
+                                <i class="fas fa-edit"></i> Editar
+                            </button>
+                            <button class="btn-delete" onclick="excluirProduto(${p.id})">
+                                <i class="fas fa-trash"></i> Excluir
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function editarPerfilLoja() {
+            mostrarToast('Função de editar perfil será implementada em breve', 'info');
+        }
+
+        function verEstatisticas() {
+            mostrarToast('Estatísticas detalhadas em breve', 'info');
+        }
+
+        function editarProduto(id) {
+            // Encontrar o produto
+            let produtoEncontrado = null;
+            let lojaEncontrada = null;
+            
+            for (const loja of lojas) {
+                const produto = loja.produtos.find(p => p.id === id);
+                if (produto) {
+                    produtoEncontrado = produto;
+                    lojaEncontrada = loja;
+                    break;
+                }
+            }
+            
+            if (!produtoEncontrado) {
+                mostrarToast('Produto não encontrado', 'error');
+                return;
+            }
+            
+            // Preencher modal de edição
+            document.getElementById('editProdutoId').value = produtoEncontrado.id;
+            document.getElementById('editProdutoLojaId').value = lojaEncontrada.id;
+            document.getElementById('editProdutoNome').value = produtoEncontrado.nome;
+            document.getElementById('editProdutoPreco').value = produtoEncontrado.preco;
+            document.getElementById('editProdutoImagem').value = produtoEncontrado.imagem;
+            
+            abrirModal('modalEditarProduto');
+        }
+
+        function salvarEdicaoProduto(event) {
+            event.preventDefault();
+            
+            const id = parseInt(document.getElementById('editProdutoId').value);
+            const lojaId = parseInt(document.getElementById('editProdutoLojaId').value);
+            const nome = document.getElementById('editProdutoNome').value;
+            const preco = parseFloat(document.getElementById('editProdutoPreco').value);
+            const imagem = document.getElementById('editProdutoImagem').value;
+            
+            const loja = lojas.find(l => l.id === lojaId);
+            if (!loja) {
+                mostrarToast('Loja não encontrada', 'error');
+                return;
+            }
+            
+            const produtoIndex = loja.produtos.findIndex(p => p.id === id);
+            if (produtoIndex === -1) {
+                mostrarToast('Produto não encontrado', 'error');
+                return;
+            }
+            
+            loja.produtos[produtoIndex] = { id, nome, preco, imagem };
+            localStorage.setItem('rimso_lojas', JSON.stringify(lojas));
+            
+            mostrarToast('✅ Produto atualizado com sucesso!', 'success');
+            fecharModal('modalEditarProduto');
+            
+            carregarDashboardLojista();
+            carregarProdutosDestaque();
+            
+            if (lojaAtual && lojaAtual.id === lojaId) {
+                abrirLoja(lojaId);
+            }
+        }
+
+        function excluirProduto(id) {
+            if (!confirm('Tem certeza que deseja excluir este produto?')) {
+                return;
+            }
+            
+            for (let i = 0; i < lojas.length; i++) {
+                const produtoIndex = lojas[i].produtos.findIndex(p => p.id === id);
+                if (produtoIndex !== -1) {
+                    lojas[i].produtos.splice(produtoIndex, 1);
+                    localStorage.setItem('rimso_lojas', JSON.stringify(lojas));
+                    
+                    mostrarToast('✅ Produto excluído com sucesso!', 'success');
+                    
+                    carregarDashboardLojista();
+                    carregarProdutosDestaque();
+                    
+                    if (lojaAtual && lojaAtual.id === lojas[i].id) {
+                        abrirLoja(lojas[i].id);
+                    }
+                    
+                    return;
+                }
+            }
+            
+            mostrarToast('Produto não encontrado', 'error');
         }
 
         // ==================== FUNÇÕES ADMIN ====================
@@ -3874,30 +4194,6 @@
             document.getElementById('planoSelecionado').value = plano;
         }
 
-        function selecionarPagamento(tipo) {
-            pagamentoSelecionado = tipo;
-            
-            document.getElementById('pagamentoPix').style.borderColor = 'var(--border)';
-            document.getElementById('pagamentoCartao').style.borderColor = 'var(--border)';
-            document.getElementById('pagamentoBoleto').style.borderColor = 'var(--border)';
-            document.getElementById('pagamentoPix').style.background = 'white';
-            document.getElementById('pagamentoCartao').style.background = 'white';
-            document.getElementById('pagamentoBoleto').style.background = 'white';
-            
-            if (tipo === 'pix') {
-                document.getElementById('pagamentoPix').style.borderColor = 'var(--accent)';
-                document.getElementById('pagamentoPix').style.background = 'var(--light)';
-            } else if (tipo === 'cartao') {
-                document.getElementById('pagamentoCartao').style.borderColor = 'var(--accent)';
-                document.getElementById('pagamentoCartao').style.background = 'var(--light)';
-            } else {
-                document.getElementById('pagamentoBoleto').style.borderColor = 'var(--accent)';
-                document.getElementById('pagamentoBoleto').style.background = 'var(--light)';
-            }
-            
-            document.getElementById('pagamentoSelecionado').value = tipo;
-        }
-
         function contratarPlanoFinal(event) {
             event.preventDefault();
             
@@ -3912,7 +4208,6 @@
             const endereco = document.getElementById('lojaEndereco').value;
             const categoria = document.getElementById('lojaCategoria').value;
             const plano = document.getElementById('planoSelecionado').value;
-            const pagamento = document.getElementById('pagamentoSelecionado').value;
             
             const planos = {
                 basico: { nome: 'Básico', preco: 49 },
@@ -3930,80 +4225,54 @@
                 endereco,
                 categoria,
                 plano,
-                pagamento,
                 valor: planos[plano].preco,
                 status: 'aguardando_pagamento',
                 data: new Date().toISOString()
             });
             localStorage.setItem('rimso_contratacoes', JSON.stringify(contratacoes));
             
-            // Fechar modal de planos e abrir modal de pagamento
+            mostrarToast(`✅ Plano ${planos[plano].nome} solicitado! Aguarde contato.`, 'success');
             fecharModal('modalPlanos');
-            abrirModalPagamento(plano, pagamento);
-        }
-
-        function abrirModalPagamento(plano, pagamento) {
-            const planos = {
-                basico: { nome: 'Básico', preco: 49 },
-                profissional: { nome: 'Profissional', preco: 89 },
-                premium: { nome: 'Premium', preco: 149 }
-            };
-            
-            document.getElementById('pagamentoLoading').style.display = 'block';
-            document.getElementById('pagamentoQRCode').style.display = 'none';
-            document.getElementById('pagamentoCartao').style.display = 'none';
-            document.getElementById('pagamentoBoleto').style.display = 'none';
-            
-            abrirModal('modalPagamento');
-            
-            // Simular processamento
-            setTimeout(() => {
-                document.getElementById('pagamentoLoading').style.display = 'none';
-                
-                if (pagamento === 'pix') {
-                    document.getElementById('pagamentoQRCode').style.display = 'block';
-                } else if (pagamento === 'cartao') {
-                    document.getElementById('pagamentoCartao').style.display = 'block';
-                    // Atualizar parcelas baseado no plano
-                    const select = document.getElementById('cardInstallments');
-                    select.innerHTML = '';
-                    for (let i = 1; i <= 12; i++) {
-                        const valorParcela = (planos[plano].preco / i).toFixed(2);
-                        const juros = i <= 6 ? 'sem juros' : 'com juros';
-                        select.innerHTML += `<option value="${i}">${i}x de R$ ${valorParcela} (${juros})</option>`;
-                    }
-                } else {
-                    document.getElementById('pagamentoBoleto').style.display = 'block';
-                }
-            }, 2000);
-        }
-
-        function copiarPix() {
-            navigator.clipboard.writeText('00020126580014BR.GOV.BCB.PIX0136a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6');
-            mostrarToast('✅ Código PIX copiado!');
-        }
-
-        function processarPagamentoCartao() {
-            mostrarToast('✅ Pagamento processado com sucesso!');
-            fecharModal('modalPagamento');
-        }
-
-        function baixarBoleto() {
-            mostrarToast('📄 Boleto gerado! Em breve você receberá por email.');
         }
 
         // ==================== ADICIONAR PRODUTO ====================
         function adicionarProduto(event) {
             event.preventDefault();
             
+            if (!usuarioLogado) {
+                mostrarToast('Faça login para adicionar produtos', 'error');
+                fecharModal('modalAddProduto');
+                abrirModal('modalLogin');
+                return;
+            }
+            
             const nome = document.getElementById('produtoNome').value;
             const preco = parseFloat(document.getElementById('produtoPreco').value);
             const imagem = document.getElementById('produtoImagem').value;
-            const lojaId = parseInt(document.getElementById('produtoLoja').value);
+            
+            let lojaId;
+            
+            if (usuarioLogado.tipo === 'admin') {
+                lojaId = parseInt(document.getElementById('produtoLoja').value);
+                if (!lojaId) {
+                    mostrarToast('Selecione uma loja', 'error');
+                    return;
+                }
+            } else if (usuarioLogado.tipo === 'lojista') {
+                const minhaLoja = lojas.find(l => l.proprietarioId === usuarioLogado.id);
+                if (!minhaLoja) {
+                    mostrarToast('Você não possui uma loja cadastrada', 'error');
+                    return;
+                }
+                lojaId = minhaLoja.id;
+            } else {
+                mostrarToast('Apenas lojistas podem adicionar produtos', 'error');
+                return;
+            }
             
             const loja = lojas.find(l => l.id === lojaId);
             if (!loja) {
-                mostrarToast('❌ Loja não encontrada', 'error');
+                mostrarToast('Loja não encontrada', 'error');
                 return;
             }
             
@@ -4023,7 +4292,6 @@
             document.getElementById('produtoNome').value = '';
             document.getElementById('produtoPreco').value = '';
             document.getElementById('produtoImagem').value = '';
-            document.getElementById('produtoLoja').value = '';
             
             if (lojaAtual && lojaAtual.id === lojaId) {
                 abrirLoja(lojaId);
@@ -4031,6 +4299,7 @@
             
             carregarProdutosDestaque();
             carregarLojas();
+            carregarDashboardLojista();
         }
 
         // ==================== ADICIONAR LOJA ====================
@@ -4058,6 +4327,7 @@
                 totalAvaliacoes: 0,
                 descricao,
                 imagem,
+                proprietarioId: usuarioLogado?.tipo === 'lojista' ? usuarioLogado.id : null,
                 produtos: []
             };
             
@@ -4075,6 +4345,7 @@
             document.getElementById('lojaDescricaoAdd').value = '';
             
             carregarLojas();
+            verificarUsuarioLogado(); // Atualizar select de lojas
         }
 
         // ==================== CARREGAMENTO ====================
@@ -4086,12 +4357,6 @@
             
             if (grid) {
                 grid.innerHTML = lojas.map(loja => criarCardLoja(loja)).join('');
-            }
-            
-            const selectLoja = document.getElementById('produtoLoja');
-            if (selectLoja) {
-                selectLoja.innerHTML = '<option value="">Selecione a loja</option>' + 
-                    lojas.map(l => `<option value="${l.id}">${l.nome}</option>`).join('');
             }
         }
 
@@ -4275,6 +4540,11 @@
                                 <button class="banner-btn" style="margin-top: 15px;" onclick="abrirModalAvaliacao(${loja.id})">
                                     <i class="fas fa-star"></i> Avaliar esta loja
                                 </button>
+                                ${usuarioLogado?.tipo === 'admin' || (usuarioLogado?.tipo === 'lojista' && loja.proprietarioId === usuarioLogado.id) ? `
+                                    <button class="banner-btn" style="margin-top: 15px; background: var(--primary);" onclick="abrirModal('modalAddProduto')">
+                                        <i class="fas fa-plus"></i> Adicionar Produto
+                                    </button>
+                                ` : ''}
                             </div>
                         </div>
                         
@@ -4311,6 +4581,7 @@
             const trabalheConoscoPage = document.getElementById('trabalheConoscoPage');
             const comoFuncionaPage = document.getElementById('comoFuncionaPage');
             const termosPage = document.getElementById('termosPage');
+            const dashboardPage = document.getElementById('dashboardPage');
             
             if (siteContent) siteContent.classList.add('hidden');
             if (lojaPage) lojaPage.classList.add('hidden');
@@ -4320,6 +4591,7 @@
             if (trabalheConoscoPage) trabalheConoscoPage.classList.add('hidden');
             if (comoFuncionaPage) comoFuncionaPage.classList.add('hidden');
             if (termosPage) termosPage.classList.add('hidden');
+            if (dashboardPage) dashboardPage.classList.add('hidden');
         }
 
         function voltarHome() {
@@ -4428,6 +4700,11 @@
                     icon.className = favoritos.includes(id) ? 'fas fa-heart' : 'far fa-heart';
                 }
             });
+            
+            // Atualizar dashboard se estiver nele
+            if (document.getElementById('dashboardPage').classList.contains('hidden') === false) {
+                carregarDashboardLojista();
+            }
         }
 
         // ==================== AVALIAÇÕES ====================
@@ -4499,6 +4776,16 @@
             avaliacoes.push(novaAvaliacao);
             localStorage.setItem('rimso_avaliacoes', JSON.stringify(avaliacoes));
             
+            // Atualizar avaliação média da loja
+            const loja = lojas.find(l => l.id === lojaId);
+            if (loja) {
+                const avaliacoesLoja = avaliacoes.filter(a => a.lojaId === lojaId);
+                const soma = avaliacoesLoja.reduce((acc, a) => acc + a.nota, 0);
+                loja.avaliacao = soma / avaliacoesLoja.length;
+                loja.totalAvaliacoes = avaliacoesLoja.length;
+                localStorage.setItem('rimso_lojas', JSON.stringify(lojas));
+            }
+            
             mostrarToast('⭐ Avaliação enviada! Obrigado!');
             fecharModal('modalAvaliar');
             
@@ -4561,7 +4848,7 @@
                     botMsg.textContent = '🛒 Para comprar: 1) Encontre uma loja 2) Explore produtos 3) Clique no WhatsApp 4) Fale com o lojista. Simples e seguro!';
                 }
                 else if (mensagem.includes('plano') || mensagem.includes('anunciar')) {
-                    botMsg.textContent = '📢 Planos: Básico R$49 (50 produtos), Profissional R$89 (200 produtos), Premium R$149 (ilimitado). Clique em "Anunciar" para começar! Aceitamos PIX, cartão e boleto.';
+                    botMsg.textContent = '📢 Planos: Básico R$49 (50 produtos), Profissional R$89 (200 produtos), Premium R$149 (ilimitado). Clique em "Anunciar" para começar!';
                 }
                 else if (mensagem.includes('local') || mensagem.includes('endereço')) {
                     botMsg.textContent = '📍 Você encontra o endereço de todas as lojas na página de cada uma. Use os filtros para encontrar a loja desejada.';
@@ -4572,11 +4859,11 @@
                 else if (mensagem.includes('contato')) {
                     botMsg.textContent = '📞 Contato: (19) 3434-5678 | Email: contato@rimso.com.br | Instagram: @rimso';
                 }
-                else if (mensagem.includes('pagamento') || mensagem.includes('pix') || mensagem.includes('cartão') || mensagem.includes('boleto')) {
-                    botMsg.textContent = '💰 Formas de pagamento: PIX (mais rápido), Cartão de crédito (até 12x) e Boleto bancário. Tudo processado com segurança pelo Mercado Pago!';
+                else if (mensagem.includes('dashboard') || mensagem.includes('painel') || mensagem.includes('minha loja')) {
+                    botMsg.textContent = '📊 Se você é lojista, faça login e clique no link "Dashboard" no topo para gerenciar seus produtos e ver estatísticas!';
                 }
                 else {
-                    botMsg.textContent = '🤖 Posso ajudar com informações sobre compras, planos, localização, preços, pagamentos e contato. Pergunte à vontade!';
+                    botMsg.textContent = '🤖 Posso ajudar com informações sobre compras, planos, localização, preços, dashboard e contato. Pergunte à vontade!';
                 }
                 
                 messages.appendChild(botMsg);
