@@ -1959,6 +1959,7 @@
             padding: 40px;
             border: 3px solid var(--accent);
             box-shadow: var(--shadow-lg);
+            position: relative;
         }
 
         .dashboard-header {
@@ -1980,6 +1981,26 @@
 
         .dashboard-header h1 i {
             color: var(--accent);
+        }
+
+        .btn-dashboard-voltar {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 60px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-dashboard-voltar:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
         }
 
         .dashboard-stats {
@@ -2184,10 +2205,23 @@
         .dashboard-link {
             color: var(--primary) !important;
             font-weight: 600;
+            padding: 5px 10px;
+            border-radius: 60px;
+            transition: var(--transition);
+        }
+
+        .dashboard-link:hover {
+            background: var(--accent);
+            color: white !important;
         }
 
         .dashboard-link i {
             color: var(--accent);
+            transition: var(--transition);
+        }
+
+        .dashboard-link:hover i {
+            color: white;
         }
 
         /* ==================== RESPONSIVIDADE ==================== */
@@ -2565,12 +2599,12 @@
         </div>
     </div>
 
-    <!-- DASHBOARD DO LOJISTA -->
+    <!-- DASHBOARD DO LOJISTA (TELA SEPARADA) -->
     <div id="dashboardPage" class="dashboard-page hidden">
         <div class="dashboard-container">
             <div class="dashboard-header">
-                <h1><i class="fas fa-store"></i> Minha Loja</h1>
-                <button class="btn-logout" onclick="voltarHome()" style="background: var(--primary); color: white; border: none;">
+                <h1><i class="fas fa-store"></i> Minha Loja - Dashboard</h1>
+                <button class="btn-dashboard-voltar" onclick="voltarHome()">
                     <i class="fas fa-arrow-left"></i> Voltar para o site
                 </button>
             </div>
@@ -4299,7 +4333,11 @@
             
             carregarProdutosDestaque();
             carregarLojas();
-            carregarDashboardLojista();
+            
+            // Se estiver no dashboard, atualizar
+            if (!document.getElementById('dashboardPage').classList.contains('hidden')) {
+                carregarDashboardLojista();
+            }
         }
 
         // ==================== ADICIONAR LOJA ====================
@@ -4702,7 +4740,7 @@
             });
             
             // Atualizar dashboard se estiver nele
-            if (document.getElementById('dashboardPage').classList.contains('hidden') === false) {
+            if (!document.getElementById('dashboardPage').classList.contains('hidden')) {
                 carregarDashboardLojista();
             }
         }
@@ -4792,6 +4830,11 @@
             if (lojaAtual && lojaAtual.id === lojaId) {
                 const lista = document.getElementById('avaliacoesLista');
                 if (lista) lista.innerHTML = carregarAvaliacoes(lojaId);
+            }
+            
+            // Atualizar dashboard se estiver nele
+            if (!document.getElementById('dashboardPage').classList.contains('hidden')) {
+                carregarDashboardLojista();
             }
         }
 
