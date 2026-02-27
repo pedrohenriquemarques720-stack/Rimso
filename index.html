@@ -217,11 +217,14 @@
             font-size: 13px;
             cursor: pointer;
             transition: var(--transition);
+            font-weight: 600;
         }
 
         .btn-logout:hover {
             background: var(--accent);
             color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
         }
 
         /* ==================== BANNER ==================== */
@@ -2041,6 +2044,28 @@
             display: none !important;
         }
 
+        /* ==================== USER INFO MELHORADO ==================== */
+        .user-info-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: var(--light);
+            padding: 5px 15px;
+            border-radius: 60px;
+            border: 2px solid var(--accent);
+        }
+
+        .user-greeting {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .user-greeting i {
+            color: var(--accent);
+            margin-right: 5px;
+        }
+
         /* ==================== RESPONSIVIDADE ==================== */
         @media (max-width: 768px) {
             .mobile-menu-toggle {
@@ -2172,6 +2197,11 @@
             .payment-methods {
                 grid-template-columns: 1fr;
             }
+            
+            .user-info-container {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
         }
 
         @media (max-width: 480px) {
@@ -2229,8 +2259,10 @@
                 <a href="#" onclick="abrirModal('modalCadastro')"><i class="fas fa-user-plus"></i> Cadastrar</a>
             </div>
             <div class="top-bar-links" id="userInfo" style="display: none;">
-                <span class="user-greeting">Olá, <span id="userName"></span></span>
-                <button class="btn-logout" onclick="fazerLogout()">Sair</button>
+                <div class="user-info-container">
+                    <span class="user-greeting"><i class="fas fa-user-circle"></i> Olá, <span id="userName"></span></span>
+                    <button class="btn-logout" onclick="fazerLogout()">Sair</button>
+                </div>
             </div>
         </div>
     </div>
@@ -2865,7 +2897,7 @@
         </div>
     </div>
 
-    <!-- MODAL LOGIN (CORRIGIDO) -->
+    <!-- MODAL LOGIN -->
     <div class="modal" id="modalLogin">
         <div class="modal-content">
             <div class="modal-header">
@@ -3325,63 +3357,62 @@
                     <p>Processando pagamento...</p>
                 </div>
                 <div id="pagamentoQRCode" style="display: none; text-align: center;">
-                                            <img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=00020126580014BR.GOV.BCB.PIX0136a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6" alt="QR Code PIX" style="max-width: 100%; border-radius: 16px;">
-                        <p style="margin: 15px 0; font-weight: 600;">PIX Copia e Cola</p>
-                        <div style="background: var(--light); padding: 10px; border-radius: 8px; font-size: 12px; word-break: break-all;">
-                            00020126580014BR.GOV.BCB.PIX0136a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6
+                    <img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=00020126580014BR.GOV.BCB.PIX0136a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6" alt="QR Code PIX" style="max-width: 100%; border-radius: 16px;">
+                    <p style="margin: 15px 0; font-weight: 600;">PIX Copia e Cola</p>
+                    <div style="background: var(--light); padding: 10px; border-radius: 8px; font-size: 12px; word-break: break-all;">
+                        00020126580014BR.GOV.BCB.PIX0136a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6
+                    </div>
+                    <button class="banner-btn" style="margin-top: 15px;" onclick="copiarPix()">
+                        <i class="fas fa-copy"></i> Copiar código PIX
+                    </button>
+                </div>
+                <div id="pagamentoCartao" style="display: none;">
+                    <form id="mercadoPagoForm">
+                        <div class="form-group">
+                            <label>Número do cartão</label>
+                            <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
                         </div>
-                        <button class="banner-btn" style="margin-top: 15px;" onclick="copiarPix()">
-                            <i class="fas fa-copy"></i> Copiar código PIX
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Validade</label>
+                                <input type="text" class="form-control" id="cardExpiry" placeholder="MM/AA">
+                            </div>
+                            <div class="form-group">
+                                <label>CVV</label>
+                                <input type="text" class="form-control" id="cardCvv" placeholder="123" maxlength="4">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Nome no cartão</label>
+                            <input type="text" class="form-control" id="cardName" placeholder="Como impresso no cartão">
+                        </div>
+                        <div class="form-group">
+                            <label>CPF do titular</label>
+                            <input type="text" class="form-control" id="cardCpf" placeholder="000.000.000-00">
+                        </div>
+                        <div class="form-group">
+                            <label>Parcelas</label>
+                            <select class="form-control" id="cardInstallments">
+                                <option value="1">1x de R$ 49,00 (sem juros)</option>
+                                <option value="2">2x de R$ 24,50 (sem juros)</option>
+                                <option value="3">3x de R$ 16,33 (sem juros)</option>
+                                <option value="4">4x de R$ 12,25 (sem juros)</option>
+                                <option value="5">5x de R$ 9,80 (sem juros)</option>
+                                <option value="6">6x de R$ 8,17 (sem juros)</option>
+                            </select>
+                        </div>
+                        <button type="button" class="banner-btn" style="width: 100%;" onclick="processarPagamentoCartao()">
+                            Pagar com cartão
                         </button>
-                    </div>
-                    <div id="pagamentoCartao" style="display: none;">
-                        <form id="mercadoPagoForm">
-                            <div class="form-group">
-                                <label>Número do cartão</label>
-                                <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label>Validade</label>
-                                    <input type="text" class="form-control" id="cardExpiry" placeholder="MM/AA">
-                                </div>
-                                <div class="form-group">
-                                    <label>CVV</label>
-                                    <input type="text" class="form-control" id="cardCvv" placeholder="123" maxlength="4">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Nome no cartão</label>
-                                <input type="text" class="form-control" id="cardName" placeholder="Como impresso no cartão">
-                            </div>
-                            <div class="form-group">
-                                <label>CPF do titular</label>
-                                <input type="text" class="form-control" id="cardCpf" placeholder="000.000.000-00">
-                            </div>
-                            <div class="form-group">
-                                <label>Parcelas</label>
-                                <select class="form-control" id="cardInstallments">
-                                    <option value="1">1x de R$ 49,00 (sem juros)</option>
-                                    <option value="2">2x de R$ 24,50 (sem juros)</option>
-                                    <option value="3">3x de R$ 16,33 (sem juros)</option>
-                                    <option value="4">4x de R$ 12,25 (sem juros)</option>
-                                    <option value="5">5x de R$ 9,80 (sem juros)</option>
-                                    <option value="6">6x de R$ 8,17 (sem juros)</option>
-                                </select>
-                            </div>
-                            <button type="button" class="banner-btn" style="width: 100%;" onclick="processarPagamentoCartao()">
-                                Pagar com cartão
-                            </button>
-                        </form>
-                    </div>
-                    <div id="pagamentoBoleto" style="display: none; text-align: center;">
-                        <i class="fas fa-barcode fa-4x" style="color: var(--primary); margin: 20px 0;"></i>
-                        <p>Boleto gerado com sucesso!</p>
-                        <p style="font-size: 14px; color: var(--gray);">Vencimento: 3 dias úteis</p>
-                        <button class="banner-btn" style="margin-top: 15px;" onclick="baixarBoleto()">
-                            <i class="fas fa-download"></i> Baixar boleto
-                        </button>
-                    </div>
+                    </form>
+                </div>
+                <div id="pagamentoBoleto" style="display: none; text-align: center;">
+                    <i class="fas fa-barcode fa-4x" style="color: var(--primary); margin: 20px 0;"></i>
+                    <p>Boleto gerado com sucesso!</p>
+                    <p style="font-size: 14px; color: var(--gray);">Vencimento: 3 dias úteis</p>
+                    <button class="banner-btn" style="margin-top: 15px;" onclick="baixarBoleto()">
+                        <i class="fas fa-download"></i> Baixar boleto
+                    </button>
                 </div>
             </div>
         </div>
