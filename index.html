@@ -1943,6 +1943,62 @@
             display: none !important;
         }
 
+        /* ==================== BOTÕES ADMIN ==================== */
+        .admin-panel {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 3px solid var(--accent);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .admin-panel h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .admin-panel h3 i {
+            color: var(--accent);
+        }
+
+        .admin-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .admin-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 60px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .admin-btn:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .admin-btn.secondary {
+            background: var(--accent);
+        }
+
+        .admin-btn.secondary:hover {
+            background: var(--primary);
+        }
+
         /* ==================== RESPONSIVIDADE ==================== */
         @media (max-width: 768px) {
             .mobile-menu-toggle {
@@ -2066,6 +2122,10 @@
                 height: 500px;
                 right: -20px;
             }
+            
+            .admin-buttons {
+                flex-direction: column;
+            }
         }
 
         @media (max-width: 480px) {
@@ -2162,6 +2222,18 @@
         </div>
     </section>
 
+    <!-- FILTROS RÁPIDOS (APENAS CATEGORIAS) -->
+    <div class="quick-filters" data-aos="fade-up" data-aos-delay="200">
+        <span class="filter-chip active" onclick="filtrarCategoria('todos')">Todas</span>
+        <span class="filter-chip" onclick="filtrarCategoria('surfwear')">Surfwear</span>
+        <span class="filter-chip" onclick="filtrarCategoria('streetwear')">Streetwear</span>
+        <span class="filter-chip" onclick="filtrarCategoria('feminina')">Moda Feminina</span>
+        <span class="filter-chip" onclick="filtrarCategoria('masculina')">Moda Masculina</span>
+        <span class="filter-chip" onclick="filtrarCategoria('infantil')">Infantil</span>
+        <span class="filter-chip" onclick="filtrarCategoria('calcados')">Calçados</span>
+        <span class="filter-chip" onclick="filtrarCategoria('acessorios')">Acessórios</span>
+    </div>
+
     <!-- PRODUTOS EM DESTAQUE -->
     <section class="featured-section" data-aos="fade-up" data-aos-delay="700">
         <div class="featured-header" data-aos="fade-right">
@@ -2170,6 +2242,27 @@
         </div>
         <div class="featured-grid" id="produtosDestaque"></div>
     </section>
+
+    <!-- PAINEL ADMIN (visível apenas para admin) -->
+    <div id="adminPanel" class="admin-panel" style="display: none; max-width: 1400px; margin: 0 auto 30px; padding: 0 30px;">
+        <div class="admin-panel">
+            <h3><i class="fas fa-crown"></i> Painel do Administrador - Acesso Total</h3>
+            <div class="admin-buttons">
+                <button class="admin-btn" onclick="abrirModal('modalAddLoja')">
+                    <i class="fas fa-store"></i> Adicionar Nova Loja
+                </button>
+                <button class="admin-btn secondary" onclick="abrirModal('modalAddProduto')">
+                    <i class="fas fa-box"></i> Adicionar Produto
+                </button>
+                <button class="admin-btn" onclick="mostrarRelatorios()">
+                    <i class="fas fa-chart-bar"></i> Ver Relatórios
+                </button>
+                <button class="admin-btn secondary" onclick="resetarDados()">
+                    <i class="fas fa-database"></i> Resetar Dados de Teste
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- CONTEÚDO PRINCIPAL (Lojas) -->
     <div id="siteContent" class="main-content">
@@ -2234,7 +2327,7 @@
                         <div class="bairro-item" onclick="filtrarBairro('jardim-maringa')">
                             <i class="fas fa-location-dot"></i> Jardim Maringá
                         </div>
-                        <div class="bairro-item" onclick="filtrarBairro('jardim-mon-teiro')">
+                        <div class="bairro-item" onclick="filtrarBairro('jardim-monteiro')">
                             <i class="fas fa-location-dot"></i> Jardim Monteiro
                         </div>
                         <div class="bairro-item" onclick="filtrarBairro('jardim-novo-horizonte')">
@@ -2728,7 +2821,7 @@
         </div>
     </div>
 
-    <!-- MODAL LOGIN (CORRIGIDO) -->
+    <!-- MODAL LOGIN -->
     <div class="modal" id="modalLogin">
         <div class="modal-content">
             <div class="modal-header">
@@ -3015,7 +3108,7 @@
         </div>
     </div>
 
-    <!-- MODAL ADICIONAR PRODUTO (para testes) -->
+    <!-- MODAL ADICIONAR PRODUTO -->
     <div class="modal" id="modalAddProduto">
         <div class="modal-content">
             <div class="modal-header">
@@ -3025,29 +3118,23 @@
             <div class="modal-body">
                 <form onsubmit="adicionarProduto(event)">
                     <div class="form-group">
-                        <label>Nome do produto</label>
+                        <label>Nome do produto *</label>
                         <input type="text" class="form-control" id="produtoNome" placeholder="Ex: Camiseta Surf" required>
                     </div>
                     <div class="form-group">
-                        <label>Preço (R$)</label>
+                        <label>Preço (R$) *</label>
                         <input type="number" class="form-control" id="produtoPreco" step="0.01" placeholder="89.90" required>
                     </div>
                     <div class="form-group">
-                        <label>URL da imagem</label>
+                        <label>URL da imagem *</label>
                         <input type="url" class="form-control" id="produtoImagem" placeholder="https://exemplo.com/imagem.jpg" required>
+                        <small style="color: var(--gray);">Use imagens do Unsplash: https://images.unsplash.com/...</small>
                     </div>
                     <div class="form-group">
-                        <label>Loja</label>
+                        <label>Loja *</label>
                         <select class="form-control" id="produtoLoja" required>
                             <option value="">Selecione a loja</option>
-                            <option value="1">CS Surf Shop</option>
-                            <option value="2">NRSurf</option>
-                            <option value="3">Renata Modas</option>
-                            <option value="4">Teka Surf</option>
-                            <option value="5">Radical Vest Surf Shop</option>
-                            <option value="6">LÖS</option>
-                            <option value="7">Vila Hípica Modas</option>
-                            <option value="8">Ki Kids Moda Infantil</option>
+                            ${lojas ? lojas.map(l => `<option value="${l.id}">${l.nome}</option>`).join('') : ''}
                         </select>
                     </div>
                     <button type="submit" class="banner-btn" style="width: 100%;">Adicionar Produto</button>
@@ -3056,7 +3143,7 @@
         </div>
     </div>
 
-    <!-- MODAL ADICIONAR LOJA (para testes) -->
+    <!-- MODAL ADICIONAR LOJA -->
     <div class="modal" id="modalAddLoja">
         <div class="modal-content">
             <div class="modal-header">
@@ -3064,63 +3151,98 @@
                 <span class="modal-close" onclick="fecharModal('modalAddLoja')">&times;</span>
             </div>
             <div class="modal-body">
-                <form onsubmit="adicionarLoja(event)">
-                    <div class="form-group">
-                        <label>Nome da loja</label>
-                        <input type="text" class="form-control" id="lojaNomeAdd" placeholder="Ex: Nova Loja" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Categoria</label>
-                        <select class="form-control" id="lojaCategoriaAdd" required>
-                            <option value="surfwear">Surfwear</option>
-                            <option value="streetwear">Streetwear</option>
-                            <option value="feminina">Moda Feminina</option>
-                            <option value="masculina">Moda Masculina</option>
-                            <option value="infantil">Moda Infantil</option>
-                            <option value="calcados">Calçados</option>
-                            <option value="acessorios">Acessórios</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Bairro</label>
-                        <select class="form-control" id="lojaBairroAdd" required>
-                            <option value="centro">Centro</option>
-                            <option value="alto">Alto</option>
-                            <option value="pauliceia">Pauliceia</option>
-                            <option value="cidade-alta">Cidade Alta</option>
-                            <option value="jardim-alvorada">Jardim Alvorada</option>
-                            <option value="vila-hipica">Vila Hípica</option>
-                            <option value="sao-dimas">São Dimas</option>
-                            <option value="jardim-europa">Jardim Europa</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Endereço completo</label>
-                        <input type="text" class="form-control" id="lojaEnderecoAdd" placeholder="Rua, número - Bairro" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Telefone</label>
-                        <input type="text" class="form-control" id="lojaTelefoneAdd" placeholder="(19) 3434-5678" required>
-                    </div>
-                    <div class="form-group">
-                        <label>WhatsApp (somente números)</label>
-                        <input type="text" class="form-control" id="lojaWhatsappAdd" placeholder="19999999999" required>
-                    </div>
-                    <div class="form-group">
-                        <label>URL da imagem</label>
-                        <input type="url" class="form-control" id="lojaImagemAdd" placeholder="https://exemplo.com/loja.jpg" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Descrição</label>
-                        <textarea class="form-control" id="lojaDescricaoAdd" rows="3" placeholder="Descreva a loja..." required></textarea>
-                    </div>
-                    <button type="submit" class="banner-btn" style="width: 100%;">Adicionar Loja</button>
-                </form>
+                <div class="scrollable-area">
+                    <form onsubmit="adicionarLoja(event)">
+                        <div class="form-group">
+                            <label>Nome da loja *</label>
+                            <input type="text" class="form-control" id="lojaNomeAdd" placeholder="Ex: Minha Loja" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Categoria *</label>
+                            <select class="form-control" id="lojaCategoriaAdd" required>
+                                <option value="surfwear">Surfwear</option>
+                                <option value="streetwear">Streetwear</option>
+                                <option value="feminina">Moda Feminina</option>
+                                <option value="masculina">Moda Masculina</option>
+                                <option value="infantil">Moda Infantil</option>
+                                <option value="calcados">Calçados</option>
+                                <option value="acessorios">Acessórios</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Bairro *</label>
+                            <select class="form-control" id="lojaBairroAdd" required>
+                                <option value="centro">Centro</option>
+                                <option value="alto">Alto</option>
+                                <option value="pauliceia">Pauliceia</option>
+                                <option value="cidade-alta">Cidade Alta</option>
+                                <option value="jardim-alvorada">Jardim Alvorada</option>
+                                <option value="vila-hipica">Vila Hípica</option>
+                                <option value="sao-dimas">São Dimas</option>
+                                <option value="jardim-europa">Jardim Europa</option>
+                                <option value="vila-rezende">Vila Rezende</option>
+                                <option value="jardim-america">Jardim América</option>
+                                <option value="cidade-jardim">Cidade Jardim</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Endereço completo *</label>
+                            <input type="text" class="form-control" id="lojaEnderecoAdd" placeholder="Rua, número - Bairro" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Telefone *</label>
+                            <input type="text" class="form-control" id="lojaTelefoneAdd" placeholder="(19) 3434-5678" required>
+                        </div>
+                        <div class="form-group">
+                            <label>WhatsApp (somente números) *</label>
+                            <input type="text" class="form-control" id="lojaWhatsappAdd" placeholder="19999999999" required>
+                        </div>
+                        <div class="form-group">
+                            <label>URL da imagem da loja *</label>
+                            <input type="url" class="form-control" id="lojaImagemAdd" placeholder="https://exemplo.com/loja.jpg" required>
+                            <small style="color: var(--gray);">Use imagens do Unsplash para teste</small>
+                        </div>
+                        <div class="form-group">
+                            <label>Descrição da loja *</label>
+                            <textarea class="form-control" id="lojaDescricaoAdd" rows="3" placeholder="Descreva a loja..." required></textarea>
+                        </div>
+                        <button type="submit" class="banner-btn" style="width: 100%;">Adicionar Loja</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- CHATBOT - CENTRAL DE AJUDA MELHORADA -->
+    <!-- MODAL RELATÓRIOS -->
+    <div class="modal" id="modalRelatorios">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h2>Relatórios do Sistema</h2>
+                <span class="modal-close" onclick="fecharModal('modalRelatorios')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div style="margin-bottom: 20px; padding: 15px; background: var(--light); border-radius: 12px;">
+                    <h3 style="color: var(--primary); margin-bottom: 10px;">📊 Estatísticas</h3>
+                    <p><strong>Total de lojas:</strong> <span id="relTotalLojas">0</span></p>
+                    <p><strong>Total de produtos:</strong> <span id="relTotalProdutos">0</span></p>
+                    <p><strong>Total de usuários:</strong> <span id="relTotalUsuarios">0</span></p>
+                    <p><strong>Total de avaliações:</strong> <span id="relTotalAvaliacoes">0</span></p>
+                    <p><strong>Total de favoritos:</strong> <span id="relTotalFavoritos">0</span></p>
+                </div>
+                
+                <div style="margin-bottom: 20px; padding: 15px; background: var(--light); border-radius: 12px;">
+                    <h3 style="color: var(--primary); margin-bottom: 10px;">💰 Planos Contratados</h3>
+                    <p><strong>Básico:</strong> <span id="relPlanosBasico">0</span></p>
+                    <p><strong>Profissional:</strong> <span id="relPlanosProfissional">0</span></p>
+                    <p><strong>Premium:</strong> <span id="relPlanosPremium">0</span></p>
+                </div>
+                
+                <button class="banner-btn" style="width: 100%;" onclick="atualizarRelatorios()">Atualizar Dados</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHATBOT - CENTRAL DE AJUDA -->
     <div class="chatbot-container">
         <div class="chatbot-button" onclick="toggleChatbot()">
             <i class="fas fa-comment-dots"></i>
@@ -3128,21 +3250,20 @@
         
         <div class="chatbot-window" id="chatbotWindow">
             <div class="chatbot-header">
-                <h3><i class="fas fa-robot"></i> Assistente RIMSO - IA</h3>
+                <h3><i class="fas fa-robot"></i> Assistente RIMSO</h3>
                 <span class="chatbot-close" onclick="toggleChatbot()">&times;</span>
             </div>
             <div class="chatbot-messages" id="chatbotMessages">
                 <div class="chatbot-message bot">
-                    Olá! Sou o assistente virtual do RIMSO com IA. Posso responder qualquer pergunta sobre moda, lojas, compras e muito mais!
+                    Olá! Sou o assistente virtual do RIMSO. Como posso ajudar?
                 </div>
                 <div class="chatbot-message bot">
-                    💡 <strong>Dica:</strong> Pergunte sobre:
-                    • "O que é surfwear?"
-                    • "Como faço pra comprar?"
-                    • "Planos pra lojistas"
-                    • "Onde fica a CS Surf Shop?"
+                    💡 <strong>Sugestões:</strong><br>
+                    • "Como comprar?"<br>
+                    • "Planos para lojistas"<br>
+                    • "Onde fica a CS Surf?"<br>
+                    • "Preço médio"<br>
                     • "Avaliações"
-                    • "Preços"
                 </div>
             </div>
             <div class="chatbot-input">
@@ -3150,10 +3271,9 @@
                 <button onclick="enviarMensagem()"><i class="fas fa-paper-plane"></i></button>
             </div>
             <div class="chatbot-suggestions">
-                <span class="chatbot-suggestion" onclick="usarSugestao('O que é surfwear?')">Surfwear</span>
-                <span class="chatbot-suggestion" onclick="usarSugestao('Como comprar?')">Como comprar</span>
+                <span class="chatbot-suggestion" onclick="usarSugestao('Como comprar?')">Comprar</span>
                 <span class="chatbot-suggestion" onclick="usarSugestao('Planos para lojistas')">Planos</span>
-                <span class="chatbot-suggestion" onclick="usarSugestao('Onde fica a CS Surf Shop?')">Localização</span>
+                <span class="chatbot-suggestion" onclick="usarSugestao('Onde fica a CS Surf Shop?')">Onde fica</span>
                 <span class="chatbot-suggestion" onclick="usarSugestao('Preço médio')">Preços</span>
             </div>
         </div>
@@ -3180,7 +3300,7 @@
                 <ul>
                     <li><a href="#" onclick="abrirPaginaInstitucional('comoComprar', event)"><i class="fas fa-shopping-bag"></i> Como comprar</a></li>
                     <li><a href="#" onclick="abrirPaginaInstitucional('faq', event)"><i class="fas fa-question-circle"></i> Dúvidas frequentes</a></li>
-                    <li><a href="#" onclick="toggleChatbot()"><i class="fas fa-robot"></i> Central de ajuda (IA)</a></li>
+                    <li><a href="#" onclick="toggleChatbot()"><i class="fas fa-robot"></i> Central de ajuda</a></li>
                     <li><a href="#" onclick="mostrarToast('Fale conosco: contato@rimso.com.br')"><i class="fas fa-envelope"></i> Fale conosco</a></li>
                 </ul>
             </div>
@@ -3228,7 +3348,7 @@
             easing: 'ease-in-out'
         });
 
-        // ==================== DADOS ====================
+        // ==================== DADOS INICIAIS ====================
         // Carregar lojas do localStorage ou usar dados iniciais
         let lojas = JSON.parse(localStorage.getItem('rimso_lojas')) || [
             {
@@ -3401,6 +3521,43 @@
             localStorage.setItem('rimso_usuarios', JSON.stringify(usuarios));
         }
 
+        // Criar usuário lojista de teste
+        const lojistaExists = usuarios.some(u => u.email === 'lojista@rimso.com.br');
+        if (!lojistaExists) {
+            usuarios.push({
+                id: 998,
+                nome: 'Lojista Teste',
+                email: 'lojista@rimso.com.br',
+                telefone: '(19) 98888-7777',
+                tipo: 'lojista',
+                data: '1985-05-15',
+                cpf: '111.222.333-44',
+                endereco: 'Rua Teste, 123 - Centro',
+                senha: 'lojista123',
+                dataCadastro: new Date().toISOString()
+            });
+            localStorage.setItem('rimso_usuarios', JSON.stringify(usuarios));
+        }
+
+        // Criar usuário cliente de teste
+        const clienteExists = usuarios.some(u => u.email === 'cliente@rimso.com.br');
+        if (!clienteExists) {
+            usuarios.push({
+                id: 997,
+                nome: 'Cliente Teste',
+                email: 'cliente@rimso.com.br',
+                telefone: '(19) 97777-6666',
+                tipo: 'cliente',
+                data: '1995-10-20',
+                cpf: '555.666.777-88',
+                endereco: 'Av Teste, 456 - Alto',
+                senha: 'cliente123',
+                dataCadastro: new Date().toISOString()
+            });
+            localStorage.setItem('rimso_usuarios', JSON.stringify(usuarios));
+        }
+
+        // ==================== VARIÁVEIS GLOBAIS ====================
         let usuarioLogado = JSON.parse(localStorage.getItem('rimso_usuario_logado')) || null;
         let favoritos = JSON.parse(localStorage.getItem('rimso_favoritos')) || [];
         let avaliacoes = JSON.parse(localStorage.getItem('rimso_avaliacoes')) || [];
@@ -3416,6 +3573,8 @@
             verificarUsuarioLogado();
             console.log('🚀 RIMSO inicializado com sucesso!');
             console.log('👑 Conta admin: admin@rimso.com.br / admin123');
+            console.log('🏪 Conta lojista: lojista@rimso.com.br / lojista123');
+            console.log('👤 Conta cliente: cliente@rimso.com.br / cliente123');
             
             // Re-inicializar AOS após carregar conteúdo dinâmico
             setTimeout(() => {
@@ -3452,7 +3611,7 @@
             });
         }
 
-        // ==================== SISTEMA DE LOGIN (CORRIGIDO) ====================
+        // ==================== SISTEMA DE LOGIN ====================
         function fazerLogin(event) {
             event.preventDefault();
             
@@ -3471,13 +3630,14 @@
                 fecharModal('modalLogin');
                 verificarUsuarioLogado();
                 
-                // Se for admin, mostrar opções extras
+                // Se for admin, mostrar painel
                 if (usuario.tipo === 'admin') {
                     setTimeout(() => {
-                        mostrarToast('👑 Modo administrador ativado', 'success');
-                        // Adicionar botões admin no header
-                        adicionarBotoesAdmin();
+                        mostrarToast('👑 Modo administrador ativado - Acesso total!', 'success');
+                        document.getElementById('adminPanel').style.display = 'block';
                     }, 500);
+                } else {
+                    document.getElementById('adminPanel').style.display = 'none';
                 }
             } else {
                 mostrarToast('❌ Email ou senha inválidos', 'error');
@@ -3533,10 +3693,7 @@
             localStorage.removeItem('rimso_usuario_logado');
             verificarUsuarioLogado();
             mostrarToast('👋 Até logo!');
-            
-            // Remover botões admin
-            const adminBtns = document.querySelectorAll('.admin-btn');
-            adminBtns.forEach(btn => btn.remove());
+            document.getElementById('adminPanel').style.display = 'none';
         }
 
         function verificarUsuarioLogado() {
@@ -3548,48 +3705,48 @@
                 authLinks.style.display = 'none';
                 userInfo.style.display = 'flex';
                 userName.textContent = usuarioLogado.nome.split(' ')[0];
-                
-                // Se for admin, mostrar botões
-                if (usuarioLogado.tipo === 'admin') {
-                    adicionarBotoesAdmin();
-                }
             } else {
                 authLinks.style.display = 'flex';
                 userInfo.style.display = 'none';
+                document.getElementById('adminPanel').style.display = 'none';
             }
         }
 
-        function adicionarBotoesAdmin() {
-            // Remover botões existentes
-            const existingBtns = document.querySelectorAll('.admin-btn');
-            existingBtns.forEach(btn => btn.remove());
+        // ==================== FUNÇÕES ADMIN ====================
+        function mostrarRelatorios() {
+            atualizarRelatorios();
+            abrirModal('modalRelatorios');
+        }
+
+        function atualizarRelatorios() {
+            const totalLojas = lojas.length;
+            const totalProdutos = lojas.reduce((acc, loja) => acc + loja.produtos.length, 0);
+            const totalUsuarios = usuarios.length;
+            const totalAvaliacoes = avaliacoes.length;
+            const totalFavoritos = favoritos.length;
             
-            const headerActions = document.querySelector('.header-actions');
+            const planosBasico = contratacoes.filter(c => c.plano === 'basico').length;
+            const planosProfissional = contratacoes.filter(c => c.plano === 'profissional').length;
+            const planosPremium = contratacoes.filter(c => c.plano === 'premium').length;
             
-            // Botão Adicionar Produto
-            const addProdutoBtn = document.createElement('a');
-            addProdutoBtn.href = '#';
-            addProdutoBtn.className = 'btn-post admin-btn';
-            addProdutoBtn.style.background = 'var(--primary)';
-            addProdutoBtn.innerHTML = '<i class="fas fa-box"></i> Add Produto';
-            addProdutoBtn.onclick = (e) => {
-                e.preventDefault();
-                abrirModal('modalAddProduto');
-            };
-            
-            // Botão Adicionar Loja
-            const addLojaBtn = document.createElement('a');
-            addLojaBtn.href = '#';
-            addLojaBtn.className = 'btn-post admin-btn';
-            addLojaBtn.style.background = 'var(--accent)';
-            addLojaBtn.innerHTML = '<i class="fas fa-store"></i> Add Loja';
-            addLojaBtn.onclick = (e) => {
-                e.preventDefault();
-                abrirModal('modalAddLoja');
-            };
-            
-            headerActions.appendChild(addProdutoBtn);
-            headerActions.appendChild(addLojaBtn);
+            document.getElementById('relTotalLojas').textContent = totalLojas;
+            document.getElementById('relTotalProdutos').textContent = totalProdutos;
+            document.getElementById('relTotalUsuarios').textContent = totalUsuarios;
+            document.getElementById('relTotalAvaliacoes').textContent = totalAvaliacoes;
+            document.getElementById('relTotalFavoritos').textContent = totalFavoritos;
+            document.getElementById('relPlanosBasico').textContent = planosBasico;
+            document.getElementById('relPlanosProfissional').textContent = planosProfissional;
+            document.getElementById('relPlanosPremium').textContent = planosPremium;
+        }
+
+        function resetarDados() {
+            if (confirm('Tem certeza que deseja resetar todos os dados de teste? Isso não afetará as lojas originais.')) {
+                localStorage.removeItem('rimso_lojas');
+                localStorage.removeItem('rimso_favoritos');
+                localStorage.removeItem('rimso_avaliacoes');
+                localStorage.removeItem('rimso_contratacoes');
+                window.location.reload();
+            }
         }
 
         // ==================== EXPANDER DOS BAIRROS ====================
@@ -3689,7 +3846,7 @@
             localStorage.setItem('rimso_contratacoes', JSON.stringify(contratacoes));
         }
 
-        // ==================== ADICIONAR PRODUTO (para testes) ====================
+        // ==================== ADICIONAR PRODUTO ====================
         function adicionarProduto(event) {
             event.preventDefault();
             
@@ -3733,7 +3890,7 @@
             carregarLojas();
         }
 
-        // ==================== ADICIONAR LOJA (para testes) ====================
+        // ==================== ADICIONAR LOJA ====================
         function adicionarLoja(event) {
             event.preventDefault();
             
@@ -3788,6 +3945,13 @@
             
             if (grid) {
                 grid.innerHTML = lojas.map(loja => criarCardLoja(loja)).join('');
+            }
+            
+            // Atualizar select do modal de produto
+            const selectLoja = document.getElementById('produtoLoja');
+            if (selectLoja) {
+                selectLoja.innerHTML = '<option value="">Selecione a loja</option>' + 
+                    lojas.map(l => `<option value="${l.id}">${l.nome}</option>`).join('');
             }
         }
 
@@ -3867,12 +4031,10 @@
         }
 
         function filtrarBairro(bairro) {
-            // Remover active de todos os bairros
             document.querySelectorAll('.bairro-item').forEach(el => {
                 el.classList.remove('active');
             });
             
-            // Adicionar active no bairro clicado
             if (event?.currentTarget) {
                 event.currentTarget.classList.add('active');
             }
@@ -3941,7 +4103,6 @@
             
             lojaAtual = loja;
             
-            // Esconder todas as páginas institucionais e mostrar apenas a página da loja
             esconderTodasPaginas();
             
             const content = document.getElementById('lojaPageContent');
@@ -3974,11 +4135,6 @@
                                 <button class="banner-btn" style="margin-top: 15px;" onclick="abrirModalAvaliacao(${loja.id})">
                                     <i class="fas fa-star"></i> Avaliar esta loja
                                 </button>
-                                ${usuarioLogado?.tipo === 'admin' ? `
-                                    <button class="banner-btn" style="margin-top: 15px; background: var(--primary);" onclick="abrirModal('modalAddProduto')">
-                                        <i class="fas fa-plus"></i> Adicionar Produto (Admin)
-                                    </button>
-                                ` : ''}
                             </div>
                         </div>
                         
@@ -4073,7 +4229,6 @@
             
             if (pageElement) {
                 pageElement.classList.remove('hidden');
-                // Scroll suave para o topo da página institucional
                 setTimeout(() => {
                     pageElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }, 100);
@@ -4105,11 +4260,6 @@
                     <button class="banner-btn" style="width: 100%;" onclick="contatoWhatsapp('${lojaEncontrada.whatsapp}')">
                         <i class="fab fa-whatsapp"></i> Comprar via WhatsApp
                     </button>
-                    ${usuarioLogado?.tipo === 'admin' ? `
-                        <button class="banner-btn" style="margin-top: 10px; background: var(--primary);" onclick="mostrarToast('Função de edição disponível apenas para admin')">
-                            <i class="fas fa-edit"></i> Editar (Admin)
-                        </button>
-                    ` : ''}
                 </div>
             `;
             
@@ -4232,7 +4382,7 @@
             faqItem.classList.toggle('active');
         }
 
-        // ==================== CHATBOT MELHORADO ====================
+        // ==================== CHATBOT ====================
         function toggleChatbot() {
             const chatbot = document.getElementById('chatbotWindow');
             chatbot.classList.toggle('active');
@@ -4250,7 +4400,6 @@
             
             const messages = document.getElementById('chatbotMessages');
             
-            // Mensagem do usuário
             const userMsg = document.createElement('div');
             userMsg.className = 'chatbot-message user';
             userMsg.textContent = mensagem;
@@ -4258,77 +4407,35 @@
             
             input.value = '';
             
-            // Mostrar indicador de digitação
             const typingDiv = document.createElement('div');
             typingDiv.className = 'chatbot-typing';
             typingDiv.innerHTML = '<span></span><span></span><span></span>';
             messages.appendChild(typingDiv);
             messages.scrollTop = messages.scrollHeight;
             
-            // Resposta automática do bot com IA simulada
             setTimeout(() => {
-                // Remover indicador de digitação
                 messages.removeChild(typingDiv);
                 
                 const botMsg = document.createElement('div');
                 botMsg.className = 'chatbot-message bot';
                 
-                // Base de conhecimento expandida
-                if (mensagem.includes('surfwear') || mensagem.includes('surf')) {
-                    botMsg.textContent = '🏄 Surfwear é o estilo de roupa inspirado no surfe, com peças como camisetas estampadas, bermudas, chinelos e roupas leves. Em Piracicaba, temos várias lojas especializadas como CS Surf Shop, NRSurf e Teka Surf.';
+                if (mensagem.includes('compra') || mensagem.includes('comprar')) {
+                    botMsg.textContent = '🛒 Para comprar: 1) Encontre uma loja 2) Explore produtos 3) Clique no WhatsApp 4) Fale com o lojista. Simples e seguro!';
                 }
-                else if (mensagem.includes('streetwear')) {
-                    botMsg.textContent = '🛹 Streetwear é um estilo urbano que mistura roupas confortáveis com influências do skate, hip-hop e cultura de rua. Inclui camisetas oversized, bonés, tênis e moletons. Confira nossas lojas NRSurf e Radical Vest.';
+                else if (mensagem.includes('plano') || mensagem.includes('anunciar')) {
+                    botMsg.textContent = '📢 Planos: Básico R$49 (50 produtos), Profissional R$89 (200 produtos), Premium R$149 (ilimitado). Clique em "Anunciar" para começar!';
                 }
-                else if (mensagem.includes('feminina') || mensagem.includes('mulher')) {
-                    botMsg.textContent = '👗 Moda Feminina: Temos diversas opções em Piracicaba! Destaque para a Renata Modas, com peças casuais e plus size, e a LÖS, com moda autoral exclusiva.';
+                else if (mensagem.includes('local') || mensagem.includes('endereço')) {
+                    botMsg.textContent = '📍 Você encontra o endereço de todas as lojas na página de cada uma. Use os filtros para encontrar a loja desejada.';
                 }
-                else if (mensagem.includes('masculina') || mensagem.includes('homem')) {
-                    botMsg.textContent = '👔 Moda Masculina: A Vila Hípica Modas é referência em moda masculina na cidade, com opções do social ao esporte. Também temos opções nas lojas de surfwear.';
+                else if (mensagem.includes('preço') || mensagem.includes('valor')) {
+                    botMsg.textContent = '💰 Preços médios: Chinelos R$39,90, Camisetas R$79,90 a R$89,90, Bermudas R$129,90. Consulte cada loja para valores exatos.';
                 }
-                else if (mensagem.includes('infantil') || mensagem.includes('criança')) {
-                    botMsg.textContent = '🧒 Moda Infantil: A Ki Kids Moda Infantil é a maior loja especializada em roupas para crianças em Piracicaba, com opções para todas as idades.';
-                }
-                else if (mensagem.includes('calcado') || mensagem.includes('sapato') || mensagem.includes('tênis')) {
-                    botMsg.textContent = '👟 Calçados: Nossas lojas oferecem diversas opções de calçados, desde chinelos Havaina até tênis casuais e sociais. Confira as seções de produtos de cada loja.';
-                }
-                else if (mensagem.includes('acessorio') || mensagem.includes('boné') || mensagem.includes('bolsa')) {
-                    botMsg.textContent = '🧢 Acessórios: Temos bonés, óculos, bolsas e muito mais! Destaque para os bonés snapback da NRSurf e os acessórios exclusivos da LÖS.';
-                }
-                else if (mensagem.includes('compra') || mensagem.includes('comprar')) {
-                    botMsg.textContent = '🛒 Para comprar: 1) Encontre uma loja pelos filtros 2) Explore os produtos 3) Clique no botão do WhatsApp 4) Fale diretamente com o lojista para negociar preço e entrega. Simples e seguro!';
-                }
-                else if (mensagem.includes('plano') || mensagem.includes('anunciar') || mensagem.includes('lojista')) {
-                    botMsg.textContent = '📢 Planos para lojistas: Básico (R$49/mês - 50 produtos), Profissional (R$89/mês - 200 produtos) e Premium (R$149/mês - ilimitado). Clique em "Anunciar" no menu superior para começar!';
-                }
-                else if (mensagem.includes('avalia') || mensagem.includes('nota')) {
-                    botMsg.textContent = '⭐ Avaliações: Você pode avaliar as lojas após visitá-las. Basta entrar na página da loja e clicar em "Avaliar esta loja". Sua opinião ajuda outros clientes!';
-                }
-                else if (mensagem.includes('local') || mensagem.includes('endereço') || mensagem.includes('onde fica')) {
-                    if (mensagem.includes('cs surf')) {
-                        botMsg.textContent = '📍 CS Surf Shop: Rua Moraes Barros, 806 - Centro. Telefone: (19) 3434-2454';
-                    } else if (mensagem.includes('nrsurf')) {
-                        botMsg.textContent = '📍 NRSurf: Av. Independência, 1200 - Alto. Telefone: (19) 3433-9012';
-                    } else if (mensagem.includes('renata')) {
-                        botMsg.textContent = '📍 Renata Modas: Rua Carlos Augusto Strazzer, 20 - Jardim Alvorada. Telefone: (19) 3411-1193';
-                    } else {
-                        botMsg.textContent = '📍 Você pode encontrar o endereço de todas as lojas na página de cada uma delas. Use a busca ou filtros para encontrar a loja desejada.';
-                    }
-                }
-                else if (mensagem.includes('preço') || mensagem.includes('preco') || mensagem.includes('valor')) {
-                    botMsg.textContent = '💰 Os preços variam por loja e produto. Em média: Chinelos R$39,90, Camisetas R$79,90 a R$89,90, Bermudas R$129,90. Consulte cada loja para valores exatos e promoções.';
-                }
-                else if (mensagem.includes('contato') || mensagem.includes('telefone') || mensagem.includes('email')) {
-                    botMsg.textContent = '📞 Contato: (19) 3434-5678 | Email: contato@rimso.com.br | Instagram: @rimso | WhatsApp: (19) 99999-9999';
-                }
-                else if (mensagem.includes('termo') || mensagem.includes('termos')) {
-                    botMsg.textContent = '📄 Termos de Uso: Nossos termos estão disponíveis no rodapé do site. Eles explicam suas responsabilidades como usuário ou lojista da plataforma.';
-                }
-                else if (mensagem.includes('privacidade') || mensagem.includes('dados')) {
-                    botMsg.textContent = '🔒 Política de Privacidade: Seus dados são protegidos pela LGPD. Não vendemos informações para terceiros. Leia a política completa no rodapé.';
+                else if (mensagem.includes('contato')) {
+                    botMsg.textContent = '📞 Contato: (19) 3434-5678 | Email: contato@rimso.com.br | Instagram: @rimso';
                 }
                 else {
-                    botMsg.textContent = '🤖 Posso ajudar com informações sobre moda, lojas, compras, planos para lojistas, avaliações, contato, política de privacidade e termos de uso. Pergunte à vontade!';
+                    botMsg.textContent = '🤖 Posso ajudar com informações sobre compras, planos, localização, preços e contato. Pergunte à vontade!';
                 }
                 
                 messages.appendChild(botMsg);
@@ -4343,7 +4450,6 @@
             const modal = document.getElementById(modalId);
             if (modal) {
                 modal.classList.add('active');
-                // Centralizar o modal na tela com scroll suave
                 setTimeout(() => {
                     modal.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }, 100);
@@ -4387,4 +4493,3 @@
     </script>
 </body>
 </html>
-
